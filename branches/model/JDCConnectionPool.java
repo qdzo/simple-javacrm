@@ -1,11 +1,15 @@
 package model;
 
+import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Vector;
 
+import model.JDCConnection;
 
-public class ConnectionReaper extends Thread {
+
+ class ConnectionReaper extends Thread {
 	
 	private JDCConnectionPool pool;
 	private final long delay = 300000;
@@ -27,7 +31,7 @@ public class ConnectionReaper extends Thread {
 
 public class JDCConnectionPool{
 	
-	private Vector<E> connections;
+	private Vector connections;
 	private String url, user, password;
 	private final long timeout = 60000;
 	private ConnectionReaper reaper;
@@ -48,7 +52,7 @@ public class JDCConnectionPool{
 		long stale = System.currentTimeMillis() - timeout;
 		Enumeration connlist = connections.elements();
 		
-		while((connlist != null) && (connlist.hasMoreElements()){
+		while((connlist != null) && (connlist.hasMoreElements())){
 			JDCConnection conn = (JDCConnection) connlist.nextElement();
 			if((conn.inUse()) && (stale>conn.getLastUse()) && (!conn.validate())){
 				removeConnection(conn);
@@ -61,16 +65,16 @@ public class JDCConnectionPool{
 		Enumeration connlist = connections.elements();
 		
 		while((connlist != null) && (connlist.hasMoreElements())){
-			JDCConnection conn = (JDCConnection)connlist.nextElement();
-			removeConnection(conn);
+			JDCConnection conn1 = (JDCConnection)connlist.nextElement();
+			removeConnection(conn1);
 		}
 	}
 	
-	private synchronized removeConnection(JDCConnection conn){
+	private synchronized void removeConnection(JDCConnection conn){
 		connections.removeElement(conn);
 	}
 	
-	public synchronized Connection getConnection() throw SQLException {
+	public synchronized Connection getConnection() throws SQLException {
 		
 		JDCConnection c;
 		for(int i = 0; i<connections.size(); i++){
@@ -87,7 +91,7 @@ public class JDCConnectionPool{
 		return c;
 	}
 	
-	public synchronized returnConnection(JDCConnection conn){
+	public synchronized void returnConnection(JDCConnection conn){
 		conn.expireLease();
 	}
 }
