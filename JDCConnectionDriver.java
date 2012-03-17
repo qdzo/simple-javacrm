@@ -2,6 +2,8 @@ package model;
 
 import java.sql.*;
 import java.util.*;
+import model.JDCConnectionPool;
+
 
 public class JDCConnectionDriver implements java.sql.Driver{
 	
@@ -11,14 +13,14 @@ public class JDCConnectionDriver implements java.sql.Driver{
 	private JDCConnectionPool pool;
 	
 	public JDCConnectionDriver(String driver, String url, String user, String password) throws ClassNotFoundException, 
-	InstantinationException, IllegalAccessException, SQLException {
+	InstantiationException, IllegalAccessException, SQLException {
 		
 		DriverManager.registerDriver(this);
 		Class.forName(driver).newInstance();
 		pool = new JDCConnectionPool(url, user, password);
 	}
 	
-	public Connection connect(String url, Properties props) throw SQLException {
+	public Connection connect(String url, Properties props) throws SQLException {
 		
 		if(!url.startsWith(URL_PREFIX)){
 			return null;
@@ -26,11 +28,11 @@ public class JDCConnectionDriver implements java.sql.Driver{
 		return pool.getConnection();
 	}
 	
-	public boolean acceptsURL(Sting url) {
-		return url.startWith(URL_PREFIX);
+	public boolean acceptsURL(String url) {
+		return url.startsWith(URL_PREFIX);
 	}
 	
-	public int getMagorVersion(){
+	public int getMajorVersion(){
 		return MAGOR_VERSION;
 	}
 	
@@ -41,8 +43,9 @@ public class JDCConnectionDriver implements java.sql.Driver{
 	public DriverPropertyInfo[] getPropertyInfo(String string, Properties props){
 		return new DriverPropertyInfo[0];
 	}
-	
+
 	public boolean jdbcCompliant(){
 		return false;
 	}
+
 }
