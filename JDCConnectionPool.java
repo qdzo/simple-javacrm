@@ -41,7 +41,7 @@ public class JDCConnectionPool{
 		this.url = url;
 		this.user = user;
 		this.password = password;
-		connections = new Vector(poolsize);
+		connections = new Vector<JDCConnection>(poolsize);
 		reaper = new ConnectionReaper(this);
 		reaper.start();
 	}
