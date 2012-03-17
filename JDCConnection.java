@@ -27,10 +27,10 @@ public class JDCConnection implements Connection {
 	private boolean inuse;
 	private long timestamp;
 	
-	public JDCConnection(Connection conn, JDCConnectionPool connectionPool){
+	public JDCConnection(Connection conn, JDCConnectionPool pool){
 		
 		this.connection = conn;
-		this.pool = connectionPool;
+		this.pool = pool;
 		this.inuse = false;
 		timestamp = 0;
 	}
@@ -65,7 +65,7 @@ public class JDCConnection implements Connection {
 	}
 	
 	public void close(){
-		pool.returnConnection(this);
+		this.pool.returnConnection(this);
 	}
 	
 	public void expireLease(){

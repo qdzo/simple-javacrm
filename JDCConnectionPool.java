@@ -5,7 +5,6 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Enumeration;
 import java.util.Vector;
-
 import model.JDCConnection;
 
 
@@ -31,7 +30,7 @@ import model.JDCConnection;
 
 public class JDCConnectionPool{
 	
-	private Vector connections;
+	private Vector<JDCConnection> connections;
 	private String url, user, password;
 	private final long timeout = 60000;
 	private ConnectionReaper reaper;
@@ -50,7 +49,7 @@ public class JDCConnectionPool{
 	public synchronized void reapConnections(){
 		
 		long stale = System.currentTimeMillis() - timeout;
-		Enumeration connlist = connections.elements();
+		Enumeration<JDCConnection> connlist = connections.elements();
 		
 		while((connlist != null) && (connlist.hasMoreElements())){
 			JDCConnection conn = (JDCConnection) connlist.nextElement();
@@ -62,7 +61,7 @@ public class JDCConnectionPool{
 	
 	public synchronized void closeConnections(JDCConnection conn){
 		
-		Enumeration connlist = connections.elements();
+		Enumeration<JDCConnection> connlist = connections.elements();
 		
 		while((connlist != null) && (connlist.hasMoreElements())){
 			JDCConnection conn1 = (JDCConnection)connlist.nextElement();
@@ -85,13 +84,13 @@ public class JDCConnectionPool{
 		}
 		
 		Connection conn = DriverManager.getConnection(url, user, password);
-		c = new JDCConnection(conn,this);
+		c = new JDCConnection(conn, this);
 		c.lease();
 		connections.addElement(c);
 		return c;
 	}
 	
-	public synchronized void returnConnection(JDCConnection conn){
-		conn.expireLease();
+	public synchronized void returnConnection(Connection conn){
+		((JDCConnection) conn).expireLease();
 	}
 }
