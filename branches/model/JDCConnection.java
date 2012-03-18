@@ -65,7 +65,7 @@ public class JDCConnection implements Connection {
 	}
 	
 	public void close(){
-		this.pool.returnConnection(this);
+		pool.returnConnection(this);
 	}
 	
 	public void expireLease(){
