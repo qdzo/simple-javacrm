@@ -73,7 +73,7 @@ public class JDCConnectionPool{
 		connections.removeElement(conn);
 	}
 	
-	public synchronized Connection getConnection() throws SQLException {
+	public synchronized JDCConnection getConnection() throws SQLException {
 		
 		JDCConnection c;
 		for(int i = 0; i<connections.size(); i++){

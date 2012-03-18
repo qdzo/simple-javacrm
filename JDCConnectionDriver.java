@@ -25,7 +25,7 @@ public class JDCConnectionDriver implements java.sql.Driver{
 		if(!url.startsWith(URL_PREFIX)){
 			return null;
 		}
-		return pool.getConnection();
+		return (JDCConnection)pool.getConnection();
 	}
 	
 	public boolean acceptsURL(String url) {
