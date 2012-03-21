@@ -1,6 +1,5 @@
 package view_controller;
 
-import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
 import javax.swing.JFrame;
@@ -26,7 +25,9 @@ public class SimpleCRMFrame extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
 	private JTable table;
-	private JTextField textField;
+	private JTextField QuickSearchField;
+	private JTextField searchField;
+	private String[] BusinessEntities = new String[] {"client","manager","product","deal"};
 
 	/**
 	 * Launch the application.
@@ -49,42 +50,61 @@ public class SimpleCRMFrame extends JFrame {
 	 */
 	public SimpleCRMFrame() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 650, 400);
+		setBounds(100, 100, 650, 397);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
 		
-		JLabel lblNewLabel = new JLabel("Search:");
+		JLabel lblNewLabel = new JLabel("Quick Search:");
 		GridBagConstraints gbc_lblNewLabel = new GridBagConstraints();
+		gbc_lblNewLabel.gridwidth = 2;
 		gbc_lblNewLabel.anchor = GridBagConstraints.EAST;
 		gbc_lblNewLabel.insets = new Insets(0, 0, 5, 5);
-		gbc_lblNewLabel.gridx = 1;
+		gbc_lblNewLabel.gridx = 0;
 		gbc_lblNewLabel.gridy = 0;
 		contentPane.add(lblNewLabel, gbc_lblNewLabel);
 		
-		JComboBox comboBox = new JComboBox();
-		GridBagConstraints gbc_comboBox = new GridBagConstraints();
-		gbc_comboBox.insets = new Insets(0, 0, 5, 5);
-		gbc_comboBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox.gridx = 2;
-		gbc_comboBox.gridy = 0;
-		contentPane.add(comboBox, gbc_comboBox);
+		QuickSearchField = new JTextField();
+		QuickSearchField.setText("enter the tel..");
+		GridBagConstraints gbc_QuickSearchField = new GridBagConstraints();
+		gbc_QuickSearchField.insets = new Insets(0, 0, 5, 5);
+		gbc_QuickSearchField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_QuickSearchField.gridx = 2;
+		gbc_QuickSearchField.gridy = 0;
+		contentPane.add(QuickSearchField, gbc_QuickSearchField);
+		QuickSearchField.setColumns(10);
 		
-		textField = new JTextField();
-		GridBagConstraints gbc_textField = new GridBagConstraints();
-		gbc_textField.gridwidth = 3;
-		gbc_textField.insets = new Insets(0, 0, 5, 5);
-		gbc_textField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_textField.gridx = 3;
-		gbc_textField.gridy = 0;
-		contentPane.add(textField, gbc_textField);
-		textField.setColumns(10);
+		JLabel lblFind = new JLabel("Find:");
+		GridBagConstraints gbc_lblFind = new GridBagConstraints();
+		gbc_lblFind.anchor = GridBagConstraints.EAST;
+		gbc_lblFind.insets = new Insets(0, 0, 5, 5);
+		gbc_lblFind.gridx = 4;
+		gbc_lblFind.gridy = 0;
+		contentPane.add(lblFind, gbc_lblFind);
+		
+		JComboBox entetiesBox = new JComboBox(BusinessEntities);
+		GridBagConstraints gbc_entetiesBox = new GridBagConstraints();
+		gbc_entetiesBox.insets = new Insets(0, 0, 5, 5);
+		gbc_entetiesBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_entetiesBox.gridx = 5;
+		gbc_entetiesBox.gridy = 0;
+		contentPane.add(entetiesBox, gbc_entetiesBox);
+		
+		searchField = new JTextField();
+		GridBagConstraints gbc_searchField = new GridBagConstraints();
+		gbc_searchField.gridwidth = 2;
+		gbc_searchField.insets = new Insets(0, 0, 5, 5);
+		gbc_searchField.fill = GridBagConstraints.HORIZONTAL;
+		gbc_searchField.gridx = 6;
+		gbc_searchField.gridy = 0;
+		contentPane.add(searchField, gbc_searchField);
+		searchField.setColumns(10);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -99,44 +119,45 @@ public class SimpleCRMFrame extends JFrame {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
-		JButton btnNewButton_3 = new JButton("Add");
-		btnNewButton_3.addActionListener(new ActionListener() {
+		JButton addButton = new JButton("Add");
+		addButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent arg0) {
 			}
 		});
-		GridBagConstraints gbc_btnNewButton_3 = new GridBagConstraints();
-		gbc_btnNewButton_3.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_3.gridx = 2;
-		gbc_btnNewButton_3.gridy = 7;
-		contentPane.add(btnNewButton_3, gbc_btnNewButton_3);
+		GridBagConstraints gbc_addButton = new GridBagConstraints();
+		gbc_addButton.insets = new Insets(0, 0, 0, 5);
+		gbc_addButton.gridx = 1;
+		gbc_addButton.gridy = 7;
+		contentPane.add(addButton, gbc_addButton);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		GridBagConstraints gbc_comboBox_1 = new GridBagConstraints();
-		gbc_comboBox_1.insets = new Insets(0, 0, 0, 5);
-		gbc_comboBox_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_comboBox_1.gridx = 3;
-		gbc_comboBox_1.gridy = 7;
-		contentPane.add(comboBox_1, gbc_comboBox_1);
+		JComboBox entetiesBox_1 = new JComboBox(BusinessEntities);
+		GridBagConstraints gbc_entetiesBox_1 = new GridBagConstraints();
+		gbc_entetiesBox_1.insets = new Insets(0, 0, 0, 5);
+		gbc_entetiesBox_1.fill = GridBagConstraints.HORIZONTAL;
+		gbc_entetiesBox_1.gridx = 2;
+		gbc_entetiesBox_1.gridy = 7;
+		contentPane.add(entetiesBox_1, gbc_entetiesBox_1);
 		
-		JButton btnNewButton_2 = new JButton("Edit");
-		GridBagConstraints gbc_btnNewButton_2 = new GridBagConstraints();
-		gbc_btnNewButton_2.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_2.gridx = 5;
-		gbc_btnNewButton_2.gridy = 7;
-		contentPane.add(btnNewButton_2, gbc_btnNewButton_2);
+		JButton editButton = new JButton("Edit");
+		GridBagConstraints gbc_editButton = new GridBagConstraints();
+		gbc_editButton.insets = new Insets(0, 0, 0, 5);
+		gbc_editButton.gridx = 4;
+		gbc_editButton.gridy = 7;
+		contentPane.add(editButton, gbc_editButton);
 		
-		JButton btnNewButton_1 = new JButton("Save");
-		GridBagConstraints gbc_btnNewButton_1 = new GridBagConstraints();
-		gbc_btnNewButton_1.insets = new Insets(0, 0, 0, 5);
-		gbc_btnNewButton_1.gridx = 8;
-		gbc_btnNewButton_1.gridy = 7;
-		contentPane.add(btnNewButton_1, gbc_btnNewButton_1);
+		JButton saveButton = new JButton("Save");
+		GridBagConstraints gbc_saveButton = new GridBagConstraints();
+		gbc_saveButton.insets = new Insets(0, 0, 0, 5);
+		gbc_saveButton.gridx = 5;
+		gbc_saveButton.gridy = 7;
+		contentPane.add(saveButton, gbc_saveButton);
 		
-		JButton btnNewButton = new JButton("Delete");
-		GridBagConstraints gbc_btnNewButton = new GridBagConstraints();
-		gbc_btnNewButton.gridx = 10;
-		gbc_btnNewButton.gridy = 7;
-		contentPane.add(btnNewButton, gbc_btnNewButton);
+		JButton deleteButton = new JButton("Delete");
+		GridBagConstraints gbc_deleteButton = new GridBagConstraints();
+		gbc_deleteButton.insets = new Insets(0, 0, 0, 5);
+		gbc_deleteButton.gridx = 6;
+		gbc_deleteButton.gridy = 7;
+		contentPane.add(deleteButton, gbc_deleteButton);
 	}
 
 }
