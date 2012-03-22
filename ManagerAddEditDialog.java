@@ -2,6 +2,7 @@ package view_controller;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -30,23 +31,11 @@ public class ManagerAddEditDialog extends JDialog {
 	private JTextField lastNameManagerField;
 	private JTextField firstNameManagerField;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			ManagerAddEditDialog dialog = new ManagerAddEditDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
-	/**
-	 * Create the dialog.
-	 */
-	public ManagerAddEditDialog() {
+
+
+	public ManagerAddEditDialog(Frame frame,String title) {
+		super(frame,title);
 		setBounds(100, 100, 320, 241);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));

@@ -2,6 +2,7 @@ package view_controller;
 
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
+import java.awt.Frame;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
@@ -26,23 +27,9 @@ public class DealAddEditDialog extends JDialog {
 	private JTextField findClientField;
 	private JTextField findProductField;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		try {
-			DealAddEditDialog dialog = new DealAddEditDialog();
-			dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
-			dialog.setVisible(true);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
 
-	/**
-	 * Create the dialog.
-	 */
-	public DealAddEditDialog() {
+	public DealAddEditDialog(Frame frame,String title) {
+		super(frame,title);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
