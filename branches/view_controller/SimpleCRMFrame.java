@@ -26,9 +26,9 @@ public class SimpleCRMFrame extends JFrame {
 	private JPanel contentPane;
 	private JTable table;
 	private JTextField QuickSearchField;
-	private JTextField searchField;
-	private String[] BusinessEntities = new String[] {"client","manager","product","deal"};
-
+	private BusinessObjects[] BusinessEntities = BusinessObjects.values();
+	private SearchAddButtonsListener searchListener;
+	private SearchAddButtonsListener addListener;
 	/**
 	 * Launch the application.
 	 */
@@ -80,7 +80,7 @@ public class SimpleCRMFrame extends JFrame {
 		contentPane.add(QuickSearchField, gbc_QuickSearchField);
 		QuickSearchField.setColumns(10);
 		
-		JLabel lblFind = new JLabel("Find:");
+		JLabel lblFind = new JLabel("Search:");
 		GridBagConstraints gbc_lblFind = new GridBagConstraints();
 		gbc_lblFind.anchor = GridBagConstraints.EAST;
 		gbc_lblFind.insets = new Insets(0, 0, 5, 5);
@@ -88,23 +88,22 @@ public class SimpleCRMFrame extends JFrame {
 		gbc_lblFind.gridy = 0;
 		contentPane.add(lblFind, gbc_lblFind);
 		
-		JComboBox entetiesBox = new JComboBox(BusinessEntities);
-		GridBagConstraints gbc_entetiesBox = new GridBagConstraints();
-		gbc_entetiesBox.insets = new Insets(0, 0, 5, 5);
-		gbc_entetiesBox.fill = GridBagConstraints.HORIZONTAL;
-		gbc_entetiesBox.gridx = 5;
-		gbc_entetiesBox.gridy = 0;
-		contentPane.add(entetiesBox, gbc_entetiesBox);
+		JComboBox findEntetiesBox = new JComboBox(BusinessEntities);
+		GridBagConstraints gbc_findEntetiesBox = new GridBagConstraints();
+		gbc_findEntetiesBox.insets = new Insets(0, 0, 5, 5);
+		gbc_findEntetiesBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_findEntetiesBox.gridx = 5;
+		gbc_findEntetiesBox.gridy = 0;
+		contentPane.add(findEntetiesBox, gbc_findEntetiesBox);
 		
-		searchField = new JTextField();
-		GridBagConstraints gbc_searchField = new GridBagConstraints();
-		gbc_searchField.gridwidth = 2;
-		gbc_searchField.insets = new Insets(0, 0, 5, 5);
-		gbc_searchField.fill = GridBagConstraints.HORIZONTAL;
-		gbc_searchField.gridx = 6;
-		gbc_searchField.gridy = 0;
-		contentPane.add(searchField, gbc_searchField);
-		searchField.setColumns(10);
+		JButton SearchButton = new JButton("Find");
+		GridBagConstraints gbc_btnFind = new GridBagConstraints();
+		gbc_btnFind.insets = new Insets(0, 0, 5, 5);
+		gbc_btnFind.gridx = 6;
+		gbc_btnFind.gridy = 0;
+		contentPane.add(SearchButton, gbc_btnFind);
+		
+		searchListener = new SearchAddButtonsListener(this,SearchButton,findEntetiesBox,SearchAddButtonsListener.SEARCH);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -120,23 +119,21 @@ public class SimpleCRMFrame extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		JButton addButton = new JButton("Add");
-		addButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent arg0) {
-			}
-		});
 		GridBagConstraints gbc_addButton = new GridBagConstraints();
 		gbc_addButton.insets = new Insets(0, 0, 0, 5);
 		gbc_addButton.gridx = 1;
 		gbc_addButton.gridy = 7;
 		contentPane.add(addButton, gbc_addButton);
 		
-		JComboBox entetiesBox_1 = new JComboBox(BusinessEntities);
-		GridBagConstraints gbc_entetiesBox_1 = new GridBagConstraints();
-		gbc_entetiesBox_1.insets = new Insets(0, 0, 0, 5);
-		gbc_entetiesBox_1.fill = GridBagConstraints.HORIZONTAL;
-		gbc_entetiesBox_1.gridx = 2;
-		gbc_entetiesBox_1.gridy = 7;
-		contentPane.add(entetiesBox_1, gbc_entetiesBox_1);
+		JComboBox AddEntetiesBox = new JComboBox(BusinessEntities);
+		GridBagConstraints gbc_AddEntetiesBox = new GridBagConstraints();
+		gbc_AddEntetiesBox.insets = new Insets(0, 0, 0, 5);
+		gbc_AddEntetiesBox.fill = GridBagConstraints.HORIZONTAL;
+		gbc_AddEntetiesBox.gridx = 2;
+		gbc_AddEntetiesBox.gridy = 7;
+		contentPane.add(AddEntetiesBox, gbc_AddEntetiesBox);
+		
+		addListener = new SearchAddButtonsListener(this,addButton,AddEntetiesBox,SearchAddButtonsListener.ADD);
 		
 		JButton editButton = new JButton("Edit");
 		GridBagConstraints gbc_editButton = new GridBagConstraints();
