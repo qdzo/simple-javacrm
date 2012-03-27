@@ -16,7 +16,7 @@ public class Client extends Person{
 //==================================================================================================
 
 	public Priority getPriority(){
-		//  получение  приоритета клиента
+		// get a value of  client priority
 		return this.priority;
 	}
 	
@@ -24,7 +24,7 @@ public class Client extends Person{
 //==================================================================================================
 
 	public void setPriority(Priority priority){
-		// установка приоритета клиента
+		// set a value of  client priority
 		this.priority = priority;
 	}
 //--------------------------------------------------------------------------------------------------
