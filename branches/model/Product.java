@@ -25,9 +25,9 @@ public class Product {
 		return price;
 	}
 
-	public void setPrice(long price) {
+	public void setPrice(String price) {
 		if(validateDecimalLong(price))
-		this.price = price;
+		this.price = Long.parseLong(price);
 	}
 
 	
@@ -53,9 +53,9 @@ public class Product {
 	}
 
 	
-	public void setSummary(int summary) {
+	public void setSummary(String summary) {
 		if(validateDecimal(summary))
-		this.summary = summary;
+		this.summary = Integer.parseInt(summary);
 	}
 	
 	
@@ -64,30 +64,45 @@ public class Product {
 	}
 	
 	
-	public void provideSell(int summToSell){
+	public void provideSell(String summToSell){
 		if(validateDecimal(summToSell))
-		this.summary = summToSell;
+		this.summary =Integer.parseInt(summToSell);
 	}
 	
 	
 	protected boolean validate(String line){
-		if(line.length()==0||line==null){
+		if(line.length()==0||(line.trim()).length()==0){
 			System.out.println("Required an argument!");
 			return false;
 		}
 		return true;
 	}
 	
-	protected boolean validateDecimal(int dec){
-		if(dec==-1||dec==0){
+	protected boolean validateDecimal(String dec){
+		Integer decimal = null;
+		
+			try {
+				decimal = Integer.parseInt(dec);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		if(decimal==null){
 			System.out.println("Required a right decimal argument!");
 			return false;
 		}
 		return true;
 	}
 	
-	private boolean validateDecimalLong(long decLong) {
-		if(decLong==-1||decLong==0){
+	protected boolean validateDecimalLong(String decLong) {
+		Long decimalLong = null;
+		try {
+			decimalLong = Long.parseLong(decLong);
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		if(decimalLong==null){
 			System.out.println("Required a right long decimal argument!");
 			return false;
 		}
