@@ -36,13 +36,13 @@ public class SearchAddButtonsListener implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		// TODO Auto-generated method stub
 		checkedBusinessObj =(BusinessObjects) comboBox.getSelectedItem();
-		System.out.println("event had pecup!");
+		System.out.println("event is found");
 		System.out.println(checkedBusinessObj);
 		if(e.getActionCommand()=="Add"||e.getActionCommand()=="Find")
 		switch (checkedBusinessObj){
 		
 		case client :try {
-					System.out.println("i don't understand, what's going on?");
+					System.out.println("client dialog is popup");
 					clientDialog = new ClientAddEditDialog(DialogOwner,usingPurpose+" Client");
 					clientDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					clientDialog.setVisible(true);
@@ -52,6 +52,7 @@ public class SearchAddButtonsListener implements ActionListener{
 		    		} break;
 		
 		case manager :try {
+					System.out.println("manager dialog is popup");
 					managerDialog = new ManagerAddEditDialog(DialogOwner,"Manager");
 					managerDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					managerDialog.setVisible(true);
@@ -60,6 +61,7 @@ public class SearchAddButtonsListener implements ActionListener{
 					} break;
 		
 		case product : try {
+					System.out.println("product dialog is popup");
 					productDialog = new ProductAddEditDialog(DialogOwner,"Product");
 					productDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					productDialog.setVisible(true);
@@ -68,6 +70,7 @@ public class SearchAddButtonsListener implements ActionListener{
 					} break;
 					
 		case deal : try {
+				System.out.println("deal-dialog is popup");
 				dealDialog = new DealAddEditDialog(DialogOwner,"Deal");
 				dealDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				dealDialog.setVisible(true);

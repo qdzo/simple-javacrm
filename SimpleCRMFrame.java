@@ -27,8 +27,9 @@ public class SimpleCRMFrame extends JFrame {
 	private JTable table;
 	private JTextField QuickSearchField;
 	private BusinessObjects[] BusinessEntities = BusinessObjects.values();
-	private SearchAddButtonsListener searchListener;
-	private SearchAddButtonsListener addListener;
+	private SearchAddButtonsListener searchButtonListener;
+	private SearchAddButtonsListener addButtonListener;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -103,7 +104,7 @@ public class SimpleCRMFrame extends JFrame {
 		gbc_btnFind.gridy = 0;
 		contentPane.add(SearchButton, gbc_btnFind);
 		
-		searchListener = new SearchAddButtonsListener(this,SearchButton,findEntetiesBox,SearchAddButtonsListener.SEARCH);
+		searchButtonListener = new SearchAddButtonsListener(this,SearchButton,findEntetiesBox,SearchAddButtonsListener.SEARCH);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -133,7 +134,7 @@ public class SimpleCRMFrame extends JFrame {
 		gbc_AddEntetiesBox.gridy = 7;
 		contentPane.add(AddEntetiesBox, gbc_AddEntetiesBox);
 		
-		addListener = new SearchAddButtonsListener(this,addButton,AddEntetiesBox,SearchAddButtonsListener.ADD);
+		addButtonListener = new SearchAddButtonsListener(this,addButton,AddEntetiesBox,SearchAddButtonsListener.ADD);
 		
 		JButton editButton = new JButton("Edit");
 		GridBagConstraints gbc_editButton = new GridBagConstraints();
