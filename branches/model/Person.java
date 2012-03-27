@@ -1,5 +1,7 @@
 package model;
 
+
+
 public abstract class Person {
 	
 	
@@ -129,16 +131,25 @@ public String getEmail(){
 	}
 	
 	
-	protected boolean validate(String line){
-		if(line==null||line==""){
+	
+	public static boolean validate(String line){
+		if(line==null||(line.trim()).length()==0){
 			System.out.println("Reauired an argument!!");
 		return false;
 		} else return true;
 	}
 	
-	protected boolean validateTel(String line){
+	public static boolean validateTel(String line)  {
 		if(validate(line)){
-			Long number = Long.parseLong(line);
+			
+			Long number = null;
+			try {
+				number = Long.parseLong(line);
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
 			if(number!=null)
 				return true;
 			else System.out.println("this is not a decimal argument");
@@ -146,7 +157,8 @@ public String getEmail(){
 		return false;
 	}
 	
-	protected boolean validateEmail(String line){
+	
+	public static boolean validateEmail(String line){
 		if(validate(line)){
 			if(line.contains("@")||line.contains("."))
 				return true;
