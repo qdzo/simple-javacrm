@@ -59,19 +59,19 @@ public class Product {
 	}
 	
 	
-	public void provideSell(){
+	public void sellProduct(){
 		this.summary=-1;
 	}
 	
 	
-	public void provideSell(String summToSell){
+	public void sellProducts(String summToSell){
 		if(validateDecimal(summToSell))
 		this.summary =Integer.parseInt(summToSell);
 	}
 	
 	
 	protected boolean validate(String line){
-		if(line.length()==0||(line.trim()).length()==0){
+		if(line==null||(line.trim()).length()==0){
 			System.out.println("Required an argument!");
 			return false;
 		}
