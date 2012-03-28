@@ -70,7 +70,7 @@ public class Product {
 	}
 	
 	
-	protected boolean validate(String line){
+	public static boolean validate(String line){
 		if(line==null||(line.trim()).length()==0){
 			System.out.println("Required an argument!");
 			return false;
@@ -78,7 +78,8 @@ public class Product {
 		return true;
 	}
 	
-	protected boolean validateDecimal(String dec){
+	
+	public static boolean validateDecimal(String dec){
 		Integer decimal = null;
 		
 			try {
@@ -94,7 +95,8 @@ public class Product {
 		return true;
 	}
 	
-	protected boolean validateDecimalLong(String decLong) {
+	
+	public static boolean validateDecimalLong(String decLong) {
 		Long decimalLong = null;
 		try {
 			decimalLong = Long.parseLong(decLong);
