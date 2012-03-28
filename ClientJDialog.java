@@ -187,9 +187,9 @@ public class ClientJDialog extends JDialog implements IModelClient{
 
 	@Override
 	public Client getModel() {
-		// TODO Auto-generated method stub
 		if(client==null)
 		return null;
+		if(checkTheFields()){
 		client.setFirstName((firstNameClientField.getText()).trim());
 		client.setSecondName((lastNameClientField.getText()).trim());
 		client.setTelephone((telephoneClientField.getText()).trim());
@@ -197,6 +197,7 @@ public class ClientJDialog extends JDialog implements IModelClient{
 		client.setPriority((Priority)priorityClientBox.getSelectedItem());
 		client.setStatus((model.Status)statusClientBox.getSelectedItem());
 		return client;
+		}else return null;
 	}
 
 
@@ -204,7 +205,6 @@ public class ClientJDialog extends JDialog implements IModelClient{
 
 	@Override
 	public void setModel(Client client) {
-		// TODO Auto-generated method stub
 		this.client = client;
 		firstNameClientField.setText(client.getFirstName());
 		lastNameClientField.setText(client.getSecondName());
@@ -214,7 +214,7 @@ public class ClientJDialog extends JDialog implements IModelClient{
 		statusClientBox.setSelectedItem(client.getStatus());
 	}
 	
-	public boolean checkTheFields(){
+	private boolean checkTheFields(){
 		boolean flag = true;
 		final String  WARNING = "a correct info is required!!";
 		if(!(Client.validate((firstNameClientField.getText()).trim()))){
