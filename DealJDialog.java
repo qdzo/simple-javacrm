@@ -16,7 +16,7 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
-public class DealJDialog extends JDialog {
+public class DealJDialog extends JDialog implements IDisplayable {
 
 	/**
 	 * 
@@ -203,5 +203,29 @@ public class DealJDialog extends JDialog {
 			}
 		}
 	}
+
+
+	@Override
+	public void init() {
+		 try {
+				System.out.println("deal-dialog is popup");
+				this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				this.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				} 
+		
+	}
+
+
+	@Override
+	public void close() {
+		try{
+			this.dispose();
+		}catch(Exception ex){
+			System.out.println("JDialog is not initialized!");
+		}
+		
+		}
 
 }
