@@ -6,11 +6,11 @@ import javax.sql.RowSet;
 
 public interface DestributionDAO {
 	
-	public int insertDestribution();
-	public boolean deleteDestribution();
-	public Destribution findDestribution();
-	public boolean updateDestribution();
-	public RowSet selectDestributionsRS();
-	public Collection<Destribution> selectDestributionsTO();
+	public int insertDestribution(Destribution destribution);
+	public boolean deleteDestribution(Destribution destribution);
+	public Destribution findDestribution(Destribution destribution);
+	public boolean updateDestribution(Destribution destribution);
+	public RowSet selectDestributionsRS(Destribution destribution);
+	public Collection<Destribution> selectDestributionsTO(Destribution destribution);
 
 }

@@ -6,11 +6,11 @@ import javax.sql.RowSet;
 
 public interface ProductDAO {
 	
-	public int insertProduct();
-	public boolean deleteProduct();
-	public Product findProduct();
-	public boolean updateProduct();
-	public RowSet selectProductsRS();
-	public Collection<Product> selectProductsTO();
+	public int insertProduct(Product product);
+	public boolean deleteProduct(Product product);
+	public Product findProduct(Product product);
+	public boolean updateProduct(Product product);
+	public RowSet selectProductsRS(Product product);
+	public Collection<Product> selectProductsTO(Product product);
 
 }
