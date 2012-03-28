@@ -1,6 +1,6 @@
 package view_controller;
 
-import model.Client;
+//import model.Client;
 import model.Priority;
 import model.Status;
 
@@ -14,7 +14,7 @@ public class DialogController implements ICommand  {
 	@Override
 	public void execute(Commands command) {
 		// TODO Auto-generated method stub
-		SearchAddButtonsListener.clientDialog.setModel(new Client(1,"Федор","Петрусев","23334445","java@java.com",Status.actual,Priority.Hi));
+		//SearchAddButtonsListener.clientDialog.setModel(new Client(1,"пїЅпїЅпїЅпїЅпїЅ","пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ","23334445","java@java.com",Status.actual,Priority.Hi));
 		
 		
 	}

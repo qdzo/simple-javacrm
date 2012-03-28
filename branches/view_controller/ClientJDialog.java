@@ -19,7 +19,7 @@ import model.Priority;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ClientJDialog extends JDialog implements IModelClient{
+public class ClientJDialog extends JDialog implements IModelClient, IDisplayable{
 
 	/**
 	 * 
@@ -33,6 +33,7 @@ public class ClientJDialog extends JDialog implements IModelClient{
 	private Client client;
 	private JComboBox priorityClientBox;
 	private JComboBox statusClientBox;
+	private JLabel msgLabel;
 
 	
 	
@@ -43,9 +44,9 @@ public class ClientJDialog extends JDialog implements IModelClient{
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
 		getContentPane().add(contentPanel, BorderLayout.NORTH);
 		GridBagLayout gbl_contentPanel = new GridBagLayout();
-		gbl_contentPanel.columnWidths = new int[]{0, 0, 0};
+		gbl_contentPanel.columnWidths = new int[]{0, 0, 0, 0};
 		gbl_contentPanel.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, Double.MIN_VALUE};
+		gbl_contentPanel.columnWeights = new double[]{0.0, 1.0, 0.0, Double.MIN_VALUE};
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
@@ -60,7 +61,8 @@ public class ClientJDialog extends JDialog implements IModelClient{
 		{
 			firstNameClientField = new JTextField();
 			GridBagConstraints gbc_firstNameClientField = new GridBagConstraints();
-			gbc_firstNameClientField.insets = new Insets(0, 0, 5, 0);
+			gbc_firstNameClientField.gridwidth = 2;
+			gbc_firstNameClientField.insets = new Insets(0, 0, 5, 5);
 			gbc_firstNameClientField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_firstNameClientField.gridx = 1;
 			gbc_firstNameClientField.gridy = 0;
@@ -79,7 +81,8 @@ public class ClientJDialog extends JDialog implements IModelClient{
 		{
 			lastNameClientField = new JTextField();
 			GridBagConstraints gbc_lastNameClientField = new GridBagConstraints();
-			gbc_lastNameClientField.insets = new Insets(0, 0, 5, 0);
+			gbc_lastNameClientField.gridwidth = 2;
+			gbc_lastNameClientField.insets = new Insets(0, 0, 5, 5);
 			gbc_lastNameClientField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_lastNameClientField.gridx = 1;
 			gbc_lastNameClientField.gridy = 1;
@@ -98,7 +101,8 @@ public class ClientJDialog extends JDialog implements IModelClient{
 		{
 			telephoneClientField = new JTextField();
 			GridBagConstraints gbc_telephoneClientField = new GridBagConstraints();
-			gbc_telephoneClientField.insets = new Insets(0, 0, 5, 0);
+			gbc_telephoneClientField.gridwidth = 2;
+			gbc_telephoneClientField.insets = new Insets(0, 0, 5, 5);
 			gbc_telephoneClientField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_telephoneClientField.gridx = 1;
 			gbc_telephoneClientField.gridy = 2;
@@ -117,7 +121,8 @@ public class ClientJDialog extends JDialog implements IModelClient{
 		{
 			emailClientField = new JTextField();
 			GridBagConstraints gbc_emailClientField = new GridBagConstraints();
-			gbc_emailClientField.insets = new Insets(0, 0, 5, 0);
+			gbc_emailClientField.gridwidth = 2;
+			gbc_emailClientField.insets = new Insets(0, 0, 5, 5);
 			gbc_emailClientField.fill = GridBagConstraints.HORIZONTAL;
 			gbc_emailClientField.gridx = 1;
 			gbc_emailClientField.gridy = 3;
@@ -137,10 +142,19 @@ public class ClientJDialog extends JDialog implements IModelClient{
 			priorityClientBox = new JComboBox(Priority.values());
 			GridBagConstraints gbc_priorityClientBox = new GridBagConstraints();
 			gbc_priorityClientBox.anchor = GridBagConstraints.WEST;
-			gbc_priorityClientBox.insets = new Insets(0, 0, 5, 0);
+			gbc_priorityClientBox.insets = new Insets(0, 0, 5, 5);
 			gbc_priorityClientBox.gridx = 1;
 			gbc_priorityClientBox.gridy = 4;
 			contentPanel.add(priorityClientBox, gbc_priorityClientBox);
+		}
+		{
+			msgLabel = new JLabel("                                  ");
+			GridBagConstraints gbc_msgLabel = new GridBagConstraints();
+			gbc_msgLabel.gridheight = 2;
+			gbc_msgLabel.insets = new Insets(0, 0, 5, 0);
+			gbc_msgLabel.gridx = 2;
+			gbc_msgLabel.gridy = 4;
+			contentPanel.add(msgLabel, gbc_msgLabel);
 		}
 		{
 			JLabel lblStatus = new JLabel("Status:");
@@ -154,6 +168,7 @@ public class ClientJDialog extends JDialog implements IModelClient{
 		{
 			statusClientBox = new JComboBox(model.Status.values());
 			GridBagConstraints gbc_statusClientBox = new GridBagConstraints();
+			gbc_statusClientBox.insets = new Insets(0, 0, 0, 5);
 			gbc_statusClientBox.anchor = GridBagConstraints.WEST;
 			gbc_statusClientBox.gridx = 1;
 			gbc_statusClientBox.gridy = 5;
@@ -214,26 +229,47 @@ public class ClientJDialog extends JDialog implements IModelClient{
 		statusClientBox.setSelectedItem(client.getStatus());
 	}
 	
+	
 	private boolean checkTheFields(){
-		boolean flag = true;
-		final String  WARNING = "a correct info is required!!";
+		final String WARNING = "UNCORRECT ";
+		String  warningMsg = WARNING;
 		if(!(Client.validate((firstNameClientField.getText()).trim()))){
-			firstNameClientField.setText(WARNING);
-			flag = false;
+			warningMsg+="First name, ";
 		}
 		if(!(Client.validate((lastNameClientField.getText()).trim()))){
-				lastNameClientField.setText(WARNING);
-				flag = false;
+			warningMsg+="Last name, ";
 		}
 		if(!(Client.validateTel((telephoneClientField.getText()).trim()))){
-			telephoneClientField.setText(WARNING);
-			flag = false;
+			warningMsg+="Telephone, ";
 		}
 		if(!(Client.validateEmail((emailClientField.getText()).trim()))){
-			emailClientField.setText(WARNING);
-			flag = false;
+			warningMsg+="E-mail!";
 		}
-		return flag;
+		if(warningMsg.equals(WARNING)){
+			return true;
+		} else {
+			msgLabel.setText(warningMsg);
+			return false;
+		}
 	}
-
+	
+	public void init(){
+		try {
+			System.out.println("client dialog is popup");
+			this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+			this.setVisible(true);
+    		} catch (Exception ex) {
+    			ex.printStackTrace();
+    		}
+	}
+	
+	
+	public void close() {
+		try{
+			this.dispose();
+		}catch(Exception ex){
+			System.out.println("JDialog is not initialized!");
+		}
+	}
+	
 }

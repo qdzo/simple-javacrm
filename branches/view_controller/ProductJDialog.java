@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import java.awt.Insets;
 import javax.swing.JTextField;
 
-public class ProductJDialog extends JDialog {
+public class ProductJDialog extends JDialog implements IDisplayable {
 
 	/**
 	 * 
@@ -130,4 +130,27 @@ public class ProductJDialog extends JDialog {
 		}
 	}
 
+
+	@Override
+	public void init() {
+		 try {
+				System.out.println("product dialog is popup");
+				this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+				this.setVisible(true);
+				} catch (Exception ex) {
+					ex.printStackTrace();
+				}
+		
+	}
+
+
+	@Override
+	public void close() {
+		try{
+			this.dispose();
+		}catch(Exception ex){
+			System.out.println("JDialog is not initialized!");
+		}
+
+	}
 }
