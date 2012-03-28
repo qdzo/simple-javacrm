@@ -11,10 +11,10 @@ import javax.swing.JDialog;
 public class SearchAddButtonsListener implements ActionListener{
 	
 	private BusinessObjects checkedBusinessObj;
-	private DealAddEditDialog dealDialog;
-	private ClientAddEditDialog clientDialog;
-	private ManagerAddEditDialog managerDialog;
-	private ProductAddEditDialog productDialog;
+	private DealJDialog dealDialog;
+	public static ClientJDialog clientDialog;
+	private ManagerJDialog managerDialog;
+	private ProductJDialog productDialog;
 	private Frame DialogOwner;
 	private JButton button;
 	private JComboBox comboBox;
@@ -43,7 +43,7 @@ public class SearchAddButtonsListener implements ActionListener{
 		
 		case client :try {
 					System.out.println("client dialog is popup");
-					clientDialog = new ClientAddEditDialog(DialogOwner,usingPurpose+" Client");
+					clientDialog = new ClientJDialog(DialogOwner,usingPurpose+" Client");
 					clientDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					clientDialog.setVisible(true);
 					System.out.println("where the dialog?");
@@ -53,7 +53,7 @@ public class SearchAddButtonsListener implements ActionListener{
 		
 		case manager :try {
 					System.out.println("manager dialog is popup");
-					managerDialog = new ManagerAddEditDialog(DialogOwner,"Manager");
+					managerDialog = new ManagerJDialog(DialogOwner,"Manager");
 					managerDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					managerDialog.setVisible(true);
 					} catch (Exception ex) {
@@ -62,7 +62,7 @@ public class SearchAddButtonsListener implements ActionListener{
 		
 		case product : try {
 					System.out.println("product dialog is popup");
-					productDialog = new ProductAddEditDialog(DialogOwner,"Product");
+					productDialog = new ProductJDialog(DialogOwner,"Product");
 					productDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 					productDialog.setVisible(true);
 					} catch (Exception ex) {
@@ -71,7 +71,7 @@ public class SearchAddButtonsListener implements ActionListener{
 					
 		case deal : try {
 				System.out.println("deal-dialog is popup");
-				dealDialog = new DealAddEditDialog(DialogOwner,"Deal");
+				dealDialog = new DealJDialog(DialogOwner,"Deal");
 				dealDialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				dealDialog.setVisible(true);
 				} catch (Exception ex) {

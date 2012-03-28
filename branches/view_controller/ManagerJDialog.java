@@ -14,8 +14,10 @@ import java.awt.GridBagConstraints;
 import javax.swing.JTextField;
 import java.awt.Insets;
 import javax.swing.JLabel;
+import model.Manager;
+import model.Status;
 
-public class ManagerJDialog extends JDialog {
+public class ManagerJDialog extends JDialog implements IModelManager {
 
 	/**
 	 * 
@@ -30,7 +32,8 @@ public class ManagerJDialog extends JDialog {
 	private JTextField telephoneManagerField;
 	private JTextField lastNameManagerField;
 	private JTextField firstNameManagerField;
-
+	private JComboBox statusManagerBox;
+	private Manager manager;
 
 
 
@@ -132,7 +135,7 @@ public class ManagerJDialog extends JDialog {
 			contentPanel.add(lblStatus, gbc_lblStatus);
 		}
 		{
-			JComboBox statusManagerBox = new JComboBox();
+			statusManagerBox = new JComboBox(Status.values());
 			GridBagConstraints gbc_statusManagerBox = new GridBagConstraints();
 			gbc_statusManagerBox.anchor = GridBagConstraints.WEST;
 			gbc_statusManagerBox.gridx = 1;
@@ -157,4 +160,26 @@ public class ManagerJDialog extends JDialog {
 		}
 	}
 
+
+
+	@Override
+	public Manager getModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+
+	@Override
+	public void setModel(Manager manager) {
+		// TODO Auto-generated method stub
+		this.manager = manager;
+	}
+
+	
+	
+	
+	
+	
+	
 }
