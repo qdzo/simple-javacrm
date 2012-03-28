@@ -13,11 +13,9 @@ import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 import java.awt.Insets;
 import javax.swing.JTextField;
-
 import model.Client;
 import model.Priority;
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+
 
 public class ClientJDialog extends JDialog implements IModelClient, IDisplayable{
 
@@ -39,6 +37,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 	
 	public ClientJDialog(Frame frame,String title) {
 		super(frame,title,true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 320, 240);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -148,15 +147,6 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 			contentPanel.add(priorityClientBox, gbc_priorityClientBox);
 		}
 		{
-			msgLabel = new JLabel("                                  ");
-			GridBagConstraints gbc_msgLabel = new GridBagConstraints();
-			gbc_msgLabel.gridheight = 2;
-			gbc_msgLabel.insets = new Insets(0, 0, 5, 0);
-			gbc_msgLabel.gridx = 2;
-			gbc_msgLabel.gridy = 4;
-			contentPanel.add(msgLabel, gbc_msgLabel);
-		}
-		{
 			JLabel lblStatus = new JLabel("Status:");
 			GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 			gbc_lblStatus.insets = new Insets(0, 0, 0, 5);
@@ -180,11 +170,10 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
-				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-						new DialogController().execute(Commands.ADD);	
-					}
-				});
+				{
+					msgLabel = new JLabel("");
+					buttonPane.add(msgLabel);
+				}
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -256,7 +245,6 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 	public void init(){
 		try {
 			System.out.println("client dialog is popup");
-			this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			this.setVisible(true);
     		} catch (Exception ex) {
     			ex.printStackTrace();

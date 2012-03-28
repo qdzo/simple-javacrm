@@ -14,6 +14,9 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
+
+import model.Client;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -27,8 +30,19 @@ public class SimpleCRMFrame extends JFrame {
 	private JTable table;
 	private JTextField QuickSearchField;
 	private BusinessObjects[] BusinessEntities = BusinessObjects.values();
-	private SearchAddButtonsListener searchButtonListener;
-	private SearchAddButtonsListener addButtonListener;
+	private DealJDialog dealDialog;
+	private ClientJDialog clientDialog;
+	private ManagerJDialog managerDialog;
+	private ProductJDialog productDialog;
+	private JButton deleteButton;
+	private JButton saveButton;
+	private JButton editButton;
+	private JComboBox addEntetiesBox;
+	private JButton addButton;
+	private JButton searchButton;
+	private JComboBox findEntetiesBox;
+	private JLabel lblFind;
+	
 	
 	/**
 	 * Launch the application.
@@ -50,6 +64,22 @@ public class SimpleCRMFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public SimpleCRMFrame() {
+	
+		initMainFrame();
+		initJDialogs();
+		
+	}		
+	
+	
+	private void initJDialogs(){
+		productDialog = new ProductJDialog(this,"Product");
+		dealDialog = new DealJDialog(this,"Product") ;
+		clientDialog = new ClientJDialog(this,"Client");
+		managerDialog = new ManagerJDialog(this,"Manager");
+	}
+	
+	
+	private void initMainFrame(){
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 397);
 		contentPane = new JPanel();
@@ -81,7 +111,7 @@ public class SimpleCRMFrame extends JFrame {
 		contentPane.add(QuickSearchField, gbc_QuickSearchField);
 		QuickSearchField.setColumns(10);
 		
-		JLabel lblFind = new JLabel("Search:");
+		lblFind = new JLabel("Search:");
 		GridBagConstraints gbc_lblFind = new GridBagConstraints();
 		gbc_lblFind.anchor = GridBagConstraints.EAST;
 		gbc_lblFind.insets = new Insets(0, 0, 5, 5);
@@ -89,7 +119,7 @@ public class SimpleCRMFrame extends JFrame {
 		gbc_lblFind.gridy = 0;
 		contentPane.add(lblFind, gbc_lblFind);
 		
-		JComboBox findEntetiesBox = new JComboBox(BusinessEntities);
+		findEntetiesBox = new JComboBox(BusinessEntities);
 		GridBagConstraints gbc_findEntetiesBox = new GridBagConstraints();
 		gbc_findEntetiesBox.insets = new Insets(0, 0, 5, 5);
 		gbc_findEntetiesBox.fill = GridBagConstraints.HORIZONTAL;
@@ -97,14 +127,13 @@ public class SimpleCRMFrame extends JFrame {
 		gbc_findEntetiesBox.gridy = 0;
 		contentPane.add(findEntetiesBox, gbc_findEntetiesBox);
 		
-		JButton SearchButton = new JButton("Find");
+		searchButton = new JButton("Find");
 		GridBagConstraints gbc_btnFind = new GridBagConstraints();
 		gbc_btnFind.insets = new Insets(0, 0, 5, 5);
 		gbc_btnFind.gridx = 6;
 		gbc_btnFind.gridy = 0;
-		contentPane.add(SearchButton, gbc_btnFind);
+		contentPane.add(searchButton, gbc_btnFind);
 		
-		searchButtonListener = new SearchAddButtonsListener(this,SearchButton,findEntetiesBox,SearchAddButtonsListener.SEARCH);
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -119,38 +148,37 @@ public class SimpleCRMFrame extends JFrame {
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
-		JButton addButton = new JButton("Add");
+		addButton = new JButton("Add");
 		GridBagConstraints gbc_addButton = new GridBagConstraints();
 		gbc_addButton.insets = new Insets(0, 0, 0, 5);
 		gbc_addButton.gridx = 1;
 		gbc_addButton.gridy = 7;
 		contentPane.add(addButton, gbc_addButton);
 		
-		JComboBox AddEntetiesBox = new JComboBox(BusinessEntities);
+		addEntetiesBox = new JComboBox(BusinessEntities);
 		GridBagConstraints gbc_AddEntetiesBox = new GridBagConstraints();
 		gbc_AddEntetiesBox.insets = new Insets(0, 0, 0, 5);
 		gbc_AddEntetiesBox.fill = GridBagConstraints.HORIZONTAL;
 		gbc_AddEntetiesBox.gridx = 2;
 		gbc_AddEntetiesBox.gridy = 7;
-		contentPane.add(AddEntetiesBox, gbc_AddEntetiesBox);
+		contentPane.add(addEntetiesBox, gbc_AddEntetiesBox);
 		
-		addButtonListener = new SearchAddButtonsListener(this,addButton,AddEntetiesBox,SearchAddButtonsListener.ADD);
 		
-		JButton editButton = new JButton("Edit");
+		editButton = new JButton("Edit");
 		GridBagConstraints gbc_editButton = new GridBagConstraints();
 		gbc_editButton.insets = new Insets(0, 0, 0, 5);
 		gbc_editButton.gridx = 4;
 		gbc_editButton.gridy = 7;
 		contentPane.add(editButton, gbc_editButton);
 		
-		JButton saveButton = new JButton("Save");
+		saveButton = new JButton("Save");
 		GridBagConstraints gbc_saveButton = new GridBagConstraints();
 		gbc_saveButton.insets = new Insets(0, 0, 0, 5);
 		gbc_saveButton.gridx = 5;
 		gbc_saveButton.gridy = 7;
 		contentPane.add(saveButton, gbc_saveButton);
 		
-		JButton deleteButton = new JButton("Delete");
+		deleteButton = new JButton("Delete");
 		GridBagConstraints gbc_deleteButton = new GridBagConstraints();
 		gbc_deleteButton.insets = new Insets(0, 0, 0, 5);
 		gbc_deleteButton.gridx = 6;
@@ -158,4 +186,6 @@ public class SimpleCRMFrame extends JFrame {
 		contentPane.add(deleteButton, gbc_deleteButton);
 	}
 
+		
+	
 }

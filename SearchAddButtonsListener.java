@@ -42,6 +42,7 @@ public class SearchAddButtonsListener implements ActionListener{
 		checkedBusinessObj =(BusinessObjects) comboBox.getSelectedItem();
 		System.out.println("event is found");
 		System.out.println(checkedBusinessObj);
+		
 		if(e.getActionCommand()=="Add"||e.getActionCommand()=="Find")
 		switch (checkedBusinessObj){
 		

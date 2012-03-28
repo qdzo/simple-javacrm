@@ -30,6 +30,7 @@ public class DealJDialog extends JDialog implements IDisplayable {
 
 	public DealJDialog(Frame frame,String title) {
 		super(frame,title,true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -209,7 +210,6 @@ public class DealJDialog extends JDialog implements IDisplayable {
 	public void init() {
 		 try {
 				System.out.println("deal-dialog is popup");
-				this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				this.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
