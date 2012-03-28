@@ -10,11 +10,11 @@ import javax.sql.RowSet;
 
 public interface ManagerDAO {
 	
-	public int insertManager();
-	public boolean deleteManager();
-	public Manager findManager();
-	public boolean updateManager();
-	public RowSet selectManagersRS();
-	public Collection<Manager> selectManagersTO();
+	public int insertManager(Manager manager);
+	public boolean deleteManager(Manager manager);
+	public Manager findManager(Manager manager);
+	public boolean updateManager(Manager manager);
+	public RowSet selectManagersRS(Manager manager);
+	public Collection<Manager> selectManagersTO(Manager manager);
 
 }

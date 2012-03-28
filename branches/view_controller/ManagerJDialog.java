@@ -40,6 +40,7 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 
 	public ManagerJDialog(Frame frame,String title) {
 		super(frame,title,true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 320, 241);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -149,17 +150,13 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 			contentPanel.add(statusManagerBox, gbc_statusManagerBox);
 		}
 		{
-			msgLabel = new JLabel("                      ");
-			GridBagConstraints gbc_msgLabel = new GridBagConstraints();
-			gbc_msgLabel.gridheight = 2;
-			gbc_msgLabel.gridx = 2;
-			gbc_msgLabel.gridy = 4;
-			contentPanel.add(msgLabel, gbc_msgLabel);
-		}
-		{
 			JPanel buttonPane = new JPanel();
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
+			{
+				msgLabel = new JLabel("");
+				buttonPane.add(msgLabel);
+			}
 			{
 				JButton okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
@@ -231,7 +228,6 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 	public void init(){
 		try {
 			System.out.println("client dialog is popup");
-			this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 			this.setVisible(true);
     		} catch (Exception ex) {
     			ex.printStackTrace();

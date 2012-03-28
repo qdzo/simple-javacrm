@@ -15,7 +15,9 @@ import javax.swing.JLabel;
 import java.awt.Insets;
 import javax.swing.JTextField;
 
-public class ProductJDialog extends JDialog implements IDisplayable {
+import model.Product;
+
+public class ProductJDialog extends JDialog implements IModelProduct, IDisplayable {
 
 	/**
 	 * 
@@ -25,10 +27,13 @@ public class ProductJDialog extends JDialog implements IDisplayable {
 	private JTextField nameProductField;
 	private JTextField priceProductField;
 	private JTextField sumProductField;
-
+	private Product product;
+	private JTextArea descriptionProductArea;
+	private JLabel msgLabel;
 	
 	public ProductJDialog(Frame frame,String title) {
 		super(frame,title,true);
+		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 400, 300);
 		getContentPane().setLayout(new BorderLayout());
 		contentPanel.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -105,7 +110,7 @@ public class ProductJDialog extends JDialog implements IDisplayable {
 			contentPanel.add(lblDescription, gbc_lblDescription);
 		}
 		{
-			JTextArea descriptionProductArea = new JTextArea();
+			descriptionProductArea = new JTextArea();
 			GridBagConstraints gbc_descriptionProductArea = new GridBagConstraints();
 			gbc_descriptionProductArea.fill = GridBagConstraints.BOTH;
 			gbc_descriptionProductArea.gridx = 1;
@@ -117,11 +122,16 @@ public class ProductJDialog extends JDialog implements IDisplayable {
 			buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
+				msgLabel = new JLabel("");
+				buttonPane.add(msgLabel);
+			}
+			{
 				JButton okButton = new JButton("OK");
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
+			
 			{
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.setActionCommand("Cancel");
@@ -130,12 +140,64 @@ public class ProductJDialog extends JDialog implements IDisplayable {
 		}
 	}
 
+	
+	@Override
+	public Product getModel() {
+		if(product==null)
+			return null;
+			if(checkTheFields()){
+			product.setNameProduct((nameProductField.getText()).trim());
+			product.setPrice((priceProductField.getText()).trim());
+			product.setSummary((sumProductField.getText()).trim());
+			product.setDescription((descriptionProductArea.getText()).trim());
+			return product;
+			}else return null;
+	}
+
+
+	@Override
+	public void setModel(Product product) {
+		try {
+			this.product = product;
+			nameProductField.setText(product.getNameProduct());
+			priceProductField.setText(String.valueOf(product.getPrice()));
+			sumProductField.setText(String.valueOf(product.getSummary()));
+			descriptionProductArea.setText(product.getDescription());
+		} catch (Exception e) {
+			System.out.println(" No argument exception!");
+		}
+	}
+	
+	
+	private boolean checkTheFields(){
+		final String WARNING = "UNCORRECT ";
+		String  warningMsg = WARNING;
+		if(!(Product.validate((nameProductField.getText()).trim()))){
+			warningMsg+="Product name";
+		}
+		if(!(Product.validate((priceProductField.getText()).trim()))){
+			warningMsg+=", price";
+		}
+		if(!(Product.validateDecimal((sumProductField.getText()).trim()))){
+			warningMsg+=", number";
+		}
+		if(!(Product.validateDecimalLong((descriptionProductArea.getText()).trim()))){
+			warningMsg+=", description!";
+		}
+		if(warningMsg.equals(WARNING)){
+			return true;
+		} else {
+			msgLabel.setText(warningMsg);
+			return false;
+		}
+	}
+	
+	
 
 	@Override
 	public void init() {
 		 try {
 				System.out.println("product dialog is popup");
-				this.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 				this.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
@@ -153,4 +215,7 @@ public class ProductJDialog extends JDialog implements IDisplayable {
 		}
 
 	}
+
+
+
 }
