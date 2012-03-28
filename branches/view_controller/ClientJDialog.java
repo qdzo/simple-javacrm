@@ -3,8 +3,6 @@ package view_controller;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.Frame;
-
-import javax.net.ssl.SSLEngineResult.Status;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JPanel;
@@ -216,17 +214,26 @@ public class ClientJDialog extends JDialog implements IModelClient{
 		statusClientBox.setSelectedItem(client.getStatus());
 	}
 	
-	public void checkTheFields(){
-		boolean flag;
+	public boolean checkTheFields(){
+		boolean flag = true;
 		final String  WARNING = "a correct info is required!!";
-		if(!(Client.validate((firstNameClientField.getText()).trim())))
+		if(!(Client.validate((firstNameClientField.getText()).trim()))){
 			firstNameClientField.setText(WARNING);
-		if(!(Client.validate((lastNameClientField.getText()).trim())))
+			flag = false;
+		}
+		if(!(Client.validate((lastNameClientField.getText()).trim()))){
 				lastNameClientField.setText(WARNING);
-		if(!(Client.validateTel((telephoneClientField.getText()).trim())))
+				flag = false;
+		}
+		if(!(Client.validateTel((telephoneClientField.getText()).trim()))){
 			telephoneClientField.setText(WARNING);
-		if(!(Client.validateEmail((emailClientField.getText()).trim())))
+			flag = false;
+		}
+		if(!(Client.validateEmail((emailClientField.getText()).trim()))){
 			emailClientField.setText(WARNING);
+			flag = false;
+		}
+		return flag;
 	}
 
 }
