@@ -16,7 +16,12 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
-public class DealJDialog extends JDialog implements IDisplayable {
+import model.Destribution;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+
+public class DealJDialog extends JDialog implements IModelDestribution,IDisplayable {
 
 	/**
 	 * 
@@ -26,6 +31,8 @@ public class DealJDialog extends JDialog implements IDisplayable {
 	private JTextField findManagerField;
 	private JTextField findClientField;
 	private JTextField findProductField;
+	private ICommand controller;
+	private Commands commandToDo;
 
 
 	public DealJDialog(Frame frame,String title) {
@@ -193,12 +200,22 @@ public class DealJDialog extends JDialog implements IDisplayable {
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.execute(commandToDo, BusinessObjects.deal, getModel());
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.execute(Commands.CLOSE, BusinessObjects.deal, null);
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -226,6 +243,29 @@ public class DealJDialog extends JDialog implements IDisplayable {
 			System.out.println("JDialog is not initialized!");
 		}
 		
-		}
+	}
+	
+	
+	public void setController(ICommand icommand){
+		controller = icommand;
+	}
 
+	
+	public void setCommandToDo(Commands nextCommand){
+		commandToDo = nextCommand;
+	}
+
+
+	@Override
+	public void setModel(Destribution destribution) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public Destribution getModel() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

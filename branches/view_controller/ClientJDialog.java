@@ -15,6 +15,8 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import model.Client;
 import model.Priority;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 
 public class ClientJDialog extends JDialog implements IModelClient, IDisplayable{
@@ -32,6 +34,8 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 	private JComboBox priorityClientBox;
 	private JComboBox statusClientBox;
 	private JLabel msgLabel;
+	private ICommand controller;
+	private Commands commandToDo;
 
 	
 	
@@ -170,6 +174,11 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 			getContentPane().add(buttonPane, BorderLayout.SOUTH);
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.execute(commandToDo, BusinessObjects.client, getModel());
+					}
+				});
 				{
 					msgLabel = new JLabel("");
 					buttonPane.add(msgLabel);
@@ -180,6 +189,11 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.execute(Commands.CLOSE, BusinessObjects.client, null);
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -260,4 +274,12 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 		}
 	}
 	
+	public void setController(ICommand icommand){
+		controller = icommand;
+	}
+
+	
+	public void setCommandToDo(Commands nextCommand){
+		commandToDo = nextCommand;
+	}
 }
