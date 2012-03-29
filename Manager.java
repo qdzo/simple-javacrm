@@ -9,7 +9,7 @@ public class Manager extends Person{
 		
 	}
 	
-	public Manager(int id){
+	public Manager(Integer id){
 		super(id);
 	}
 //--------------------------------------------------------------------------------------------------

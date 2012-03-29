@@ -13,7 +13,7 @@ public class Client extends Person{
 	}
 	
 	
-	public Client(int id){
+	public Client(Integer id){
 		super(id);
 	}
 	
