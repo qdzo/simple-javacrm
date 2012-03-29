@@ -16,6 +16,8 @@ import java.awt.Insets;
 import javax.swing.JLabel;
 import model.Manager;
 import model.Status;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ManagerJDialog extends JDialog implements IModelManager, IDisplayable {
 
@@ -35,6 +37,8 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 	private JComboBox statusManagerBox;
 	private Manager manager;
 	private JLabel msgLabel;
+	private ICommand controller;
+	private Commands commandToDo;
 
 
 
@@ -159,12 +163,22 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 			}
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.execute(commandToDo, BusinessObjects.manager, getModel());
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
 			}
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.execute(Commands.CLOSE, BusinessObjects.manager, null);
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -243,5 +257,12 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 		}
 	}
 	
+	public void setController(ICommand icommand){
+		controller = icommand;
+	}
+	
+	public void setCommandToDo(Commands nextCommand){
+		commandToDo = nextCommand;
+	}
 	
 }

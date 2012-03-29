@@ -14,7 +14,7 @@ import javax.swing.JTable;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.JTextField;
-
+import view_controller.BusinessObjects;
 import model.Client;
 
 import java.awt.event.ActionListener;
@@ -42,8 +42,8 @@ public class SimpleCRMFrame extends JFrame {
 	private JButton searchButton;
 	private JComboBox findEntetiesBox;
 	private JLabel lblFind;
-	
-	
+	private JDialogsController controller;
+
 	/**
 	 * Launch the application.
 	 */
@@ -67,9 +67,17 @@ public class SimpleCRMFrame extends JFrame {
 	
 		initMainFrame();
 		initJDialogs();
-		
+		initController();
 	}		
 	
+	
+	private void initController(){
+		controller = new JDialogsController();
+		controller.setClientDialog(clientDialog);
+		controller.setDealDialog(dealDialog);
+		controller.setManagerDialog(managerDialog);
+		controller.setProductDialog(productDialog);
+	}
 	
 	private void initJDialogs(){
 		productDialog = new ProductJDialog(this,"Product");
@@ -102,6 +110,14 @@ public class SimpleCRMFrame extends JFrame {
 		contentPane.add(lblNewLabel, gbc_lblNewLabel);
 		
 		QuickSearchField = new JTextField();
+		QuickSearchField.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String tel = QuickSearchField.getText().trim();
+				Client sClient =  new Client(null);
+				sClient.setTelephone(tel);
+				controller.execute(Commands.QUICKFIND, BusinessObjects.client,sClient);
+			}
+		});
 		QuickSearchField.setText("enter the tel..");
 		GridBagConstraints gbc_QuickSearchField = new GridBagConstraints();
 		gbc_QuickSearchField.insets = new Insets(0, 0, 5, 5);
@@ -128,6 +144,11 @@ public class SimpleCRMFrame extends JFrame {
 		contentPane.add(findEntetiesBox, gbc_findEntetiesBox);
 		
 		searchButton = new JButton("Find");
+		searchButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.execute(Commands.FIND,(BusinessObjects)findEntetiesBox.getSelectedItem(), null);
+			}
+		});
 		GridBagConstraints gbc_btnFind = new GridBagConstraints();
 		gbc_btnFind.insets = new Insets(0, 0, 5, 5);
 		gbc_btnFind.gridx = 6;
@@ -149,6 +170,11 @@ public class SimpleCRMFrame extends JFrame {
 		scrollPane.setViewportView(table);
 		
 		addButton = new JButton("Add");
+		addButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.execute(Commands.CREATE,(BusinessObjects)addEntetiesBox.getSelectedItem(), null);
+			}
+		});
 		GridBagConstraints gbc_addButton = new GridBagConstraints();
 		gbc_addButton.insets = new Insets(0, 0, 0, 5);
 		gbc_addButton.gridx = 1;
@@ -165,6 +191,11 @@ public class SimpleCRMFrame extends JFrame {
 		
 		
 		editButton = new JButton("Edit");
+		editButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.execute(Commands.EDIT, BusinessObjects.client, null);
+			}
+		});
 		GridBagConstraints gbc_editButton = new GridBagConstraints();
 		gbc_editButton.insets = new Insets(0, 0, 0, 5);
 		gbc_editButton.gridx = 4;
@@ -172,6 +203,11 @@ public class SimpleCRMFrame extends JFrame {
 		contentPane.add(editButton, gbc_editButton);
 		
 		saveButton = new JButton("Save");
+		saveButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.execute(Commands.SAVE, BusinessObjects.client, null);
+			}
+		});
 		GridBagConstraints gbc_saveButton = new GridBagConstraints();
 		gbc_saveButton.insets = new Insets(0, 0, 0, 5);
 		gbc_saveButton.gridx = 5;
@@ -179,6 +215,11 @@ public class SimpleCRMFrame extends JFrame {
 		contentPane.add(saveButton, gbc_saveButton);
 		
 		deleteButton = new JButton("Delete");
+		deleteButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.execute(Commands.DELETE, BusinessObjects.client, null);
+			}
+		});
 		GridBagConstraints gbc_deleteButton = new GridBagConstraints();
 		gbc_deleteButton.insets = new Insets(0, 0, 0, 5);
 		gbc_deleteButton.gridx = 6;

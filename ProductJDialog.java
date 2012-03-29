@@ -16,6 +16,8 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 
 import model.Product;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class ProductJDialog extends JDialog implements IModelProduct, IDisplayable {
 
@@ -30,6 +32,8 @@ public class ProductJDialog extends JDialog implements IModelProduct, IDisplayab
 	private Product product;
 	private JTextArea descriptionProductArea;
 	private JLabel msgLabel;
+	private ICommand controller;
+	private Commands commandToDo;
 	
 	public ProductJDialog(Frame frame,String title) {
 		super(frame,title,true);
@@ -127,6 +131,11 @@ public class ProductJDialog extends JDialog implements IModelProduct, IDisplayab
 			}
 			{
 				JButton okButton = new JButton("OK");
+				okButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.execute(commandToDo, BusinessObjects.product, getModel());
+					}
+				});
 				okButton.setActionCommand("OK");
 				buttonPane.add(okButton);
 				getRootPane().setDefaultButton(okButton);
@@ -134,6 +143,11 @@ public class ProductJDialog extends JDialog implements IModelProduct, IDisplayab
 			
 			{
 				JButton cancelButton = new JButton("Cancel");
+				cancelButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						controller.execute(Commands.CLOSE, BusinessObjects.product, null);
+					}
+				});
 				cancelButton.setActionCommand("Cancel");
 				buttonPane.add(cancelButton);
 			}
@@ -215,7 +229,17 @@ public class ProductJDialog extends JDialog implements IModelProduct, IDisplayab
 		}
 
 	}
+	
+	public void setController(ICommand icommand){
+		controller = icommand;
+	}
 
 
+	public void setCommandToDo(Commands nextCommand){
+		commandToDo = nextCommand;
+	}
 
 }
+
+
+	

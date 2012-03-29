@@ -1,6 +1,5 @@
 package view_controller;
 
-import model.Person;
 
 
 
@@ -8,6 +7,11 @@ import model.Person;
 
 public class JDialogsController implements ICommand  {
 
+	private IDisplayable clientDialog;
+	private IDisplayable managerDialog;
+	private IDisplayable dealDialog;
+	private IDisplayable productDialog;
+	
 	public JDialogsController(){
 		
 	}
@@ -28,12 +32,15 @@ public class JDialogsController implements ICommand  {
 		
 		case CREATE: 
 				initDialog(bObject);
+				setNextCommand(bObject);
 				break;
 		case FIND:	
 				initDialog(bObject);
+				setNextCommand(bObject);
 				break;
 		case EDIT:
 				editDialog(bObject,currentObject);
+				setNextCommand(bObject);
 				break;
 		case UPDATE:
 				updateModel(bObject,currentObject);
@@ -63,48 +70,281 @@ public class JDialogsController implements ICommand  {
 	
 	
 	
-	private void saveModel(BusinessObjects bObject, Object currentObject) {
-		// TODO Auto-generated method stub
+	private void setNextCommand(BusinessObjects bObject) {
+		switch (bObject){
 		
+		case client:
+			
+			break;
+			
+		case manager:
+			
+			break;
+			
+		case product:
+			
+			break;
+			
+		case deal:
+			
+			break;
+			
+		default: throw new NullPointerException("Wrong parrameter currentObject");	
+			
+		}
+		
+	}
+
+	private void saveModel(BusinessObjects bObject, Object currentObject) {
+	switch (bObject){
+		
+		case client:
+			
+			break;
+			
+		case manager:
+			
+			break;
+			
+		case product:
+			
+			break;
+			
+		case deal:
+			
+			break;
+			
+		default: throw new NullPointerException("Wrong parrameter currentObject");	
+			
+		}	
 	}
 
 	private void deleteObject(BusinessObjects bObject, Object currentObject) {
-		// TODO Auto-generated method stub
+	switch (bObject){
 		
+		case client:
+			
+			break;
+			
+		case manager:
+			
+			break;
+			
+		case product:
+			
+			break;
+			
+		case deal:
+			
+			break;
+			
+		default: throw new NullPointerException("Wrong parrameter currentObject");	
+			
+		}
 	}
 
 	private void closeDialog(BusinessObjects bObject) {
-		// TODO Auto-generated method stub
+	switch (bObject){
 		
+		case client:
+			clientDialog.close();
+			break;
+			
+		case manager:
+			managerDialog.close();
+			break;
+			
+		case product:
+			productDialog.close();
+			break;
+			
+		case deal:
+			dealDialog.close();
+			break;
+			
+		default: throw new NullPointerException("Wrong parrameter currentObject");	
+			
+		}	
 	}
 
 	private void findModel(BusinessObjects bObject, Object currentObject) {
-		// TODO Auto-generated method stub
+	switch (bObject){
 		
+		case client:
+			
+			break;
+			
+		case manager:
+			
+			break;
+			
+		case product:
+			
+			break;
+			
+		case deal:
+			
+			break;
+			
+		default: throw new NullPointerException("Wrong parrameter currentObject");	
+			
+		}
 	}
 
 	private void quickFind(BusinessObjects bObject) {
-		// TODO Auto-generated method stub
+	switch (bObject){
 		
+		case client:
+			
+			break;
+			
+		case manager:
+			
+			break;
+			
+		case product:
+			
+			break;
+			
+		case deal:
+			
+			break;
+			
+		default: throw new NullPointerException("Wrong parrameter currentObject");	
+			
+		}
 	}
 
 	private void addModel(BusinessObjects bObject, Object currentObject) {
-		// TODO Auto-generated method stub
+	switch (bObject){
 		
+		case client:
+			
+			break;
+			
+		case manager:
+			
+			break;
+			
+		case product:
+			
+			break;
+			
+		case deal:
+			
+			break;
+			
+		default: throw new NullPointerException("Wrong parrameter currentObject");	
+			
+		}
 	}
 
 	private void updateModel(BusinessObjects bObject, Object currentObject) {
-		// TODO Auto-generated method stub
+	switch (bObject){
 		
+		case client:
+			
+			break;
+			
+		case manager:
+			
+			break;
+			
+		case product:
+			
+			break;
+			
+		case deal:
+			
+			break;
+			
+		default: throw new NullPointerException("Wrong parrameter currentObject");	
+			
+		}
 	}
 
 	private void editDialog(BusinessObjects bObject, Object currentObject) {
-		// TODO Auto-generated method stub
+	switch (bObject){
 		
+		case client:
+			
+			break;
+			
+		case manager:
+			
+			break;
+			
+		case product:
+			
+			break;
+			
+		case deal:
+			
+			break;
+			
+		default: throw new NullPointerException("Wrong parrameter currentObject");	
+			
+		}
 	}
 
 	private void initDialog(BusinessObjects bObject) {
+	switch (bObject){
+		
+		case client:
+			clientDialog.init();
+			break;
 			
+		case manager:
+			managerDialog.init();
+			break;
+			
+		case product:
+			productDialog.init();
+			break;
+			
+		case deal:
+			dealDialog.init();
+			break;
+			
+		default: throw new NullPointerException("Wrong parrameter currentObject");	
+			
+		}	
+	}
+
+	
+	
+	
+	
+	public IDisplayable getClientDialog() {
+		return clientDialog;
+	}
+
+	public void setClientDialog(IDisplayable clientDialog) {
+		this.clientDialog = clientDialog;
+	}
+
+	public IDisplayable getManagerDialog() {
+		return managerDialog;
+	}
+
+	public void setManagerDialog(IDisplayable managerDialog) {
+		this.managerDialog = managerDialog;
+	}
+
+	public IDisplayable getDealDialog() {
+		return dealDialog;
+	}
+
+	public void setDealDialog(IDisplayable dealDialog) {
+		this.dealDialog = dealDialog;
+	}
+
+	public IDisplayable getProductDialog() {
+		return productDialog;
+	}
+
+	public void setProductDialog(IDisplayable productDialog) {
+		this.productDialog = productDialog;
 	}
 	
 	

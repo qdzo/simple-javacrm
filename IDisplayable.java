@@ -1,6 +1,5 @@
 package view_controller;
 
-import java.awt.Frame;
 
 public interface IDisplayable {
 	
