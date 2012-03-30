@@ -165,7 +165,10 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						if(checkTheFields()){
 						controller.execute(commandToDo, BusinessObjects.manager, getModel());
+						controller.execute(Commands.CLOSE, BusinessObjects.manager, null);
+						}
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -231,6 +234,7 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 			warningMsg+="E-mail!";
 		}
 		if(warningMsg.equals(WARNING)){
+			msgLabel.setText("");
 			return true;
 		} else {
 			msgLabel.setText(warningMsg);

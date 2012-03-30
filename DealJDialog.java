@@ -33,6 +33,7 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	private JTextField findProductField;
 	private ICommand controller;
 	private Commands commandToDo;
+	private Destribution destribution;
 
 
 	public DealJDialog(Frame frame,String title) {
@@ -202,7 +203,11 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+		// TODO	 implement the method to check the correction of entered information	
+						if(true){
 						controller.execute(commandToDo, BusinessObjects.deal, getModel());
+						controller.execute(Commands.CLOSE, BusinessObjects.manager, null);
+						}
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -258,9 +263,10 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 
 	@Override
 	public void setModel(Destribution destribution) {
-		// TODO Auto-generated method stub
-		
-	}
+	// TODO realize the method
+		if(destribution!=null)
+		this.destribution = destribution;
+		}
 
 
 	@Override
