@@ -176,8 +176,11 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(checkTheFields())
-						controller.execute(commandToDo, BusinessObjects.client, getModel());
+						if(checkTheFields()){
+						//controller.execute(commandToDo, BusinessObjects.client, getModel());
+						controller.execute(Commands.CLOSE, BusinessObjects.client, null);
+						}
+						
 					}
 				});
 				{
@@ -255,6 +258,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 			warningMsg+="E-mail!";
 		}
 		if(warningMsg.equals(WARNING)){
+			msgLabel.setText("");
 			return true;
 		} else {
 			msgLabel.setText(warningMsg);

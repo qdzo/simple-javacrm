@@ -142,8 +142,8 @@ public class Destribution {
 		return true;
 	}
 	
-	protected boolean validateDecimal(int dec){
-		if(dec==-1||dec==0){
+	protected boolean validateDecimal(Integer dec){
+		if(dec==null||dec<0){
 			System.out.println("Required a right decimal argument");
 			return false;
 		}

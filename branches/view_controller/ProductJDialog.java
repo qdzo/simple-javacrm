@@ -133,7 +133,10 @@ public class ProductJDialog extends JDialog implements IModelProduct, IDisplayab
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						if(checkTheFields()){
 						controller.execute(commandToDo, BusinessObjects.product, getModel());
+						controller.execute(Commands.CLOSE, BusinessObjects.product, null);
+						}
 					}
 				});
 				okButton.setActionCommand("OK");
@@ -171,6 +174,7 @@ public class ProductJDialog extends JDialog implements IModelProduct, IDisplayab
 
 	@Override
 	public void setModel(Product product) {
+		if(product!=null)
 		try {
 			this.product = product;
 			nameProductField.setText(product.getNameProduct());
@@ -189,16 +193,17 @@ public class ProductJDialog extends JDialog implements IModelProduct, IDisplayab
 		if(!(Product.validate((nameProductField.getText()).trim()))){
 			warningMsg+="Product name";
 		}
-		if(!(Product.validate((priceProductField.getText()).trim()))){
+		if(!(Product.validateDecimal((priceProductField.getText()).trim()))){
 			warningMsg+=", price";
 		}
 		if(!(Product.validateDecimal((sumProductField.getText()).trim()))){
-			warningMsg+=", number";
+			warningMsg+=", sum";
 		}
-		if(!(Product.validateDecimalLong((descriptionProductArea.getText()).trim()))){
+		if(!(Product.validate((descriptionProductArea.getText()).trim()))){
 			warningMsg+=", description!";
 		}
 		if(warningMsg.equals(WARNING)){
+			msgLabel.setText("");
 			return true;
 		} else {
 			msgLabel.setText(warningMsg);
