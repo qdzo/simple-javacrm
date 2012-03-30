@@ -176,6 +176,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						if(checkTheFields())
 						controller.execute(commandToDo, BusinessObjects.client, getModel());
 					}
 				});
@@ -191,6 +192,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 				JButton cancelButton = new JButton("Cancel");
 				cancelButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
+						if(controller!=null)
 						controller.execute(Commands.CLOSE, BusinessObjects.client, null);
 					}
 				});
@@ -215,21 +217,25 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 		client.setPriority((Priority)priorityClientBox.getSelectedItem());
 		client.setStatus((model.Status)statusClientBox.getSelectedItem());
 		return client;
-		}else return null;
+		} else return null;
 	}
+
 
 
 
 
 	@Override
 	public void setModel(Client client) {
-		this.client = client;
-		firstNameClientField.setText(client.getFirstName());
-		lastNameClientField.setText(client.getSecondName());
-		telephoneClientField.setText(client.getTelephone());
-		emailClientField.setText(client.getEmail());
-		priorityClientBox.setSelectedItem(client.getPriority());
-		statusClientBox.setSelectedItem(client.getStatus());
+		if(client!=null){
+			this.client = client;
+			firstNameClientField.setText(client.getFirstName());
+			lastNameClientField.setText(client.getSecondName());
+			telephoneClientField.setText(client.getTelephone());
+			emailClientField.setText(client.getEmail());
+			priorityClientBox.setSelectedItem(client.getPriority());
+			statusClientBox.setSelectedItem(client.getStatus());	
+		}
+		
 	}
 	
 	
@@ -282,4 +288,9 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 	public void setCommandToDo(Commands nextCommand){
 		commandToDo = nextCommand;
 	}
+
+
+
+
+	
 }

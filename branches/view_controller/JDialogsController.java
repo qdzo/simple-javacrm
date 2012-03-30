@@ -1,5 +1,7 @@
 package view_controller;
 
+import model.Client;
+
 
 
 
@@ -292,6 +294,8 @@ public class JDialogsController implements ICommand  {
 		
 		case client:
 			clientDialog.init();
+			IModelClient imodelClient = (IModelClient)clientDialog;
+			imodelClient.setModel(new Client(null));
 			break;
 			
 		case manager:
