@@ -146,13 +146,11 @@ public String getEmail(){
 			try {
 				number = Long.parseLong(line);
 			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("this is not a decimal argument");
 			}
 			
 			if(number!=null)
 				return true;
-			else System.out.println("this is not a decimal argument");
 		}
 		return false;
 	}
@@ -160,7 +158,7 @@ public String getEmail(){
 	
 	public static boolean validateEmail(String line){
 		if(validate(line)){
-			if(line.contains("@")||line.contains("."))
+			if(line.contains("@")&&line.contains("."))
 				return true;
 			else System.out.println("it's a wrong email adress!!");
 		}

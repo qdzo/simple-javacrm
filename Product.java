@@ -85,11 +85,9 @@ public class Product {
 			try {
 				decimal = Integer.parseInt(dec);
 			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("Required a right decimal argument!");
 			}
 		if(decimal==null){
-			System.out.println("Required a right decimal argument!");
 			return false;
 		}
 		return true;
@@ -101,11 +99,9 @@ public class Product {
 		try {
 			decimalLong = Long.parseLong(decLong);
 		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			System.out.println("Required a right long decimal argument!");
 		}
 		if(decimalLong==null){
-			System.out.println("Required a right long decimal argument!");
 			return false;
 		}
 		return true;
