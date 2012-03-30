@@ -68,9 +68,18 @@ public class SimpleCRMFrame extends JFrame {
 		initMainFrame();
 		initJDialogs();
 		initController();
+		setDefaultController(controller);
 	}		
 	
 	
+	private void setDefaultController(ICommand defaultController) {
+		productDialog.setController(defaultController);
+		dealDialog.setController(defaultController);
+		clientDialog.setController(defaultController);
+		managerDialog.setController(defaultController);
+		
+	}
+
 	private void initController(){
 		controller = new JDialogsController();
 		controller.setClientDialog(clientDialog);
