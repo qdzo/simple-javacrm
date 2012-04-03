@@ -13,7 +13,7 @@ public class Model implements IModelPersistable {
 	DestributionDAO	destributionDAO;
 	
 	
-	Model(){
+	public Model(){
 		daoFactory = new RdbDAOFactory();
 		clientDAO = daoFactory.getClientDAO();
 		managerDAO = daoFactory.getManagerDAO();
