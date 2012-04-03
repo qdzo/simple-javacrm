@@ -21,7 +21,7 @@ import model.Destribution;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class DealJDialog extends JDialog implements IModelDestribution,IDisplayable {
+public class DealJDialog extends JDialog implements IModelDestribution,IDisplayable,ICommandable {
 
 	/**
 	 * 

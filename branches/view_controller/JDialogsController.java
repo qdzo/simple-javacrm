@@ -34,15 +34,15 @@ public class JDialogsController implements ICommand  {
 		
 		case CREATE: 
 				initDialog(bObject);
-				setNextCommand(bObject);
+				setNextCommand(bObject,Commands.ADD);
 				break;
 		case FIND:	
 				initDialog(bObject);
-				setNextCommand(bObject);
+				setNextCommand(bObject,Commands.SEARCH);
 				break;
 		case EDIT:
 				editDialog(bObject,currentObject);
-				setNextCommand(bObject);
+				setNextCommand(bObject,Commands.UPDATE);
 				break;
 		case UPDATE:
 				updateModel(bObject,currentObject);
@@ -72,23 +72,23 @@ public class JDialogsController implements ICommand  {
 	
 	
 	
-	private void setNextCommand(BusinessObjects bObject) {
+	private void setNextCommand(BusinessObjects bObject,Commands nextCommand) {
 		switch (bObject){
 		
 		case client:
-			
+			((ICommandable)clientDialog).setCommandToDo(nextCommand);
 			break;
 			
 		case manager:
-			
+			((ICommandable)managerDialog).setCommandToDo(nextCommand);
 			break;
 			
 		case product:
-			
+			((ICommandable)productDialog).setCommandToDo(nextCommand);
 			break;
 			
 		case deal:
-			
+			((ICommandable)dealDialog).setCommandToDo(nextCommand);
 			break;
 			
 		default: throw new NullPointerException("Wrong parrameter currentObject");	
@@ -125,7 +125,7 @@ public class JDialogsController implements ICommand  {
 	switch (bObject){
 		
 		case client:
-			
+			 
 			break;
 			
 		case manager:
