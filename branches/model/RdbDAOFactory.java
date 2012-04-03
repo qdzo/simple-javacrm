@@ -19,7 +19,7 @@ public class RdbDAOFactory implements DAOFactoryInterface {
 			if(ConnectionDriver.acceptsURL(DBURL)){
 			ConnectionDriver = new JDCConnectionDriver(DRIVER,DBURL,USER,PSWD);
 			}
-		return (JDCConnection)	ConnectionDriver.connect(DBURL, null);
+		return 	ConnectionDriver.connect(DBURL, null);
 	}		
 	
 

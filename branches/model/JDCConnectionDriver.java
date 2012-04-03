@@ -20,7 +20,7 @@ public class JDCConnectionDriver implements java.sql.Driver{
 		pool = new JDCConnectionPool(url, user, password);
 	}
 	
-	public Connection connect(String url, Properties props) throws SQLException {
+	public JDCConnection connect(String url, Properties props) throws SQLException {
 		
 		if(!url.startsWith(URL_PREFIX)){
 			return null;
