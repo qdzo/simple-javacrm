@@ -16,6 +16,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import view_controller.BusinessObjects;
 import model.Client;
+import model.Model;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -43,7 +44,7 @@ public class SimpleCRMFrame extends JFrame {
 	private JComboBox findEntetiesBox;
 	private JLabel lblFind;
 	private JDialogsController controller;
-
+	private Model model;
 	/**
 	 * Launch the application.
 	 */
@@ -69,6 +70,8 @@ public class SimpleCRMFrame extends JFrame {
 		initJDialogs();
 		initController();
 		setDefaultController(controller);
+		model = new Model();
+		
 	}		
 	
 	
