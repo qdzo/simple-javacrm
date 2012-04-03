@@ -19,7 +19,7 @@ import model.Status;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ManagerJDialog extends JDialog implements IModelManager, IDisplayable {
+public class ManagerJDialog extends JDialog implements IModelManager, IDisplayable,ICommandable {
 
 	/**
 	 * 

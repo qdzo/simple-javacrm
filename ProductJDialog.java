@@ -19,7 +19,7 @@ import model.Product;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class ProductJDialog extends JDialog implements IModelProduct, IDisplayable {
+public class ProductJDialog extends JDialog implements IModelProduct, IDisplayable,ICommandable {
 
 	/**
 	 * 

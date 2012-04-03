@@ -19,7 +19,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 
-public class ClientJDialog extends JDialog implements IModelClient, IDisplayable{
+public class ClientJDialog extends JDialog implements IModelClient, IDisplayable,ICommandable{
 
 	/**
 	 * 
