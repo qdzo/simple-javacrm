@@ -177,7 +177,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 						if(checkTheFields()){
-						//controller.execute(commandToDo, BusinessObjects.client, getModel());
+						controller.execute(commandToDo, BusinessObjects.client, getModel());
 						controller.execute(Commands.CLOSE, BusinessObjects.client, null);
 						}
 						
