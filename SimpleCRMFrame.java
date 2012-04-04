@@ -66,11 +66,12 @@ public class SimpleCRMFrame extends JFrame {
 	 */
 	public SimpleCRMFrame() {
 	
+		model = new Model();
 		initMainFrame();
 		initJDialogs();
 		initController();
 		setDefaultController(controller);
-		model = new Model();
+		
 		
 	}		
 	
@@ -89,6 +90,7 @@ public class SimpleCRMFrame extends JFrame {
 		controller.setDealDialog(dealDialog);
 		controller.setManagerDialog(managerDialog);
 		controller.setProductDialog(productDialog);
+		controller.setIModelPersistable(model);
 	}
 	
 	private void initJDialogs(){

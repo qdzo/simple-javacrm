@@ -1,6 +1,7 @@
 package view_controller;
 
 import model.Client;
+import model.IModelPersistable;
 
 
 
@@ -13,6 +14,7 @@ public class JDialogsController implements ICommand  {
 	private IDisplayable managerDialog;
 	private IDisplayable dealDialog;
 	private IDisplayable productDialog;
+	private IModelPersistable modelFasade;
 	
 	public JDialogsController(){
 		
@@ -33,8 +35,8 @@ public class JDialogsController implements ICommand  {
 		switch(command){
 		
 		case CREATE: 
-				initDialog(bObject);
 				setNextCommand(bObject,Commands.ADD);
+				initDialog(bObject);
 				break;
 		case FIND:	
 				initDialog(bObject);
@@ -218,22 +220,23 @@ public class JDialogsController implements ICommand  {
 	}
 
 	private void addModel(BusinessObjects bObject, Object currentObject) {
-	switch (bObject){
+// TODO  to think about this this method implementation , it's to fat
+		switch (bObject){
 		
 		case client:
-			
+			modelFasade.insert(currentObject);
 			break;
 			
 		case manager:
-			
+			modelFasade.insert(currentObject);
 			break;
 			
 		case product:
-			
+			modelFasade.insert(currentObject);
 			break;
 			
 		case deal:
-			
+			modelFasade.insert(currentObject);
 			break;
 			
 		default: throw new NullPointerException("Wrong parrameter currentObject");	
@@ -293,9 +296,9 @@ public class JDialogsController implements ICommand  {
 	switch (bObject){
 		
 		case client:
-			clientDialog.init();
 			IModelClient imodelClient = (IModelClient)clientDialog;
-			imodelClient.setModel(new Client(null));
+			imodelClient.setModel(new Client(0));
+			clientDialog.init();
 			break;
 			
 		case manager:
@@ -351,7 +354,9 @@ public class JDialogsController implements ICommand  {
 		this.productDialog = productDialog;
 	}
 	
-	
+	public void setIModelPersistable(IModelPersistable modelFasade){
+		this.modelFasade = modelFasade;
+	}
 	
 
 }
