@@ -24,10 +24,12 @@ public class RdbClientDAO implements ClientDAO {
 		int result = 0;
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
+			System.out.println("connection is created!");
 			Statement statement = connection.createStatement();
+			System.out.println("statement is created!");
 			String sql = INSERT+QUOTES+client.getFirstName()+QUOTESWITHKOMA+client.getSecondName()+
 					QUOTESWITHKOMA+client.getTelephone()+QUOTESWITHKOMA+client.getEmail()+QUOTESWITHKOMA+
-					GROUP+QUOTESWITHKOMA+client.getPriority()+QUOTES+SEMICOLON;
+					GROUP+QUOTESWITHKOMA+client.getPriorityValue()+QUOTES+SEMICOLON;
 			System.out.println(sql);
 			result = statement.executeUpdate(sql);
 		} catch (ClassNotFoundException e) {
