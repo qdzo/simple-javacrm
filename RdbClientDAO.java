@@ -32,6 +32,10 @@ public class RdbClientDAO implements ClientDAO {
 					GROUP+QUOTESWITHKOMA+client.getPriorityValue()+QUOTES+SEMICOLON;
 			System.out.println(sql);
 			result = statement.executeUpdate(sql);
+			if(!statement.isClosed())
+				statement.close();
+			if(connection.isClosed())
+				connection.close();
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -58,6 +62,11 @@ public class RdbClientDAO implements ClientDAO {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			result = statement.executeUpdate(null);
+			if(!statement.isClosed())
+				statement.close();
+			if(connection.isClosed())
+				connection.close();
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,6 +94,11 @@ public class RdbClientDAO implements ClientDAO {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(null);
+			if(!statement.isClosed())
+				statement.close();
+			if(connection.isClosed())
+				connection.close();
+
 			} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -110,6 +124,11 @@ public class RdbClientDAO implements ClientDAO {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			result = statement.executeUpdate("select");
+			if(!statement.isClosed())
+				statement.close();
+			if(connection.isClosed())
+				connection.close();
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -137,6 +156,11 @@ public class RdbClientDAO implements ClientDAO {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(null);
+			if(!statement.isClosed())
+				statement.close();
+			if(connection.isClosed())
+				connection.close();
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -161,6 +185,11 @@ public class RdbClientDAO implements ClientDAO {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			ResultSet resultSet = statement.executeQuery(null);
+			if(!statement.isClosed())
+				statement.close();
+			if(connection.isClosed())
+				connection.close();
+
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

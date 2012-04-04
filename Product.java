@@ -7,8 +7,10 @@ public class Product {
 	private long price;
 	private int summary;
 	private String description;
+	private ModelStatus modelStatus;
 	
-	Product(Integer id){
+	
+	public Product(Integer id){
 		this.productId = id;
 	}
 
@@ -105,6 +107,14 @@ public class Product {
 			return false;
 		}
 		return true;
+	}
+
+	public ModelStatus getStatus() {
+		return modelStatus;
+	}
+
+	public void setStatus(ModelStatus modelStatus) {
+		this.modelStatus = modelStatus;
 	}
 
 	
