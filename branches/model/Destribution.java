@@ -12,9 +12,10 @@ public class Destribution {
 	private String ClientSecondName;
 	private int ProductId;
 	private String ProductName;
+	private ModelStatus modelStatus;
 	
 	
-	public Destribution(int id){
+	public Destribution(Integer id){
 		// a default constructor
 		this.id = id;
 	}
@@ -153,6 +154,16 @@ public class Destribution {
 
 	public String getDateTime() {
 		return DateTime;
+	}
+
+
+	public ModelStatus getModelStatus() {
+		return modelStatus;
+	}
+
+
+	public void setModelStatus(ModelStatus modelStatus) {
+		this.modelStatus = modelStatus;
 	}
 
 

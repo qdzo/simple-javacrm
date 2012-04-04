@@ -1,7 +1,10 @@
 package view_controller;
 
 import model.Client;
+import model.Destribution;
 import model.IModelPersistable;
+import model.Manager;
+import model.Product;
 
 
 
@@ -39,12 +42,12 @@ public class JDialogsController implements ICommand  {
 				initDialog(bObject);
 				break;
 		case FIND:	
-				initDialog(bObject);
 				setNextCommand(bObject,Commands.SEARCH);
+				initDialog(bObject);
 				break;
 		case EDIT:
-				editDialog(bObject,currentObject);
 				setNextCommand(bObject,Commands.UPDATE);
+				editDialog(bObject,currentObject);
 				break;
 		case UPDATE:
 				updateModel(bObject,currentObject);
@@ -99,54 +102,20 @@ public class JDialogsController implements ICommand  {
 		
 	}
 
+	
+	
 	private void saveModel(BusinessObjects bObject, Object currentObject) {
-	switch (bObject){
-		
-		case client:
-			
-			break;
-			
-		case manager:
-			
-			break;
-			
-		case product:
-			
-			break;
-			
-		case deal:
-			
-			break;
-			
-		default: throw new NullPointerException("Wrong parrameter currentObject");	
-			
-		}	
+	 
+		modelFasade.insert(currentObject);
 	}
 
+	
 	private void deleteObject(BusinessObjects bObject, Object currentObject) {
-	switch (bObject){
-		
-		case client:
-			 
-			break;
-			
-		case manager:
-			
-			break;
-			
-		case product:
-			
-			break;
-			
-		case deal:
-			
-			break;
-			
-		default: throw new NullPointerException("Wrong parrameter currentObject");	
-			
-		}
+	
+		modelFasade.delete(currentObject);
 	}
 
+	
 	private void closeDialog(BusinessObjects bObject) {
 	switch (bObject){
 		
@@ -171,23 +140,24 @@ public class JDialogsController implements ICommand  {
 		}	
 	}
 
+	
 	private void findModel(BusinessObjects bObject, Object currentObject) {
 	switch (bObject){
 		
 		case client:
-			
+			modelFasade.find(currentObject);
 			break;
 			
 		case manager:
-			
+			modelFasade.find(currentObject);
 			break;
 			
 		case product:
-			
+			modelFasade.find(currentObject);
 			break;
 			
 		case deal:
-			
+			modelFasade.find(currentObject);
 			break;
 			
 		default: throw new NullPointerException("Wrong parrameter currentObject");	
@@ -195,28 +165,10 @@ public class JDialogsController implements ICommand  {
 		}
 	}
 
-	private void quickFind(BusinessObjects bObject) {
-	switch (bObject){
+	private void quickFind(Object currentObject) {
 		
-		case client:
-			
-			break;
-			
-		case manager:
-			
-			break;
-			
-		case product:
-			
-			break;
-			
-		case deal:
-			
-			break;
-			
-		default: throw new NullPointerException("Wrong parrameter currentObject");	
-			
-		}
+		modelFasade.find(currentObject);
+		
 	}
 
 	private void addModel(BusinessObjects bObject, Object currentObject) {
@@ -248,19 +200,19 @@ public class JDialogsController implements ICommand  {
 	switch (bObject){
 		
 		case client:
-			
+			modelFasade.update(currentObject);
 			break;
 			
 		case manager:
-			
+			modelFasade.update(currentObject);
 			break;
 			
 		case product:
-			
+			modelFasade.update(currentObject);
 			break;
 			
 		case deal:
-			
+			modelFasade.update(currentObject);
 			break;
 			
 		default: throw new NullPointerException("Wrong parrameter currentObject");	
@@ -296,20 +248,26 @@ public class JDialogsController implements ICommand  {
 	switch (bObject){
 		
 		case client:
-			IModelClient imodelClient = (IModelClient)clientDialog;
-			imodelClient.setModel(new Client(0));
+			IModelClient imodelClient = (IModelClient) clientDialog;
+			imodelClient.setModel(new Client(null));
 			clientDialog.init();
 			break;
 			
 		case manager:
+			IModelManager imodelManager = (IModelManager) managerDialog;
+			imodelManager.setModel(new Manager(null));
 			managerDialog.init();
 			break;
 			
 		case product:
+			IModelProduct imodelProduct = (IModelProduct) productDialog;
+			imodelProduct.setModel(new Product(null));
 			productDialog.init();
 			break;
 			
 		case deal:
+			IModelDestribution imodelDestribution = (IModelDestribution) dealDialog;
+			imodelDestribution.setModel(new Destribution(null));
 			dealDialog.init();
 			break;
 			

@@ -11,7 +11,7 @@ public abstract class Person {
 	private String telephone;
 	private String email;
 	private Status status;
-	
+	private ModelStatus modelStatus;
 //===================================================================================================================
 	
 	
@@ -122,6 +122,8 @@ public String getEmail(){
 		return this.status;
 	}
 	
+	
+	
 //--------------------------------------------------------------------------------------------------------------------
 //====================================================================================================================
 	
@@ -164,4 +166,20 @@ public String getEmail(){
 		}
 		return false;
 	}
+
+
+	public ModelStatus getModelStatus() {
+		return modelStatus;
+	}
+
+
+	public void setModelStatus(ModelStatus modelStatus) {
+		this.modelStatus = modelStatus;
+	}
+
+
+	
+
+
+	
 }
