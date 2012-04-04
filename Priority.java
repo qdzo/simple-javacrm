@@ -2,7 +2,7 @@ package model;
 
 public enum Priority {
 	
-	low(1),Medium(2),Hi(3);
+	low(3),Medium(2),Hi(1);
 	int priorityValue;
 //=========================================================================================
 	Priority(int priorValue){
