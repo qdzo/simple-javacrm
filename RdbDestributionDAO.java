@@ -9,12 +9,24 @@ import javax.sql.RowSet;
 
 public class RdbDestributionDAO  implements DestributionDAO{
 
+	private final static String INSERT = "insert into person(first_name,second_name,tel,email,belong,priority) values (";
+	private final static String SEMICOLON = ");";
+	private final static String SELECT = "select * from person where ";
+	private final static String UPDATE = "update person set ";
+	private final static String DELETE = "delete from person where pers_id = ";
+	private final static String QUOTES = "\'";
+	private final static String QUOTES_WITH_COMMA = "\',\'";
+	private final static String WHERE = "where ";
+	
 	@Override
 	public int insertDestribution(Destribution destribution) {
 		// TODO Auto-generated method stub
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
+			
+			
+			
 			ResultSet resultSet = statement.executeQuery(null);
 			if(!statement.isClosed())
 				statement.close();
@@ -43,6 +55,9 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
+			
+			
+			
 			ResultSet resultSet = statement.executeQuery(null);
 			if(!statement.isClosed())
 				statement.close();
@@ -71,6 +86,9 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
+			
+			
+			
 			ResultSet resultSet = statement.executeQuery(null);
 			if(!statement.isClosed())
 				statement.close();
@@ -99,6 +117,9 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
+			
+			
+			
 			ResultSet resultSet = statement.executeQuery(null);
 			if(!statement.isClosed())
 				statement.close();
@@ -127,6 +148,9 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
+			
+			
+			
 			ResultSet resultSet = statement.executeQuery(null);
 			if(!statement.isClosed())
 				statement.close();
@@ -155,6 +179,9 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
+			
+			
+			
 			ResultSet resultSet = statement.executeQuery(null);
 			if(!statement.isClosed())
 				statement.close();

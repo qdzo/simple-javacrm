@@ -15,7 +15,8 @@ public class RdbClientDAO implements ClientDAO {
 	private final static String UPDATE = "update person set ";
 	private final static String DELETE = "delete from person where pers_id = ";
 	private final static String QUOTES = "\'";
-	private final static String QUOTESWITHKOMA = "\',\'";
+	private final static String QUOTES_WITH_COMMA = "\',\'";
+	private final static String WHERE = "where ";
 	private final static String GROUP = "2";
 //==================================================================================================	
 	
@@ -27,9 +28,9 @@ public class RdbClientDAO implements ClientDAO {
 			System.out.println("connection is created!");
 			Statement statement = connection.createStatement();
 			System.out.println("statement is created!");
-			String sql = INSERT+QUOTES+client.getFirstName()+QUOTESWITHKOMA+client.getSecondName()+
-					QUOTESWITHKOMA+client.getTelephone()+QUOTESWITHKOMA+client.getEmail()+QUOTESWITHKOMA+
-					GROUP+QUOTESWITHKOMA+client.getPriorityValue()+QUOTES+SEMICOLON;
+			String sql = INSERT+QUOTES+client.getFirstName()+QUOTES_WITH_COMMA+client.getSecondName()+
+					QUOTES_WITH_COMMA+client.getTelephone()+QUOTES_WITH_COMMA+client.getEmail()+QUOTES_WITH_COMMA+
+					GROUP+QUOTES_WITH_COMMA+client.getPriorityValue()+QUOTES+SEMICOLON;
 			System.out.println(sql);
 			result = statement.executeUpdate(sql);
 			if(!statement.isClosed())
@@ -61,6 +62,8 @@ public class RdbClientDAO implements ClientDAO {
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
+			
+			
 			result = statement.executeUpdate(null);
 			if(!statement.isClosed())
 				statement.close();
@@ -93,6 +96,9 @@ public class RdbClientDAO implements ClientDAO {
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
+			
+			
+			
 			ResultSet resultSet = statement.executeQuery(null);
 			if(!statement.isClosed())
 				statement.close();
@@ -155,6 +161,9 @@ public class RdbClientDAO implements ClientDAO {
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
+			
+			
+			
 			ResultSet resultSet = statement.executeQuery(null);
 			if(!statement.isClosed())
 				statement.close();
@@ -184,6 +193,9 @@ public class RdbClientDAO implements ClientDAO {
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
+			
+			
+			
 			ResultSet resultSet = statement.executeQuery(null);
 			if(!statement.isClosed())
 				statement.close();
