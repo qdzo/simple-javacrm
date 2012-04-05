@@ -19,6 +19,8 @@ public class test {
 		// TODO Auto-generated method stub
 
 		try {
+			Heap heap = new Heap(new Client(null));
+			System.out.println(heap.getValueAt(0).getClass());
 			JDCConnectionDriver conDrive = new JDCConnectionDriver(DRIVER,DBURL,USER,PSWD);
 			JDCConnection connection = conDrive.connect(DBURL, null);
 			System.out.println("Connection is created");
@@ -26,6 +28,7 @@ public class test {
 			System.out.println("Statement is created");
 			ResultSet resultSet = statement.executeQuery("select * from person where pers_id=20;");
 			System.out.println("send query");
+			
 //		    ResultSetMetaData metaData = resultSet.getMetaData();
 //		    for(int i=1;i<metaData.getColumnCount();i++)
 //			System.out.println(resultSet.getString(i));
