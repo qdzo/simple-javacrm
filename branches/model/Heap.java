@@ -14,8 +14,12 @@ import javax.swing.table.TableModel;
 public class Heap implements List<Object>, TableModel{
 	
 	private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
-	List<Object> myList;
+	private List<Object> myList;
+	private Integer selectedIndex;
 	
+	public Heap(){
+		
+	}
 	
 	public Heap(List<Object> businessObjectsList){
 		myList = businessObjectsList;
@@ -27,6 +31,18 @@ public class Heap implements List<Object>, TableModel{
 		myList.add(businessObject);
 	}
 
+	
+	public void setNewListBObjects(List<Object> businessObjectsList){
+		myList = businessObjectsList;
+	}
+	
+	
+	public void setNewBObject(Object object){
+		myList = new ArrayList<Object>();
+		myList.add(object);
+	}
+	
+	
 	@Override
 	public int getRowCount() {
 		
@@ -107,13 +123,57 @@ public class Heap implements List<Object>, TableModel{
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		// TODO Auto-generated method stub
+		if(myList.getClass()==Client.class){
+			Client client = (Client) myList.get(rowIndex);
+			switch(columnIndex){
+			case 0: return client.getFirstName();
+			case 1: return client.getSecondName();
+			case 2: return client.getTelephone();
+			case 3: return client.getEmail();
+			case 4: return client.getPriority();
+			case 5: return client.getStatus();
+			}
+		}
+			else if(myList.getClass()==Manager.class){
+				Manager manager = (Manager) myList.get(rowIndex);
+				switch(columnIndex){
+				case 0: return manager.getFirstName();
+				case 1: return manager.getSecondName();
+				case 2: return manager.getTelephone();
+				case 3: return manager.getEmail();
+				case 4: return manager.getStatus();
+				}
+			}
+			else if(myList.getClass()==Product.class){
+				Product product =  (Product) myList.get(rowIndex);
+				switch(columnIndex){
+				case 0: return product.getNameProduct();
+				case 1: return product.getDescription();
+				case 2: return product.getPrice();
+				case 3: return product.getSummary();
+				}
+			}
+			else if(myList.getClass()==Destribution.class){
+			Destribution destribution = (Destribution) myList.get(rowIndex);
+				switch(columnIndex){
+				case 0: return destribution.getDateTime();
+				case 1: return destribution.getProductName();
+				case 2: return destribution.getManagerFirstName();
+				case 3: return destribution.getManagerSecondName();
+				case 4: return destribution.getClientFirstName();
+				case 5: return destribution.getClientSecondName();
+				case 6: return destribution.getComment();
+				case 7: return destribution.getStatus();
+				}
+			}
 		return null;
 	}
 
+	
 	public Object getValueAt(int rowIndex){
 		return myList.get(rowIndex);
 	}
+	
 	
 	@Override
 	public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
@@ -164,6 +224,7 @@ public class Heap implements List<Object>, TableModel{
 		return myList.toArray();
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Object[] toArray(Object[] a) {
 		return myList.toArray(a);
@@ -178,20 +239,22 @@ public class Heap implements List<Object>, TableModel{
 
 	@Override
 	public boolean remove(Object object) {
-		
-		return myList.remove(object);
+			return myList.remove(object);
 	}
 
+	
 	@Override
 	public boolean containsAll(Collection<?> c) {
 		return myList.containsAll(c);
 	}
 
+	
 	@Override
 	public boolean addAll(Collection<?> c) {
 		return myList.addAll(c);
 	}
 
+	
 	@Override
 	public boolean addAll(int index, Collection<?> c) {
 		return myList.addAll(index, c);
@@ -257,4 +320,21 @@ public class Heap implements List<Object>, TableModel{
 		return myList.subList(fromIndex, toIndex);
 	}
 
+	public Integer getSelectedIndex() {
+		if(selectedIndex==null)
+			return null;
+		int index = selectedIndex;
+		selectedIndex=null;
+		return index;
+	}
+
+	public void setSelectedIndex(Integer selectedIndex) {
+		if(selectedIndex==null)
+		this.selectedIndex = selectedIndex;
+		else{
+			System.out.println("SET SELECTED INDEX: Take off first the index! ");
+		}
+	}
+
+	
 }
