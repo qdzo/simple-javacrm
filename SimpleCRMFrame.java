@@ -9,6 +9,8 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
+
+import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JLabel;
@@ -16,6 +18,7 @@ import javax.swing.JComboBox;
 import javax.swing.JTextField;
 import view_controller.BusinessObjects;
 import model.Client;
+import model.Heap;
 import model.Model;
 
 import java.awt.event.ActionListener;
@@ -45,6 +48,9 @@ public class SimpleCRMFrame extends JFrame {
 	private JLabel lblFind;
 	private JDialogsController controller;
 	private Model model;
+	private Heap heap;
+	private Notificator notificator;
+	
 	/**
 	 * Launch the application.
 	 */
@@ -69,12 +75,24 @@ public class SimpleCRMFrame extends JFrame {
 		model = new Model();
 		initMainFrame();
 		initJDialogs();
+		initNotificator();
 		initController();
 		setDefaultController(controller);
+		initHeap();
 		
 		
 	}		
 	
+	private void initHeap(){
+		heap = new Heap();
+		heap.addTableModelListener(table);
+		System.out.println("Heap is initialized!");
+	}
+	
+	private void initNotificator(){
+		notificator = new Notificator(this);
+		System.out.println("Notificator is initialized!");
+	}
 	
 	private void setDefaultController(ICommand defaultController) {
 		productDialog.setController(defaultController);
@@ -91,6 +109,7 @@ public class SimpleCRMFrame extends JFrame {
 		controller.setManagerDialog(managerDialog);
 		controller.setProductDialog(productDialog);
 		controller.setIModelPersistable(model);
+		controller.setNotificator(notificator);
 	}
 	
 	private void initJDialogs(){
@@ -241,6 +260,9 @@ public class SimpleCRMFrame extends JFrame {
 		contentPane.add(deleteButton, gbc_deleteButton);
 	}
 
-		
+	public void sendMessage(String msg,String title){
+		JOptionPane.showMessageDialog(this,msg,title,JOptionPane.INFORMATION_MESSAGE);	
+
+		}
 	
 }
