@@ -109,11 +109,11 @@ public class Product {
 		return true;
 	}
 
-	public ModelStatus getStatus() {
+	public ModelStatus getModelStatus() {
 		return modelStatus;
 	}
 
-	public void setStatus(ModelStatus modelStatus) {
+	public void setModelStatus(ModelStatus modelStatus) {
 		this.modelStatus = modelStatus;
 	}
 
