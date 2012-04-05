@@ -12,6 +12,8 @@ public class Destribution {
 	private String ClientSecondName;
 	private int ProductId;
 	private String ProductName;
+	private String comment;
+	private Status Status;
 	private ModelStatus modelStatus;
 	
 	
@@ -164,6 +166,26 @@ public class Destribution {
 
 	public void setModelStatus(ModelStatus modelStatus) {
 		this.modelStatus = modelStatus;
+	}
+
+
+	public String getComment() {
+		return comment;
+	}
+
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+
+	public Status getStatus() {
+		return Status;
+	}
+
+
+	public void setStatus(Status status) {
+		Status = status;
 	}
 
 
