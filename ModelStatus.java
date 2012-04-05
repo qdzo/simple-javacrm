@@ -2,6 +2,6 @@ package model;
 
 public enum ModelStatus {
 	
-	Null, Created, Exist, Added, Deleted;
+	Null, Created, Exist, Updated, Deleted;
 
 }
