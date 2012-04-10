@@ -7,21 +7,15 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
-import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 import view_controller.IObserver;
 
-public class Heap extends DefaultTableModel{
+public class Heap implements TableModel{
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -1626654479860452287L;
-	/**
-	 * 
-	 */
+
+
 	private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
 	private Set<IObserver>	observers = new HashSet<IObserver>();
 	private List<Object> myList;
@@ -44,16 +38,17 @@ public class Heap extends DefaultTableModel{
 	}
 
 	
-	public void setNewListBObjects(List<Object> businessObjectsList){
+	public void setNewList(List<Object> businessObjectsList){
 		myList = businessObjectsList;
 		notifyChanges();
 	}
 	
 	
-	public void setNewBObject(Object object){
-		myList = new ArrayList<Object>();
+	private void setNewBObject(Object object){
+		myList.clear();
 		myList.add(object);
 		notifyChanges();
+		System.out.println("Set new BusinessObject in heap : "+object.getClass());
 	}
 	
 	
@@ -245,8 +240,15 @@ public class Heap extends DefaultTableModel{
 
 	
 	public void add(Object object) {
+		if(myList.size()>0)
+		if(myList.get(0).getClass().equals(object.getClass())){
 		myList.add(object);
+		System.out.println("added new row in list!");
 		notifyChanges();
+		} else {
+		setNewBObject(object);
+		}
+		else setNewBObject(object);
 	}
 	
 	
@@ -284,14 +286,23 @@ public class Heap extends DefaultTableModel{
 
 
 	public void add(int index, Object element) {
+		try{
 		myList.add(index, element);
 		notifyChanges();
+		} catch (IndexOutOfBoundsException e){
+			System.out.println("heap size is smaller, than your index = "+index);
+		}
 	}
 
 
 	public void remove(int index) {
-		 myList.remove(index);
-		 notifyChanges();
+		try{
+			myList.remove(index);
+			notifyChanges();
+		} catch (IndexOutOfBoundsException e){
+			System.out.println("heap size is smaller, than your index = "+index);
+		}
+		 
 	}
 
 
@@ -304,6 +315,9 @@ public class Heap extends DefaultTableModel{
 		return myList.lastIndexOf(o);
 	}
 
+	
+	
+	
 	public Integer getSelectedIndex() {
 		if(selectedIndex==null)
 			return null;
@@ -320,6 +334,8 @@ public class Heap extends DefaultTableModel{
 		}
 	}
 
+	
+	
 	public void addObserver(IObserver observer){
 		observers.add(observer);
 	}
