@@ -9,17 +9,23 @@ import java.util.Set;
 
 import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.table.DefaultTableModel;
 
 import view_controller.IObserver;
 
-public class Heap implements  TableModel{
+public class Heap extends DefaultTableModel{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1626654479860452287L;
+	/**
+	 * 
+	 */
 	private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
 	private Set<IObserver>	observers = new HashSet<IObserver>();
 	private List<Object> myList;
 	private Integer selectedIndex;
-	private JTable viewTable;
 	
 	
 	public Heap(){
@@ -324,17 +330,9 @@ public class Heap implements  TableModel{
 	
 	private void notifyChanges(){
 		for(IObserver o : observers){
-			o.notifyEvent();
-			viewTable.setModel(this);
+			o.notifyEvent(this);
 		}
 	}
 
-	public JTable getViewTable() {
-		return viewTable;
-	}
 
-	public void setViewTable(JTable viewTable) {
-		this.viewTable = viewTable;
-	}
-	
 }
