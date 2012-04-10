@@ -76,16 +76,16 @@ public class SimpleCRMFrame extends JFrame {
 		initMainFrame();
 		initJDialogs();
 		initNotificator();
-		initController();
-		setDefaultController(controller);
 		initHeap();
-		
+		initController();
 		
 	}		
 	
 	private void initHeap(){
 		heap = new Heap();
+		heap.setViewTable(table);
 		heap.addTableModelListener(table);
+		
 		System.out.println("Heap is initialized!");
 	}
 	
@@ -110,6 +110,9 @@ public class SimpleCRMFrame extends JFrame {
 		controller.setProductDialog(productDialog);
 		controller.setIModelPersistable(model);
 		controller.setNotificator(notificator);
+		setDefaultController(controller);
+		controller.setHeapList(heap);
+		System.out.println("Controller is initialized!");
 	}
 	
 	private void initJDialogs(){
@@ -117,6 +120,7 @@ public class SimpleCRMFrame extends JFrame {
 		dealDialog = new DealJDialog(this,"Product") ;
 		clientDialog = new ClientJDialog(this,"Client");
 		managerDialog = new ManagerJDialog(this,"Manager");
+		System.out.println("Jdialogs are initialized!");
 	}
 	
 	
@@ -258,11 +262,13 @@ public class SimpleCRMFrame extends JFrame {
 		gbc_deleteButton.gridx = 6;
 		gbc_deleteButton.gridy = 7;
 		contentPane.add(deleteButton, gbc_deleteButton);
+		
+		System.out.println("Main Frame is initialized!");
 	}
 
 	public void sendMessage(String msg,String title){
 		JOptionPane.showMessageDialog(this,msg,title,JOptionPane.INFORMATION_MESSAGE);	
-
+		
 		}
 	
 }

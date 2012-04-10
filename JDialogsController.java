@@ -1,10 +1,6 @@
 package view_controller;
 
-import java.awt.Frame;
 import java.util.List;
-
-import javax.swing.JOptionPane;
-
 import model.Client;
 import model.Destribution;
 import model.Heap;
@@ -27,6 +23,7 @@ public class JDialogsController implements ICommand  {
 	private IModelPersistable modelFasade;
 	private Heap heapList;
 	private Notificator notificator;
+	
 	public JDialogsController(){
 		
 	}
@@ -302,7 +299,8 @@ public class JDialogsController implements ICommand  {
 			System.out.println("ADD MODEL:Heap is not initialized in the controller!");
 			return;
 		}
-		if(heapList.getValueAt(0).getClass()==currentObject.getClass()){
+		if(heapList.size()>0){
+			if((heapList.get(0)).getClass().equals(currentObject.getClass()))
 			switch (bObject){
 			case client:
 				Client client = (Client)currentObject;
@@ -323,6 +321,10 @@ public class JDialogsController implements ICommand  {
 				Destribution destribution = (Destribution)currentObject;
 				destribution.setModelStatus(ModelStatus.Created);
 				heapList.add(destribution);
+			}
+			else{
+			heapList.clear();
+			addModel(bObject,currentObject);
 			}
 		}
 		else {
@@ -494,7 +496,7 @@ public class JDialogsController implements ICommand  {
 	}
 
 	public List<?> getHeapList() {
-		return heapList;
+		return (List<?>) heapList;
 	}
 
 	public void setHeapList(Heap heapList) {
