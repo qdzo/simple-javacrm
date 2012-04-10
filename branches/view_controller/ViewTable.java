@@ -1,7 +1,7 @@
 package view_controller;
 
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
 
 
 public class ViewTable extends JTable implements IObserver {
@@ -15,11 +15,13 @@ public class ViewTable extends JTable implements IObserver {
 
 
 	@Override
-	public void notifyEvent(DefaultTableModel tableEvent) {
-		if(this.getModel().equals(tableEvent)){
-			tableEvent.fireTableDataChanged();
-		} else
+	public void notifyEvent(TableModel tableEvent) {
 		this.setModel(tableEvent);
+		this.revalidate();
 		this.repaint();
-	}
+    }
+	
+	
+	
+	
 }

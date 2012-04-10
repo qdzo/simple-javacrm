@@ -21,7 +21,7 @@ public class JDialogsController implements ICommand  {
 	private IDisplayable dealDialog;
 	private IDisplayable productDialog;
 	private IModelPersistable modelFasade;
-	private Heap heapList;
+	private Heap heap;
 	private Notificator notificator;
 	
 	public JDialogsController(){
@@ -119,83 +119,83 @@ public class JDialogsController implements ICommand  {
 	
 	private void saveModels() {
 	 
-		if(heapList.getValueAt(0).getClass()==Client.class){
-		for(int i=0;i<heapList.size();i++){
-			Client client = (Client) heapList.getValueAt(i);
+		if(heap.getValueAt(0).getClass()==Client.class){
+		for(int i=0;i<heap.size();i++){
+			Client client = (Client) heap.getValueAt(i);
 			switch (client.getModelStatus()){
 			case Created:
 				modelFasade.insert(client);
 				client.setModelStatus(ModelStatus.Exist);
-				heapList.set(i,client);
+				heap.set(i,client);
 				break;
 			case Updated:
 				modelFasade.update(client);
 				client.setModelStatus(ModelStatus.Exist);
-				heapList.set(i, client);
+				heap.set(i, client);
 				break;
 			case Deleted:
 				modelFasade.delete(client);
-				heapList.remove(i);
+				heap.remove(i);
 				break;
 			}
 		}
-	} else if(heapList.getValueAt(0).getClass()==Manager.class){
-		for(int i=0;i<heapList.size();i++){
-			Manager manager = (Manager) heapList.getValueAt(i);
+	} else if(heap.getValueAt(0).getClass()==Manager.class){
+		for(int i=0;i<heap.size();i++){
+			Manager manager = (Manager) heap.getValueAt(i);
 			switch (manager.getModelStatus()){
 			case Created:
 				modelFasade.insert(manager);
 				manager.setModelStatus(ModelStatus.Exist);
-				heapList.set(i,manager);
+				heap.set(i,manager);
 				break;
 			case Updated:
 				modelFasade.update(manager);
 				manager.setModelStatus(ModelStatus.Exist);
-				heapList.set(i, manager);
+				heap.set(i, manager);
 				break;
 			case Deleted:
 				modelFasade.delete(manager);
-				heapList.remove(i);
+				heap.remove(i);
 				break;
 			}
 		}
-	} else if(heapList.getValueAt(0).getClass()==Product.class){
-		for(int i=0;i<heapList.size();i++){
-			Product product = (Product) heapList.getValueAt(i);
+	} else if(heap.getValueAt(0).getClass()==Product.class){
+		for(int i=0;i<heap.size();i++){
+			Product product = (Product) heap.getValueAt(i);
 			switch (product.getModelStatus()){
 			case Created:
 				modelFasade.insert(product);
 				product.setModelStatus(ModelStatus.Exist);
-				heapList.set(i,product);
+				heap.set(i,product);
 				break;
 			case Updated:
 				modelFasade.update(product);
 				product.setModelStatus(ModelStatus.Exist);
-				heapList.set(i, product);
+				heap.set(i, product);
 				break;
 			case Deleted:
 				modelFasade.delete(product);
-				heapList.remove(i);
+				heap.remove(i);
 				break;
 			}
 		}
-	} else if(heapList.getValueAt(0).getClass()==Destribution.class){
-		for(int i=0;i<heapList.size();i++){
-			Destribution destribution = (Destribution) heapList.getValueAt(i);
+	} else if(heap.getValueAt(0).getClass()==Destribution.class){
+		for(int i=0;i<heap.size();i++){
+			Destribution destribution = (Destribution) heap.getValueAt(i);
 			switch (destribution.getModelStatus()){
 			case Created:
 				modelFasade.insert(destribution);
 				destribution.setModelStatus(ModelStatus.Exist);
-				heapList.set(i,destribution);
+				heap.set(i,destribution);
 				break;
 			case Updated:
 				modelFasade.update(destribution);
 				destribution.setModelStatus(ModelStatus.Exist);
-				heapList.set(i, destribution);
+				heap.set(i, destribution);
 				break;
 			case Deleted:
 				modelFasade.delete(destribution);
-				heapList.remove(i);
+				heap.remove(i);
 				break;
 					
 			}
@@ -210,19 +210,19 @@ public class JDialogsController implements ICommand  {
 		
 		if(currentObject.getClass()==Client.class){
 			((Client) currentObject).setModelStatus(ModelStatus.Deleted);
-			heapList.set(heapList.getSelectedIndex(), currentObject);
+			heap.set(heap.getSelectedIndex(), currentObject);
 			
 		} else if(currentObject.getClass()==Manager.class){
 			((Manager) currentObject).setModelStatus(ModelStatus.Deleted);
-			heapList.set(heapList.getSelectedIndex(), currentObject);
+			heap.set(heap.getSelectedIndex(), currentObject);
 			
 		} else if(currentObject.getClass()==Product.class){
 			((Product) currentObject).setModelStatus(ModelStatus.Deleted);
-			heapList.set(heapList.getSelectedIndex(), currentObject);
+			heap.set(heap.getSelectedIndex(), currentObject);
 			
 		} else if(currentObject.getClass()==Destribution.class){
 			((Destribution) currentObject).setModelStatus(ModelStatus.Deleted);
-			heapList.set(heapList.getSelectedIndex(), currentObject);
+			heap.set(heap.getSelectedIndex(), currentObject);
 		} 
 	}
 
@@ -258,25 +258,25 @@ public class JDialogsController implements ICommand  {
 		case client:
 			Client client =(Client) modelFasade.find(currentObject);
 			client.setModelStatus(ModelStatus.Exist);
-			heapList.setNewBObject(client);
+			heap.add(client);
 			break;
 			
 		case manager:
 			Manager manager = (Manager) modelFasade.find(currentObject);
 			manager.setModelStatus(ModelStatus.Exist);
-			heapList.setNewBObject(manager);
+			heap.add(manager);
 			break;
 			
 		case product:
 			Product product = (Product) modelFasade.find(currentObject);
 			product.setModelStatus(ModelStatus.Exist);
-			heapList.setNewBObject(product);
+			heap.add(product);
 			break;
 			
 		case deal:
 			Destribution destribution = (Destribution) modelFasade.find(currentObject);
 			destribution.setModelStatus(ModelStatus.Exist);
-			heapList.setNewBObject(destribution);
+			heap.add(destribution);
 			break;
 			
 		default: throw new NullPointerException("FIND MODEL:Wrong parrameter currentObject");	
@@ -288,70 +288,38 @@ public class JDialogsController implements ICommand  {
 		
 		Client client =(Client) modelFasade.find(currentObject);
 		client.setModelStatus(ModelStatus.Exist);
-		heapList.setNewBObject(client);
+		heap.add(client);
 		
 	}
 
 	
 	private void addModel(BusinessObjects bObject, Object currentObject) {
 		
-		if(heapList==null){
+		if(heap==null){
 			System.out.println("ADD MODEL:Heap is not initialized in the controller!");
 			return;
 		}
-		if(heapList.size()>0){
-			if((heapList.get(0)).getClass().equals(currentObject.getClass()))
 			switch (bObject){
 			case client:
 				Client client = (Client)currentObject;
 				client.setModelStatus(ModelStatus.Created);
-				heapList.add(client);
+				heap.add(client);
 				break;
 			case manager:
 				Manager manager = (Manager)currentObject;
 				manager.setModelStatus(ModelStatus.Created);
-				heapList.add(manager);
+				heap.add(manager);
 				break;
 			case product:
 				Product product = (Product)currentObject;
 				product.setModelStatus(ModelStatus.Created);
-				heapList.add(product);
+				heap.add(product);
 				break;
 			case deal:
 				Destribution destribution = (Destribution)currentObject;
 				destribution.setModelStatus(ModelStatus.Created);
-				heapList.add(destribution);
+				heap.add(destribution);
 			}
-			else{
-			heapList.clear();
-			addModel(bObject,currentObject);
-			}
-		}
-		else {
-			
-			switch (bObject){
-			case client:
-				Client client = (Client)currentObject;
-				client.setModelStatus(ModelStatus.Created);
-				heapList.setNewBObject(client);
-				break;
-			case manager:
-				Manager manager = (Manager)currentObject;
-				manager.setModelStatus(ModelStatus.Created);
-				heapList.setNewBObject(manager);
-				break;
-			case product:
-				Product product = (Product)currentObject;
-				product.setModelStatus(ModelStatus.Created);
-				heapList.setNewBObject(product);
-				break;
-			case deal:
-				Destribution destribution = (Destribution)currentObject;
-				destribution.setModelStatus(ModelStatus.Created);
-				heapList.setNewBObject(destribution);
-				break;
-				}
-		}
 		
 	}
 
@@ -359,7 +327,7 @@ public class JDialogsController implements ICommand  {
 	// update a changed model to heapList
 	// not completed
 	private void updateModel(BusinessObjects bObject, Object currentObject) {
-		if(heapList==null){
+		if(heap==null){
 			System.out.println("UPDATE MODEL:Heap is not initialized in the controller!");
 			return;
 		}
@@ -368,25 +336,25 @@ public class JDialogsController implements ICommand  {
 				Client client = (Client)currentObject;
 				if(client.getModelStatus()==ModelStatus.Exist)
 				client.setModelStatus(ModelStatus.Updated);
-				heapList.set(heapList.getSelectedIndex(), client);
+				heap.set(heap.getSelectedIndex(), client);
 				break;
 			case manager:
 				Manager manager = (Manager)currentObject;
 				if(manager.getModelStatus()==ModelStatus.Exist)
 				manager.setModelStatus(ModelStatus.Updated);
-				heapList.set(heapList.getSelectedIndex(), manager);
+				heap.set(heap.getSelectedIndex(), manager);
 				break;
 			case product:
 				Product product = (Product)currentObject;
 				if(product.getModelStatus()==ModelStatus.Exist)
 				product.setModelStatus(ModelStatus.Updated);
-				heapList.set(heapList.getSelectedIndex(), product);
+				heap.set(heap.getSelectedIndex(), product);
 				break;
 			case deal:
 				Destribution destribution = (Destribution)currentObject;
 				if(destribution.getModelStatus()==ModelStatus.Exist)
 				destribution.setModelStatus(ModelStatus.Updated);
-				heapList.set(heapList.getSelectedIndex(), destribution);
+				heap.set(heap.getSelectedIndex(), destribution);
 			}
 	}
 
@@ -496,11 +464,11 @@ public class JDialogsController implements ICommand  {
 	}
 
 	public List<?> getHeapList() {
-		return (List<?>) heapList;
+		return (List<?>) heap;
 	}
 
 	public void setHeapList(Heap heapList) {
-		this.heapList = heapList;
+		this.heap = heapList;
 	}
 
 	public Notificator getNotificator() {
