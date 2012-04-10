@@ -31,7 +31,6 @@ public class SimpleCRMFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTable table;
 	private JTextField QuickSearchField;
 	private BusinessObjects[] BusinessEntities = BusinessObjects.values();
 	private DealJDialog dealDialog;
@@ -50,6 +49,7 @@ public class SimpleCRMFrame extends JFrame {
 	private Model model;
 	private Heap heap;
 	private Notificator notificator;
+	private ViewTable table;
 	
 	/**
 	 * Launch the application.
@@ -83,8 +83,8 @@ public class SimpleCRMFrame extends JFrame {
 	
 	private void initHeap(){
 		heap = new Heap();
-		heap.setViewTable(table);
 		heap.addTableModelListener(table);
+		heap.addObserver(table);
 		
 		System.out.println("Heap is initialized!");
 	}
@@ -203,7 +203,7 @@ public class SimpleCRMFrame extends JFrame {
 		gbc_scrollPane.gridy = 1;
 		contentPane.add(scrollPane, gbc_scrollPane);
 		
-		table = new JTable();
+		table = new ViewTable();
 		scrollPane.setViewportView(table);
 		
 		addButton = new JButton("Add");
