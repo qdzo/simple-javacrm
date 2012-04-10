@@ -5,41 +5,49 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 import java.util.Set;
 
+import javax.swing.JTable;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
-public class Heap implements List<Object>, TableModel{
+import view_controller.IObserver;
+
+public class Heap implements  TableModel{
 	
 	private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
+	private Set<IObserver>	observers = new HashSet<IObserver>();
 	private List<Object> myList;
 	private Integer selectedIndex;
+	private JTable viewTable;
+	
 	
 	public Heap(){
-		
+		myList = new ArrayList<Object>();
 	}
 	
 	public Heap(List<Object> businessObjectsList){
 		myList = businessObjectsList;
-		
+		notifyChanges();
 	}
 	
 	public Heap(Object businessObject){
 		myList = new ArrayList<Object>();
 		myList.add(businessObject);
+		notifyChanges();
 	}
 
 	
 	public void setNewListBObjects(List<Object> businessObjectsList){
 		myList = businessObjectsList;
+		notifyChanges();
 	}
 	
 	
 	public void setNewBObject(Object object){
 		myList = new ArrayList<Object>();
 		myList.add(object);
+		notifyChanges();
 	}
 	
 	
@@ -53,13 +61,13 @@ public class Heap implements List<Object>, TableModel{
 	@Override
 	public int getColumnCount() {
 		
-		if(myList.getClass()==Client.class)
+		if(myList.get(0).getClass()==Client.class)
 			return 6;
-		else if(myList.getClass()==Manager.class)
+		else if(myList.get(0).getClass()==Manager.class)
 			return 5;
-		else if(myList.getClass()==Product.class)
+		else if(myList.get(0).getClass()==Product.class)
 			return 4;
-		else if(myList.getClass()==Destribution.class)
+		else if(myList.get(0).getClass()==Destribution.class)
 			return 8;
 		else
 		return 0;
@@ -70,7 +78,7 @@ public class Heap implements List<Object>, TableModel{
 	
 	@Override
 	public String getColumnName(int columnIndex) {
-		if(myList.getClass()==Client.class)
+		if(myList.get(0).getClass()==Client.class)
 			switch(columnIndex){
 			case 0: return "First Name";
 			case 1: return "Second Name";
@@ -79,7 +87,7 @@ public class Heap implements List<Object>, TableModel{
 			case 4: return "Priority";
 			case 5: return "Status";
 			}
-		else if(myList.getClass()==Manager.class)
+		else if(myList.get(0).getClass()==Manager.class)
 			switch(columnIndex){
 			case 0: return "First Name";
 			case 1: return "Second Name";
@@ -87,14 +95,14 @@ public class Heap implements List<Object>, TableModel{
 			case 3: return "e-mail";
 			case 4: return "Status";
 			}
-		else if(myList.getClass()==Product.class)
+		else if(myList.get(0).getClass()==Product.class)
 			switch(columnIndex){
 			case 0: return "Product name";
 			case 1: return "Description";
 			case 2: return "Price";
 			case 3: return "Quant in stock";
 			}
-		else if(myList.getClass()==Destribution.class)
+		else if(myList.get(0).getClass()==Destribution.class)
 			switch(columnIndex){
 			case 0: return "Date & time";
 			case 1: return "Product";
@@ -118,12 +126,12 @@ public class Heap implements List<Object>, TableModel{
 
 	@Override
 	public boolean isCellEditable(int rowIndex, int columnIndex) {
-		return true;
+		return false;
 	}
 
 	@Override
 	public Object getValueAt(int rowIndex, int columnIndex) {
-		if(myList.getClass()==Client.class){
+		if(myList.get(0).getClass()==Client.class){
 			Client client = (Client) myList.get(rowIndex);
 			switch(columnIndex){
 			case 0: return client.getFirstName();
@@ -134,7 +142,7 @@ public class Heap implements List<Object>, TableModel{
 			case 5: return client.getStatus();
 			}
 		}
-			else if(myList.getClass()==Manager.class){
+			else if(myList.get(0).getClass()==Manager.class){
 				Manager manager = (Manager) myList.get(rowIndex);
 				switch(columnIndex){
 				case 0: return manager.getFirstName();
@@ -144,7 +152,7 @@ public class Heap implements List<Object>, TableModel{
 				case 4: return manager.getStatus();
 				}
 			}
-			else if(myList.getClass()==Product.class){
+			else if(myList.get(0).getClass()==Product.class){
 				Product product =  (Product) myList.get(rowIndex);
 				switch(columnIndex){
 				case 0: return product.getNameProduct();
@@ -153,7 +161,7 @@ public class Heap implements List<Object>, TableModel{
 				case 3: return product.getSummary();
 				}
 			}
-			else if(myList.getClass()==Destribution.class){
+			else if(myList.get(0).getClass()==Destribution.class){
 			Destribution destribution = (Destribution) myList.get(rowIndex);
 				switch(columnIndex){
 				case 0: return destribution.getDateTime();
@@ -183,7 +191,7 @@ public class Heap implements List<Object>, TableModel{
 	
 	public void setValueAt(Object aValue, int rowIndex) {
 		myList.set(rowIndex, aValue);
-		
+		notifyChanges();
 	}
 
 	@Override
@@ -199,125 +207,95 @@ public class Heap implements List<Object>, TableModel{
 	}
 
 	
-	@Override
+	
 	public int size() {
 		return myList.size();
 	}
 
-	@Override
+	
 	public boolean isEmpty() {
 		return myList.isEmpty();
 	}
 
-	@Override
+	
 	public boolean contains(Object o) {
 		return myList.contains(o);
 	}
 
-	@Override
+	
 	public Iterator<Object> iterator() {
 			return myList.iterator();
 	}
 
-	@Override
+	
 	public Object[] toArray() {
 		return myList.toArray();
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
+	
 	public Object[] toArray(Object[] a) {
 		return myList.toArray(a);
 	}
 
-	@Override
-	public boolean add(Object object) {
-		return myList.add(object);
+	
+	public void add(Object object) {
+		myList.add(object);
+		notifyChanges();
 	}
 	
 	
 
-	@Override
-	public boolean remove(Object object) {
-			return myList.remove(object);
+	
+	public void remove(Object object) {
+		myList.remove(object);
+		notifyChanges();
 	}
 
 	
-	@Override
+	
+	
+	
 	public boolean containsAll(Collection<?> c) {
 		return myList.containsAll(c);
 	}
 
-	
-	@Override
-	public boolean addAll(Collection<?> c) {
-		return myList.addAll(c);
-	}
 
-	
-	@Override
-	public boolean addAll(int index, Collection<?> c) {
-		return myList.addAll(index, c);
-	}
-
-	@Override
-	public boolean removeAll(Collection<?> c) {
-		return myList.removeAll(c);
-	}
-
-	@Override
-	public boolean retainAll(Collection<?> c) {
-		return myList.retainAll(c);
-	}
-
-	@Override
 	public void clear() {
 		myList.clear();
+		notifyChanges();
 	}
 
-	@Override
+
 	public Object get(int index) {
 		return myList.get(index);
 	}
 
-	@Override
-	public Object set(int index, Object element) {
-		return myList.set(index, element);
+	
+	public void set(int index, Object element) {
+		 myList.set(index, element);
+		notifyChanges();
 	}
 
-	@Override
+
 	public void add(int index, Object element) {
 		myList.add(index, element);
+		notifyChanges();
 	}
 
-	@Override
-	public Object remove(int index) {
-		return myList.remove(index);
+
+	public void remove(int index) {
+		 myList.remove(index);
+		 notifyChanges();
 	}
 
-	@Override
+
 	public int indexOf(Object o) {
 		return myList.indexOf(o);
 	}
 
-	@Override
+
 	public int lastIndexOf(Object o) {
 		return myList.lastIndexOf(o);
-	}
-
-	@Override
-	public ListIterator<Object> listIterator() {
-		return myList.listIterator();
-	}
-
-	@Override
-	public ListIterator<Object> listIterator(int index) {
-		return myList.listIterator(index);
-	}
-
-	@Override
-	public List<Object> subList(int fromIndex, int toIndex) {
-		return myList.subList(fromIndex, toIndex);
 	}
 
 	public Integer getSelectedIndex() {
@@ -336,5 +314,27 @@ public class Heap implements List<Object>, TableModel{
 		}
 	}
 
+	public void addObserver(IObserver observer){
+		observers.add(observer);
+	}
+	
+	public void removeObserver(IObserver observer){
+		observers.remove(observer);
+	}
+	
+	private void notifyChanges(){
+		for(IObserver o : observers){
+			o.notifyEvent();
+			viewTable.setModel(this);
+		}
+	}
+
+	public JTable getViewTable() {
+		return viewTable;
+	}
+
+	public void setViewTable(JTable viewTable) {
+		this.viewTable = viewTable;
+	}
 	
 }
