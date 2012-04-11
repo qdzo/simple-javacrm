@@ -20,6 +20,7 @@ import model.Destribution;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 public class DealJDialog extends JDialog implements IModelDestribution,IDisplayable,ICommandable {
 
@@ -187,13 +188,20 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			contentPanel.add(lblComment, gbc_lblComment);
 		}
 		{
-			JTextArea commentArea = new JTextArea();
-			GridBagConstraints gbc_textArea = new GridBagConstraints();
-			gbc_textArea.gridwidth = 3;
-			gbc_textArea.fill = GridBagConstraints.BOTH;
-			gbc_textArea.gridx = 1;
-			gbc_textArea.gridy = 4;
-			contentPanel.add(commentArea, gbc_textArea);
+			JScrollPane scrollPane = new JScrollPane();
+			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+			gbc_scrollPane.fill = GridBagConstraints.BOTH;
+			gbc_scrollPane.gridwidth = 3;
+			gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
+			gbc_scrollPane.gridx = 1;
+			gbc_scrollPane.gridy = 4;
+			contentPanel.add(scrollPane, gbc_scrollPane);
+			{
+				JTextArea commentArea = new JTextArea();
+				commentArea.setLineWrap(true);
+				commentArea.setWrapStyleWord(true);
+				scrollPane.setViewportView(commentArea);
+			}
 		}
 		{
 			JPanel buttonPane = new JPanel();
