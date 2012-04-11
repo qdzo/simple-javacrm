@@ -367,17 +367,17 @@ public class JDialogsController implements ICommand  {
 		} else if(currentObject.getClass()==Manager.class){
 				IModelManager imodelManager = (IModelManager) managerDialog;
 				imodelManager.setModel((Manager)currentObject);
-					clientDialog.init(); 
+					managerDialog.init(); 
 					
 		}  else if(currentObject.getClass()==Product.class){
 			IModelProduct imodelProduct = (IModelProduct) productDialog;
 			imodelProduct.setModel((Product)currentObject);
-				clientDialog.init();
+				productDialog.init();
 				
 		}  else if(currentObject.getClass()==Destribution.class){
 			IModelDestribution imodelDestribution = (IModelDestribution) dealDialog;
 			imodelDestribution.setModel((Destribution)currentObject);
-				clientDialog.init();
+				dealDialog.init();
 		}  else { System.out.println("EDIT DIALOG: invalid arguments");
 			return;
 		}

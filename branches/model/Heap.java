@@ -10,6 +10,7 @@ import java.util.Set;
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
 
+import view_controller.BusinessObjects;
 import view_controller.IObserver;
 
 public class Heap implements TableModel{
@@ -19,8 +20,7 @@ public class Heap implements TableModel{
 	private Set<TableModelListener> listeners = new HashSet<TableModelListener>();
 	private Set<IObserver>	observers = new HashSet<IObserver>();
 	private List<Object> myList;
-	private Integer selectedIndex;
-	
+	private Integer selectedIndex = null;
 	
 	public Heap(){
 		myList = new ArrayList<Object>();
@@ -319,19 +319,11 @@ public class Heap implements TableModel{
 	
 	
 	public Integer getSelectedIndex() {
-		if(selectedIndex==null)
-			return null;
-		int index = selectedIndex;
-		selectedIndex=null;
-		return index;
+		return selectedIndex;
 	}
 
 	public void setSelectedIndex(Integer selectedIndex) {
-		if(selectedIndex==null)
 		this.selectedIndex = selectedIndex;
-		else{
-			System.out.println("SET SELECTED INDEX: Take off first the index! ");
-		}
 	}
 
 	
@@ -350,6 +342,6 @@ public class Heap implements TableModel{
 		}
 	}
 
- 
+
 
 }
