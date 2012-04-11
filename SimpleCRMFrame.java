@@ -230,7 +230,8 @@ public class SimpleCRMFrame extends JFrame {
 		editButton = new JButton("Edit");
 		editButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.execute(Commands.EDIT, BusinessObjects.client, null);
+				heap.setSelectedIndex(table.getSelectedRow());
+				controller.execute(Commands.EDIT, BusinessObjects.client,heap.getValueAt(table.getSelectedRow()));
 			}
 		});
 		GridBagConstraints gbc_editButton = new GridBagConstraints();

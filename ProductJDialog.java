@@ -18,6 +18,7 @@ import javax.swing.JTextField;
 import model.Product;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import javax.swing.JScrollPane;
 
 public class ProductJDialog extends JDialog implements IModelProduct, IDisplayable,ICommandable {
 
@@ -114,12 +115,18 @@ public class ProductJDialog extends JDialog implements IModelProduct, IDisplayab
 			contentPanel.add(lblDescription, gbc_lblDescription);
 		}
 		{
-			descriptionProductArea = new JTextArea();
-			GridBagConstraints gbc_descriptionProductArea = new GridBagConstraints();
-			gbc_descriptionProductArea.fill = GridBagConstraints.BOTH;
-			gbc_descriptionProductArea.gridx = 1;
-			gbc_descriptionProductArea.gridy = 3;
-			contentPanel.add(descriptionProductArea, gbc_descriptionProductArea);
+			JScrollPane scrollPane = new JScrollPane();
+			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
+			gbc_scrollPane.fill = GridBagConstraints.BOTH;
+			gbc_scrollPane.gridx = 1;
+			gbc_scrollPane.gridy = 3;
+			contentPanel.add(scrollPane, gbc_scrollPane);
+			{
+				descriptionProductArea = new JTextArea();
+				scrollPane.setViewportView(descriptionProductArea);
+				descriptionProductArea.setLineWrap(true);
+				descriptionProductArea.setWrapStyleWord(true);
+			}
 		}
 		{
 			JPanel buttonPane = new JPanel();
