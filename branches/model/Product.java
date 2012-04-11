@@ -38,9 +38,9 @@ public class Product {
 		return description;
 	}
 
-	public void setDescription(String descriprion) {
+	public void setDescription(String description) {
 		if(validate(description))
-		this.description = descriprion;
+		this.description = description;
 	}
 	
 
