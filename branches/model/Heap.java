@@ -342,6 +342,17 @@ public class Heap implements TableModel{
 		}
 	}
 
-
+	public BusinessObjects getBObject(){
+		if(myList.get(0).getClass().equals(Client.class)){
+			return BusinessObjects.client;
+		} else if(myList.get(0).getClass().equals(Manager.class)){
+			return BusinessObjects.manager;
+		} if(myList.get(0).getClass().equals(Product.class)){
+			return BusinessObjects.product;
+		} if(myList.get(0).getClass().equals(Destribution.class)){
+			return BusinessObjects.deal;
+		}
+		return null;
+	}
 
 }
