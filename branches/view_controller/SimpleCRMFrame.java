@@ -242,7 +242,7 @@ public class SimpleCRMFrame extends JFrame {
 		saveButton = new JButton("Save");
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.execute(Commands.SAVE, BusinessObjects.client, null);
+				controller.execute(Commands.SAVE, null, null);
 			}
 		});
 		GridBagConstraints gbc_saveButton = new GridBagConstraints();
@@ -254,7 +254,8 @@ public class SimpleCRMFrame extends JFrame {
 		deleteButton = new JButton("Delete");
 		deleteButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.execute(Commands.DELETE, BusinessObjects.client, null);
+				heap.setSelectedIndex(table.getSelectedRow());
+				controller.execute(Commands.DELETE, heap.getBObject(),heap.get(table.getSelectedRow()));
 			}
 		});
 		GridBagConstraints gbc_deleteButton = new GridBagConstraints();
