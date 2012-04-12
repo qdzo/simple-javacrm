@@ -49,6 +49,7 @@ public class SimpleCRMFrame extends JFrame {
 	private Heap heap;
 	private Notificator notificator;
 	private ViewTable table;
+	private JButton ShowAllButton;
 	
 	/**
 	 * Launch the application.
@@ -131,7 +132,7 @@ public class SimpleCRMFrame extends JFrame {
 		setContentPane(contentPane);
 		GridBagLayout gbl_contentPane = new GridBagLayout();
 		gbl_contentPane.columnWidths = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
-		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 0, 0, 0};
+		gbl_contentPane.rowHeights = new int[]{0, 0, 0, 0, 0, 0, 103, 0, 0};
 		gbl_contentPane.columnWeights = new double[]{0.0, 0.0, 1.0, 1.0, 0.0, 1.0, 1.0, 0.0, 0.0, 0.0, 1.0, Double.MIN_VALUE};
 		gbl_contentPane.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 1.0, Double.MIN_VALUE};
 		contentPane.setLayout(gbl_contentPane);
@@ -191,6 +192,18 @@ public class SimpleCRMFrame extends JFrame {
 		gbc_btnFind.gridy = 0;
 		contentPane.add(searchButton, gbc_btnFind);
 		
+		ShowAllButton = new JButton("Show All");
+		ShowAllButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				controller.execute(Commands.SHOW, (BusinessObjects) findEntetiesBox.getSelectedItem(), null);
+			}
+		});
+		GridBagConstraints gbc_ShowAllButton = new GridBagConstraints();
+		gbc_ShowAllButton.insets = new Insets(0, 0, 5, 5);
+		gbc_ShowAllButton.gridx = 7;
+		gbc_ShowAllButton.gridy = 0;
+		contentPane.add(ShowAllButton, gbc_ShowAllButton);
+		
 		
 		JScrollPane scrollPane = new JScrollPane();
 		GridBagConstraints gbc_scrollPane = new GridBagConstraints();
@@ -242,14 +255,9 @@ public class SimpleCRMFrame extends JFrame {
 		saveButton = new JButton("Save");
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				controller.execute(Commands.SAVE, null, null);
+				controller.execute(Commands.SAVE, heap.getBObject(), null);
 			}
 		});
-		GridBagConstraints gbc_saveButton = new GridBagConstraints();
-		gbc_saveButton.insets = new Insets(0, 0, 0, 5);
-		gbc_saveButton.gridx = 5;
-		gbc_saveButton.gridy = 7;
-		contentPane.add(saveButton, gbc_saveButton);
 		
 		deleteButton = new JButton("Delete");
 		deleteButton.addActionListener(new ActionListener() {
@@ -260,9 +268,14 @@ public class SimpleCRMFrame extends JFrame {
 		});
 		GridBagConstraints gbc_deleteButton = new GridBagConstraints();
 		gbc_deleteButton.insets = new Insets(0, 0, 0, 5);
-		gbc_deleteButton.gridx = 6;
+		gbc_deleteButton.gridx = 5;
 		gbc_deleteButton.gridy = 7;
 		contentPane.add(deleteButton, gbc_deleteButton);
+		GridBagConstraints gbc_saveButton = new GridBagConstraints();
+		gbc_saveButton.insets = new Insets(0, 0, 0, 5);
+		gbc_saveButton.gridx = 7;
+		gbc_saveButton.gridy = 7;
+		contentPane.add(saveButton, gbc_saveButton);
 		
 		System.out.println("Main Frame is initialized!");
 	}

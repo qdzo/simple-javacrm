@@ -82,12 +82,52 @@ public class JDialogsController implements ICommand  {
 			// save all changes 	
 		case SAVE:
 				saveModels();
+				break;
+		case SHOW:
+				showModels(bObject);
 				
 		}
 	}
 
 	
 	
+	private void showModels(BusinessObjects bObject) {
+switch (bObject){
+		
+		case client:
+			@SuppressWarnings("unchecked")
+			List<Client> clients =(List<Client>) modelFasade.selectTO(new Client(null));
+		//	client.setModelStatus(ModelStatus.Exist);
+			heap.setNewList(clients);
+			break;
+			
+		case manager:
+			@SuppressWarnings("unchecked")
+			List<Manager> managers = (List<Manager>) modelFasade.selectTO(new Manager(null));
+			//manager.setModelStatus(ModelStatus.Exist);
+			heap.add(managers);
+			break;
+			
+		case product:
+			@SuppressWarnings("unchecked")
+			List<Product> products = (List<Product>) modelFasade.selectTO(new Product(null));
+			//product.setModelStatus(ModelStatus.Exist);
+			heap.add(products);
+			break;
+			
+		case deal:
+			@SuppressWarnings("unchecked")
+			List<Destribution> destributions = (List<Destribution>) modelFasade.selectTO(new Destribution(null));
+			//destribution.setModelStatus(ModelStatus.Exist);
+			heap.add(destributions);
+			break;
+			
+		default: throw new NullPointerException("FIND MODEL:Wrong parrameter currentObject");	
+			
+		}
+		
+	}
+
 	// set a next command to jdialogs, which selection depends on the pushed button 
 	
 	private void setNextCommand(BusinessObjects bObject,Commands nextCommand) {
@@ -211,18 +251,22 @@ public class JDialogsController implements ICommand  {
 		if(currentObject.getClass()==Client.class){
 			((Client) currentObject).setModelStatus(ModelStatus.Deleted);
 			heap.set(heap.getSelectedIndex(), currentObject);
+			System.out.println("some client marked to delete");
 			
 		} else if(currentObject.getClass()==Manager.class){
 			((Manager) currentObject).setModelStatus(ModelStatus.Deleted);
 			heap.set(heap.getSelectedIndex(), currentObject);
+			System.out.println("some manager marked to delete");
 			
 		} else if(currentObject.getClass()==Product.class){
 			((Product) currentObject).setModelStatus(ModelStatus.Deleted);
 			heap.set(heap.getSelectedIndex(), currentObject);
-			
+			System.out.println("some product marked to delete");
 		} else if(currentObject.getClass()==Destribution.class){
+			
 			((Destribution) currentObject).setModelStatus(ModelStatus.Deleted);
 			heap.set(heap.getSelectedIndex(), currentObject);
+			System.out.println("some destribution marked to delete");
 		} 
 	}
 
@@ -358,6 +402,11 @@ public class JDialogsController implements ICommand  {
 			}
 	}
 
+	//============================================================================================================
+	
+	
+	
+	
 	private void editDialog(Object currentObject) {
 	
 		if(currentObject.getClass()==Client.class){
@@ -455,6 +504,11 @@ public class JDialogsController implements ICommand  {
 		return productDialog;
 	}
 
+	
+//===============================================================================================================	
+	
+	
+	
 	public void setProductDialog(IDisplayable productDialog) {
 		this.productDialog = productDialog;
 	}
@@ -463,6 +517,8 @@ public class JDialogsController implements ICommand  {
 		this.modelFasade = modelFasade;
 	}
 
+	
+	
 	public List<?> getHeapList() {
 		return (List<?>) heap;
 	}
@@ -471,6 +527,8 @@ public class JDialogsController implements ICommand  {
 		this.heap = heapList;
 	}
 
+	
+	
 	public Notificator getNotificator() {
 		return notificator;
 	}
