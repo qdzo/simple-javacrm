@@ -1,8 +1,10 @@
 package model;
 
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.sql.RowSet;
@@ -18,6 +20,14 @@ public class RdbClientDAO implements ClientDAO {
 	private final static String QUOTES_WITH_COMMA = "\',\'";
 	private final static String WHERE = "where ";
 	private final static String GROUP = "2";
+	private final static String PERS_ID = "pers_id";
+	private final static String FIRST_NAME = "first_name";
+	private final static String SECOND_NAME = "second_name";
+	private final static String TELEPHONE = "tel";
+	private final static String EMAIL = "email";
+	private final static String GROUP_ID = "group_id";
+	private final static String PRIORITY_ID = "priority_id";
+	private final static String STATUS_ID = "status_id";
 //==================================================================================================	
 	
 	public int insertClient(Client client){
@@ -38,17 +48,13 @@ public class RdbClientDAO implements ClientDAO {
 			if(connection.isClosed())
 				connection.close();
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		}
 		
 		
@@ -57,9 +63,9 @@ public class RdbClientDAO implements ClientDAO {
 
 	@Override
 	public boolean deleteClient(Client client) {
+		
 		int result=0;
-		// TODO Auto-generated method stub
-		try {
+				try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			
@@ -71,17 +77,13 @@ public class RdbClientDAO implements ClientDAO {
 				connection.close();
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		}
 		
 		if(result==1)
@@ -92,8 +94,7 @@ public class RdbClientDAO implements ClientDAO {
 
 	@Override
 	public Client findClient(Client client) {
-		// TODO Auto-generated method stub
-		try {
+				try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			
@@ -104,19 +105,15 @@ public class RdbClientDAO implements ClientDAO {
 				statement.close();
 			if(connection.isClosed())
 				connection.close();
-
-			} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		}
 		
 		return null;
@@ -124,7 +121,7 @@ public class RdbClientDAO implements ClientDAO {
 
 	@Override
 	public boolean updateClient(Client client) {
-		// TODO Auto-generated method stub
+		
 		int result = 0;
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
@@ -136,17 +133,13 @@ public class RdbClientDAO implements ClientDAO {
 				connection.close();
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+					e.printStackTrace();
 		}
 		
 		if(result==1)
@@ -157,7 +150,7 @@ public class RdbClientDAO implements ClientDAO {
 
 	@Override
 	public RowSet selectClientsRS(Client client) {
-		// TODO Auto-generated method stub
+
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
@@ -171,55 +164,131 @@ public class RdbClientDAO implements ClientDAO {
 				connection.close();
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return null;
 	}
+	
+	
 
 	@Override
 	public Collection<Client> selectClientsTO(Client client) {
-		// TODO Auto-generated method stub
+
+		Collection<Client> clients = new ArrayList<Client>();
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
+			String query = SELECT+"belong=2"+";";
+//			String query = "select p.pers_id,p.first_name,p.second_name,p.tel,p.email,pb.belong,pr.name," +
+//					"st.status_name from person p left outer join person_belong pb on p.belong = pb.id left outer join " +
+//					"priority pr on p.priority = pr.prio_id left outer join status st on p.status = st.stat_id where pb.belong ='клиент';";
+		System.out.println(query);
+			ResultSet resultSet = statement.executeQuery(query);
+			clients = buildClients(resultSet);
 			
-			
-			
-			ResultSet resultSet = statement.executeQuery(null);
 			if(!statement.isClosed())
 				statement.close();
 			if(connection.isClosed())
 				connection.close();
-
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
-		return null;
+		return clients;
 	}
 
+	private static Client buildClient(ResultSet rs){
+		Client client;
+		try {
+			client = new Client(rs.getInt(PERS_ID));
+			client.setFirstName(rs.getString(FIRST_NAME));
+			client.setSecondName(rs.getString(SECOND_NAME));
+			Integer tel = rs.getInt(TELEPHONE);
+			client.setTelephone(tel.toString());
+			client.setEmail(rs.getString(EMAIL));
+			
+			if(Priority.low.getValue()==rs.getInt(PRIORITY_ID)){
+			client.setPriority(Priority.low);
+			} else if(Priority.Medium.getValue()==rs.getInt(PRIORITY_ID)){
+				client.setPriority(Priority.Medium);
+			} else if(Priority.Hi.priorityValue==rs.getInt(PRIORITY_ID)){
+				client.setPriority(Priority.Hi);
+			}
+			
+			
+			int stat = rs.getInt(STATUS_ID);
+			switch (stat){
+			case 1:
+				client.setStatus(Status.актуально);
+				break;
+			case 2:
+				client.setStatus(Status.недействительно);
+			}
+			client.setModelStatus(ModelStatus.Exist);
+			return client;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 	
-	
+	private static Collection<Client> buildClients(ResultSet rs){
+		Collection<Client> clientsCollection = new ArrayList<Client>();
+		try {
+			while(rs.next()){
+			Client client = new Client(rs.getInt(PERS_ID));
+			client.setFirstName(rs.getString(FIRST_NAME));
+			client.setSecondName(rs.getString(SECOND_NAME));
+			Long tel = rs.getLong(TELEPHONE);
+			client.setTelephone(tel.toString());
+			client.setEmail(rs.getString(EMAIL));
+			Priority priority;
+			
+			switch (rs.getInt(PRIORITY_ID)){
+			case 1:
+				priority = Priority.Hi;
+				break;
+			case 2:
+				priority = Priority.Medium;
+				break;
+			case 3:
+				priority = Priority.low;
+				break;
+			default: 
+				priority = Priority.Medium;
+			}
+			client.setPriority(priority);
+			
+			int stat = rs.getInt(STATUS_ID);
+			switch (stat){
+			case 1:
+				client.setStatus(Status.актуально);
+				break;
+			case 2:
+				client.setStatus(Status.недействительно);
+			}
+			
+			
+			client.setModelStatus(ModelStatus.Exist);
+			clientsCollection.add(client);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return clientsCollection;
+	}
 
 }

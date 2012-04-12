@@ -38,8 +38,8 @@ public class Heap implements TableModel{
 	}
 
 	
-	public void setNewList(List<Object> businessObjectsList){
-		myList = businessObjectsList;
+	public void setNewList(List<? extends Object> businessObjectsList){
+		myList = (List<Object>) businessObjectsList;
 		notifyChanges();
 	}
 	

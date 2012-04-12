@@ -6,7 +6,7 @@ public class RdbDAOFactory implements DAOFactoryInterface {
 
 	public static final String DRIVER = "com.mysql.jdbc.Driver";
 	public static final String DBURL = "jdbc:jdc:mysql://192.168.0.2:3306/CRM_db"+
-		 "?autoReconnect=true&useUnicode=true&characterEncoding=utf8";
+		 "?autoReconnect=true&characterEncoding=UTF-8&useUnicode=true";
 	public static final String USER = "java";
 	public static final String PSWD = "12345";
 	private static JDCConnectionDriver ConnectionDriver;
