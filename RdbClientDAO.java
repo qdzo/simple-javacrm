@@ -11,15 +11,13 @@ import javax.sql.RowSet;
 
 public class RdbClientDAO implements ClientDAO {
 	
-	private final static String INSERT = "insert into person(first_name,second_name,tel,email,belong,priority) values (";
-	private final static String SEMICOLON = ");";
-	private final static String SELECT = "select * from person where ";
-	private final static String UPDATE = "update person set ";
-	private final static String DELETE = "delete from person where pers_id = ";
+	private final static int SELECT = 1;
+	private final static int INSERT = 2;
+	private final static int UPDATE = 3;
+	private final static int DELETE = 4;
 	private final static String QUOTES = "\'";
 	private final static String QUOTES_WITH_COMMA = "\',\'";
-	private final static String WHERE = "where ";
-	private final static String GROUP = "2";
+	private final static String COMMA = ",";
 	private final static String PERS_ID = "pers_id";
 	private final static String FIRST_NAME = "first_name";
 	private final static String SECOND_NAME = "second_name";
@@ -28,6 +26,7 @@ public class RdbClientDAO implements ClientDAO {
 	private final static String GROUP_ID = "group_id";
 	private final static String PRIORITY_ID = "priority_id";
 	private final static String STATUS_ID = "status_id";
+	
 //==================================================================================================	
 	
 	public int insertClient(Client client){
@@ -38,14 +37,12 @@ public class RdbClientDAO implements ClientDAO {
 			System.out.println("connection is created!");
 			Statement statement = connection.createStatement();
 			System.out.println("statement is created!");
-			String sql = INSERT+QUOTES+client.getFirstName()+QUOTES_WITH_COMMA+client.getSecondName()+
-					QUOTES_WITH_COMMA+client.getTelephone()+QUOTES_WITH_COMMA+client.getEmail()+QUOTES_WITH_COMMA+
-					GROUP+QUOTES_WITH_COMMA+client.getPriorityValue()+QUOTES+SEMICOLON;
+			String sql=null;
 			System.out.println(sql);
 			result = statement.executeUpdate(sql);
 			if(!statement.isClosed())
 				statement.close();
-			if(connection.isClosed())
+			if(!connection.isClosed())
 				connection.close();
 		} catch (ClassNotFoundException e) {
 					e.printStackTrace();
@@ -73,7 +70,7 @@ public class RdbClientDAO implements ClientDAO {
 			result = statement.executeUpdate(null);
 			if(!statement.isClosed())
 				statement.close();
-			if(connection.isClosed())
+			if(!connection.isClosed())
 				connection.close();
 
 		} catch (ClassNotFoundException e) {
@@ -103,7 +100,7 @@ public class RdbClientDAO implements ClientDAO {
 			ResultSet resultSet = statement.executeQuery(null);
 			if(!statement.isClosed())
 				statement.close();
-			if(connection.isClosed())
+			if(!connection.isClosed())
 				connection.close();
 			
 				} catch (ClassNotFoundException e) {
@@ -129,7 +126,7 @@ public class RdbClientDAO implements ClientDAO {
 			result = statement.executeUpdate("select");
 			if(!statement.isClosed())
 				statement.close();
-			if(connection.isClosed())
+			if(!connection.isClosed())
 				connection.close();
 
 		} catch (ClassNotFoundException e) {
@@ -154,13 +151,11 @@ public class RdbClientDAO implements ClientDAO {
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			
-			
-			
+			String query;
 			ResultSet resultSet = statement.executeQuery(null);
 			if(!statement.isClosed())
 				statement.close();
-			if(connection.isClosed())
+			if(!connection.isClosed())
 				connection.close();
 
 		} catch (ClassNotFoundException e) {
@@ -185,17 +180,16 @@ public class RdbClientDAO implements ClientDAO {
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			String query = SELECT+"belong=2"+";";
 //			String query = "select p.pers_id,p.first_name,p.second_name,p.tel,p.email,pb.belong,pr.name," +
 //					"st.status_name from person p left outer join person_belong pb on p.belong = pb.id left outer join " +
 //					"priority pr on p.priority = pr.prio_id left outer join status st on p.status = st.stat_id where pb.belong ='клиент';";
-		System.out.println(query);
+			String query = buildQuery(client,SELECT);
+			System.out.println(query);
 			ResultSet resultSet = statement.executeQuery(query);
 			clients = buildClients(resultSet);
-			
 			if(!statement.isClosed())
 				statement.close();
-			if(connection.isClosed())
+			if(!connection.isClosed())
 				connection.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -245,6 +239,7 @@ public class RdbClientDAO implements ClientDAO {
 		return null;
 	}
 	
+	
 	private static Collection<Client> buildClients(ResultSet rs){
 		Collection<Client> clientsCollection = new ArrayList<Client>();
 		try {
@@ -255,23 +250,19 @@ public class RdbClientDAO implements ClientDAO {
 			Long tel = rs.getLong(TELEPHONE);
 			client.setTelephone(tel.toString());
 			client.setEmail(rs.getString(EMAIL));
-			Priority priority;
-			
 			switch (rs.getInt(PRIORITY_ID)){
 			case 1:
-				priority = Priority.Hi;
+				client.setPriority(Priority.Hi);
 				break;
 			case 2:
-				priority = Priority.Medium;
+				client.setPriority(Priority.Medium);
 				break;
 			case 3:
-				priority = Priority.low;
+				client.setPriority(Priority.low);
 				break;
 			default: 
-				priority = Priority.Medium;
+				client.setPriority(Priority.Medium);
 			}
-			client.setPriority(priority);
-			
 			int stat = rs.getInt(STATUS_ID);
 			switch (stat){
 			case 1:
@@ -280,8 +271,6 @@ public class RdbClientDAO implements ClientDAO {
 			case 2:
 				client.setStatus(Status.недействительно);
 			}
-			
-			
 			client.setModelStatus(ModelStatus.Exist);
 			clientsCollection.add(client);
 			}
@@ -291,4 +280,109 @@ public class RdbClientDAO implements ClientDAO {
 		return clientsCollection;
 	}
 
+	
+	
+	private static String buildQuery(Client client,int queryType){
+		
+		String columns = null;
+		String values = null;
+		Integer id = client.getId();
+		if(client.getFirstName()!=null){
+			columns = FIRST_NAME;
+			values = client.getFirstName();
+		}
+		if(client.getSecondName()!=null){
+			if(columns!=null){
+				columns += COMMA;
+				values += COMMA;
+			}
+			columns += SECOND_NAME;
+			values += client.getSecondName();
+		}
+		if(client.getTelephone()!=null){
+			if(columns!=null){
+				columns += COMMA;
+				values += COMMA;
+			}
+			columns += TELEPHONE;
+			values += client.getTelephone();
+		}
+		if(client.getEmail()!=null){
+			if(columns!=null){
+				columns += COMMA;
+				values += COMMA;
+			}
+			columns += COMMA;
+			values += COMMA;
+		}	
+		if(client.getPriority()!=null){
+			if(columns!=null){
+				columns += COMMA;
+				values += COMMA;
+			}
+			columns += PRIORITY_ID;
+			values += client.getPriority().getValue();
+		}
+		if(client.getStatus()!=null){
+			if(columns!=null){
+				columns += COMMA;
+				values += COMMA;
+			}
+			columns += STATUS_ID;
+			values += client.getStatus().getValue();
+		}
+		switch (queryType){
+		case SELECT:
+			return buildSelect(columns,values);
+		case INSERT:
+			return buildInsert(columns,values);
+		case UPDATE:
+			return buildUpdate(columns,values,id);
+		case DELETE:
+			return buildDelete(columns,values,id);
+		}
+		return null;
+	}
+	
+	
+	private static String buildDelete(String columns, String values,int id) {
+		String sql = "UPDATE person SET "+STATUS_ID+"=2 WRERE "+PERS_ID+"="+id+";";
+		return sql;
+	}
+
+	
+	private static String buildUpdate(String columns, String values,int id) {
+		String sql = "UPDATE person SET ";
+			while(columns.indexOf(COMMA)>0){
+			 sql += columns.substring(0, columns.indexOf(COMMA))+"=\""+values.substring(0, values.indexOf(COMMA))+"\" AND ";
+			 columns = columns.substring(columns.indexOf(COMMA)+1);
+			 values = values.substring(values.indexOf(COMMA)+1);
+		 }
+		 sql += columns+"=\""+values+"\" ";
+		 sql +="WHERE "+PERS_ID+"="+id+";";
+		return null;
+	}
+
+	
+	private static String buildInsert(String columns, String values) {
+		values = values.replace(COMMA, QUOTES_WITH_COMMA);
+		String sql = "INSERT INTO person("+columns+") VALUES (\'"+values+"\');";
+		return sql;
+	}
+
+	
+	private static String buildSelect(String columns,String values){
+		String sql = "SELECT * FROM person WHERE "+GROUP_ID+"=2";
+		if(columns!=null){
+			while(columns.indexOf(COMMA)>0){
+			 sql += " AND "+columns.substring(0, columns.indexOf(COMMA))+"="+values.substring(0, values.indexOf(COMMA));
+			 columns = columns.substring(columns.indexOf(COMMA)+1);
+			 values = values.substring(values.indexOf(COMMA)+1);
+		 }
+		 sql += " AND "+columns+"="+values;
+		}
+		sql += ";";
+		return sql;
+	}
+	
 }
