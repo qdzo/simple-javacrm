@@ -182,7 +182,7 @@ public class RdbClientDAO implements ClientDAO {
 			Statement statement = connection.createStatement();
 //			String query = "select p.pers_id,p.first_name,p.second_name,p.tel,p.email,pb.belong,pr.name," +
 //					"st.status_name from person p left outer join person_belong pb on p.belong = pb.id left outer join " +
-//					"priority pr on p.priority = pr.prio_id left outer join status st on p.status = st.stat_id where pb.belong ='клиент';";
+//					"priority pr on p.priority = pr.prio_id left outer join status st on p.status = st.stat_id where pb.belong ='пїЅпїЅпїЅпїЅпїЅпїЅ';";
 			String query = buildQuery(client,SELECT);
 			System.out.println(query);
 			ResultSet resultSet = statement.executeQuery(query);
@@ -226,10 +226,10 @@ public class RdbClientDAO implements ClientDAO {
 			int stat = rs.getInt(STATUS_ID);
 			switch (stat){
 			case 1:
-				client.setStatus(Status.актуально);
+				client.setStatus(Status.РђРєС‚СѓР°Р»СЊРЅРѕ);
 				break;
 			case 2:
-				client.setStatus(Status.недействительно);
+				client.setStatus(Status.РќРµРґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ);
 			}
 			client.setModelStatus(ModelStatus.Exist);
 			return client;
@@ -266,10 +266,10 @@ public class RdbClientDAO implements ClientDAO {
 			int stat = rs.getInt(STATUS_ID);
 			switch (stat){
 			case 1:
-				client.setStatus(Status.актуально);
+				client.setStatus(Status.РђРєС‚СѓР°Р»СЊРЅРѕ);
 				break;
 			case 2:
-				client.setStatus(Status.недействительно);
+				client.setStatus(Status.РќРµРґРµР№СЃС‚РІРёС‚РµР»СЊРЅРѕ);
 			}
 			client.setModelStatus(ModelStatus.Exist);
 			clientsCollection.add(client);
