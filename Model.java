@@ -135,7 +135,4 @@ public class Model implements IModelPersistable {
 			return destributionDAO.selectDestributionsTO((Destribution)t);
 		} else return null;
 	}
-	
-	
-
 }
