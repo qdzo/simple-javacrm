@@ -11,10 +11,10 @@ import javax.sql.RowSet;
 
 public class RdbClientDAO implements ClientDAO {
 	
-	private final static int SELECT = 1;
-	private final static int INSERT = 2;
-	private final static int UPDATE = 3;
-	private final static int DELETE = 4;
+	public final static int SELECT = 1;
+	public final static int INSERT = 2;
+	public final static int UPDATE = 3;
+	public final static int DELETE = 4;
 	private final static String QUOTES = "\'";
 	private final static String QUOTES_WITH_COMMA = "\',\'";
 	private final static String COMMA = ",";
@@ -182,7 +182,7 @@ public class RdbClientDAO implements ClientDAO {
 			Statement statement = connection.createStatement();
 //			String query = "select p.pers_id,p.first_name,p.second_name,p.tel,p.email,pb.belong,pr.name," +
 //					"st.status_name from person p left outer join person_belong pb on p.belong = pb.id left outer join " +
-//					"priority pr on p.priority = pr.prio_id left outer join status st on p.status = st.stat_id where pb.belong ='������';";
+//					"priority pr on p.priority = pr.prio_id left outer join status st on p.status = st.stat_id where pb.belong ='клиент';";
 			String query = buildQuery(client,SELECT);
 			System.out.println(query);
 			ResultSet resultSet = statement.executeQuery(query);
@@ -282,7 +282,7 @@ public class RdbClientDAO implements ClientDAO {
 
 	
 	
-	private static String buildQuery(Client client,int queryType){
+	public static String buildQuery(Client client,int queryType){
 		
 		String columns = null;
 		String values = null;
@@ -360,7 +360,7 @@ public class RdbClientDAO implements ClientDAO {
 		 }
 		 sql += columns+"=\""+values+"\" ";
 		 sql +="WHERE "+PERS_ID+"="+id+";";
-		return null;
+		return sql;
 	}
 
 	
@@ -375,7 +375,7 @@ public class RdbClientDAO implements ClientDAO {
 		String sql = "SELECT * FROM person WHERE "+GROUP_ID+"=2";
 		if(columns!=null){
 			while(columns.indexOf(COMMA)>0){
-			 sql += " AND "+columns.substring(0, columns.indexOf(COMMA))+"="+values.substring(0, values.indexOf(COMMA));
+			 sql += " AND "+columns.substring(0, columns.indexOf(COMMA))+"=\""+values.substring(0, values.indexOf(COMMA))+"\"";
 			 columns = columns.substring(columns.indexOf(COMMA)+1);
 			 values = values.substring(values.indexOf(COMMA)+1);
 		 }
