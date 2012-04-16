@@ -6,56 +6,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class test {
-
-	public static final String DRIVER = "com.mysql.jdbc.Driver";
-	public static final String DBURL = "jdbc:jdc:mysql://192.168.0.2:3306/CRM_db";
-//	+ "?autoReconnect=true&useUnicode=true&characterEncoding=utf8";
-	public static final String USER = "java";
-	public static final String PSWD = "12345";
+	
+	SQLBuilder sqlBuilder = new SQLBuilder();
+	RdbManagerDAO managerDAO = new RdbManagerDAO();
 	/**
 	 * @param args
 	 */
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-		try {
-			Heap heap = new Heap(new Client(null));
-			System.out.println(heap.getValueAt(0).getClass());
-			JDCConnectionDriver conDrive = new JDCConnectionDriver(DRIVER,DBURL,USER,PSWD);
-			JDCConnection connection = conDrive.connect(DBURL, null);
-			System.out.println("connection is created!");
-			connection.close();
-			System.out.println("connection is closed!");
-			connection = conDrive.connect(DBURL, null);
-			System.out.println("connection is created!");
-			connection.close();
-			System.out.println("connection is closed!");
-			connection = conDrive.connect(DBURL, null);
-			System.out.println("connection is created!");
-			connection = conDrive.connect(DBURL, null);
-			System.out.println("connection is created!");
-//			System.out.println("Connection is created");
-//			Statement statement = connection.createStatement();
-//			System.out.println("Statement is created");
-//			ResultSet resultSet = statement.executeQuery("select * from person where pers_id=20;");
-//			System.out.println("send query");
-//		    ResultSetMetaData metaData = resultSet.getMetaData();
-//		    for(int i=1;i<metaData.getColumnCount();i++)
-//			System.out.println(resultSet.getString(i));
-//		    printRes(resultSet);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		
+		Manager manager = new Manager(16);
+		manager.setFirstName("Vladimir");
+		manager.setSecondName("Banchenko");
+		manager.setTelephone("876537281");
+		String query = RdbManagerDAO.buildQuery(manager,RdbManagerDAO.UPDATE);
+		System.out.println(query);
+		
+			
 	}
 	
 	
