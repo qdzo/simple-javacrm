@@ -10,7 +10,7 @@ public class RdbDAOFactory implements DAOFactoryInterface {
 	public static final String USER = "java";
 	public static final String PSWD = "12345";
 	private static JDCConnectionDriver ConnectionDriver;
-	
+	public static SQLBuilder sql = new SQLBuilder();
 	
 	public static JDCConnection createConnection() throws ClassNotFoundException, InstantiationException, 
 	IllegalAccessException, SQLException{
