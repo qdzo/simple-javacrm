@@ -177,9 +177,4 @@ public String getEmail(){
 		this.modelStatus = modelStatus;
 	}
 
-
-	
-
-
-	
 }
