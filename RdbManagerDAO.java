@@ -24,156 +24,129 @@ public class RdbManagerDAO implements ManagerDAO{
 	public static final int UPDATE = 3;
 	public static final int DELETE = 4;
 	
-	@Override
+
 	public int insertManager(Manager manager) {
-		// TODO Auto-generated method stub
+		int insertedID = 0;
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			
-			
-			
-			ResultSet resultSet = statement.executeQuery(null);
+			String query = buildQuery(manager,INSERT);
+			insertedID = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
 			if(connection.isClosed())
 				connection.close();
-
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return 0;
+		return insertedID;
 	}
 
-	@Override
+
 	public boolean deleteManager(Manager manager) {
-		// TODO Auto-generated method stub
+		int deleteResult = 0;
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			
-			
-			
-			ResultSet resultSet = statement.executeQuery(null);
+			String query = buildQuery(manager,DELETE);
+			deleteResult = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
 			if(connection.isClosed())
 				connection.close();
-
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(deleteResult==1)
+			return true;
+		else
 		return false;
 	}
 
 	@Override
 	public Manager findManager(Manager manager) {
-		// TODO Auto-generated method stub
+		Manager findedManager = null;
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			
-			
-			
-			ResultSet resultSet = statement.executeQuery(null);
+			String query = buildQuery(manager,SELECT);
+			System.out.println(query);
+			ResultSet resultSet = statement.executeQuery(query);
+			findedManager = buildManager(resultSet);
 			if(!statement.isClosed())
 				statement.close();
 			if(connection.isClosed())
 				connection.close();
-
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return findedManager;
 	}
 
 	@Override
 	public boolean updateManager(Manager manager) {
-		// TODO Auto-generated method stub
+		int result = 0;
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			
-			
-			
-			ResultSet resultSet = statement.executeQuery(null);
+			String query = buildQuery(manager,UPDATE);
+			result = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
 			if(connection.isClosed())
 				connection.close();
-
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		if(result==1)
+			return true;
+		else
 		return false;
 	}
 
 	@Override
 	public RowSet selectManagersRS(Manager manager) {
-		// TODO Auto-generated method stub
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			
-			
-			
-			ResultSet resultSet = statement.executeQuery(null);
+			String query = buildQuery(manager,SELECT);			
+			ResultSet resultSet = statement.executeQuery(query);
 			if(!statement.isClosed())
 				statement.close();
 			if(connection.isClosed())
 				connection.close();
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return null;
@@ -181,54 +154,49 @@ public class RdbManagerDAO implements ManagerDAO{
 
 	@Override
 	public Collection<Manager> selectManagersTO(Manager manager) {
-		// TODO Auto-generated method stub
+		Collection<Manager> managers = new ArrayList<Manager>();
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			
-			
-			
-			ResultSet resultSet = statement.executeQuery(null);
+			String query = buildQuery(manager,SELECT);
+			ResultSet resultSet = statement.executeQuery(query);
+			managers = buildManagers(resultSet);
 			if(!statement.isClosed())
 				statement.close();
 			if(connection.isClosed())
 				connection.close();
 
 		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InstantiationException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IllegalAccessException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return null;
+		return managers;
 	}
 	
-	private static Client buildManager(ResultSet rs){
-		Client client;
+	private static Manager buildManager(ResultSet rs){
+		Manager manager;
 		try {
-			client = new Client(rs.getInt(PERS_ID));
-			client.setFirstName(rs.getString(FIRST_NAME));
-			client.setSecondName(rs.getString(SECOND_NAME));
+			manager = new Manager(rs.getInt(PERS_ID));
+			manager.setFirstName(rs.getString(FIRST_NAME));
+			manager.setSecondName(rs.getString(SECOND_NAME));
 			Integer tel = rs.getInt(TELEPHONE);
-			client.setTelephone(tel.toString());
-			client.setEmail(rs.getString(EMAIL));		
+			manager.setTelephone(tel.toString());
+			manager.setEmail(rs.getString(EMAIL));		
 			int stat = rs.getInt(STATUS_ID);
 			switch (stat){
 			case 1:
-				client.setStatus(Status.Актуально);
+				manager.setStatus(Status.Актуально);
 				break;
 			case 2:
-				client.setStatus(Status.Недействительно);
+				manager.setStatus(Status.Недействительно);
 			}
-			client.setModelStatus(ModelStatus.Exist);
-			return client;
+			manager.setModelStatus(ModelStatus.Exist);
+			return manager;
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
