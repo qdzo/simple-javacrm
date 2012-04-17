@@ -11,7 +11,7 @@ import javax.sql.RowSet;
 
 public class RdbManagerDAO implements ManagerDAO{
 
-	private final static String tableName = "person";
+	private final static String TABLE_NAME = "person";
 	private final static String PERS_ID = "pers_id";
 	private final static String FIRST_NAME = "first_name";
 	private final static String SECOND_NAME = "second_name";
@@ -210,6 +210,61 @@ public class RdbManagerDAO implements ManagerDAO{
 		return null;
 	}
 	
+	private static Client buildManager(ResultSet rs){
+		Client client;
+		try {
+			client = new Client(rs.getInt(PERS_ID));
+			client.setFirstName(rs.getString(FIRST_NAME));
+			client.setSecondName(rs.getString(SECOND_NAME));
+			Integer tel = rs.getInt(TELEPHONE);
+			client.setTelephone(tel.toString());
+			client.setEmail(rs.getString(EMAIL));		
+			int stat = rs.getInt(STATUS_ID);
+			switch (stat){
+			case 1:
+				client.setStatus(Status.Актуально);
+				break;
+			case 2:
+				client.setStatus(Status.Недействительно);
+			}
+			client.setModelStatus(ModelStatus.Exist);
+			return client;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	
+	
+	private static Collection<Manager> buildManagers(ResultSet rs){
+		Collection<Manager> clientsCollection = new ArrayList<Manager>();
+		try {
+			while(rs.next()){
+			Manager manager = new Manager(rs.getInt(PERS_ID));
+			manager.setFirstName(rs.getString(FIRST_NAME));
+			manager.setSecondName(rs.getString(SECOND_NAME));
+			Long tel = rs.getLong(TELEPHONE);
+			manager.setTelephone(tel.toString());
+			manager.setEmail(rs.getString(EMAIL));
+			int stat = rs.getInt(STATUS_ID);
+			switch (stat){
+			case 1:
+				manager.setStatus(Status.Актуально);
+				break;
+			case 2:
+				manager.setStatus(Status.Недействительно);
+			}
+			manager.setModelStatus(ModelStatus.Exist);
+			clientsCollection.add(manager);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return clientsCollection;
+	}
+
+	
 	public static String buildQuery(Manager manager,int queryType){
 		
 		Integer id = manager.getId();
@@ -236,18 +291,22 @@ public class RdbManagerDAO implements ManagerDAO{
 			Integer statusId = manager.getStatus().getValue();
 			values.add(statusId.toString());
 		}
-		Object obj = columns.toArray();
-		String[] col =  (String[]) obj;
-		String [] val = (String[]) values.toArray();
+		
+		String[] col =  new String[columns.size()];
+		String [] val = new String[values.size()];
+		for(int i=0;i<columns.size();i++){
+			col[i]=columns.get(i);
+			val[i]=values.get(i);
+		}
 		switch(queryType){
 		case INSERT:
-			return RdbDAOFactory.sql.buildInsert(tableName,col,val);
+			return RdbDAOFactory.sql.buildInsert(TABLE_NAME,col,val);
 		case SELECT:
-			return RdbDAOFactory.sql.buildSelect(tableName,col,val);
+			return RdbDAOFactory.sql.buildSelect(TABLE_NAME,col,val);
 		case UPDATE:
-			return RdbDAOFactory.sql.buildUpdate(tableName,col,val, PERS_ID, id);
+			return RdbDAOFactory.sql.buildUpdate(TABLE_NAME,col,val, PERS_ID, id);
 		case DELETE:
-			return RdbDAOFactory.sql.buildDelete(tableName, PERS_ID, id, STATUS_ID);
+			return RdbDAOFactory.sql.buildDelete(TABLE_NAME, PERS_ID, id, STATUS_ID);
 		}
 		
 		return null;

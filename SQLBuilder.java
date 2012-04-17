@@ -14,7 +14,7 @@ public class SQLBuilder {
 	public String buildUpdate(String tableName,String[] columns, String[] values,String columnId,int id) {
 		String sql = "UPDATE "+tableName+" SET ";
 			for(int i=0;i<columns.length;i++){
-				sql+= columns[i]+ "= \""+values[i]+"\"";
+				sql+= columns[i]+ "=\""+values[i]+"\"";
 				if(i+1<columns.length)
 					sql+= " AND ";
 		 }
@@ -44,7 +44,7 @@ public class SQLBuilder {
 	public String buildSelect(String tableName,String[] columns,String[] values){
 		String sql = "SELECT * FROM "+tableName+" WHERE ";
 		for(int i=0;i<columns.length;i++){
-			sql+= columns[i]+ "= \""+values[i]+"\"";
+			sql+= columns[i]+ "=\""+values[i]+"\"";
 			if(i+1<columns.length)
 				sql+= " AND ";
 	 }

@@ -15,6 +15,7 @@ public class Client extends Person{
 	
 	public Client(Integer id){
 		super(id);
+		this.priority=null;
 	}
 	
 //--------------------------------------------------------------------------------------------------
