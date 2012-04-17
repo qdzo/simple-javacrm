@@ -6,27 +6,26 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 
 import javax.sql.RowSet;
 
 public class RdbClientDAO implements ClientDAO {
 	
+	
+	private final static String TABLE_NAME = "person";
 	public final static int SELECT = 1;
 	public final static int INSERT = 2;
 	public final static int UPDATE = 3;
 	public final static int DELETE = 4;
-	private final static String QUOTES = "\'";
-	private final static String QUOTES_WITH_COMMA = "\',\'";
-	private final static String COMMA = ",";
 	private final static String PERS_ID = "pers_id";
 	private final static String FIRST_NAME = "first_name";
 	private final static String SECOND_NAME = "second_name";
 	private final static String TELEPHONE = "tel";
 	private final static String EMAIL = "email";
-	private final static String GROUP_ID = "group_id";
 	private final static String PRIORITY_ID = "priority_id";
 	private final static String STATUS_ID = "status_id";
-	
+	private final static String GROUP_ID = "group_id";
 //==================================================================================================	
 	
 	public int insertClient(Client client){
@@ -34,12 +33,10 @@ public class RdbClientDAO implements ClientDAO {
 		int result = 0;
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
-			System.out.println("connection is created!");
 			Statement statement = connection.createStatement();
-			System.out.println("statement is created!");
-			String sql=null;
-			System.out.println(sql);
-			result = statement.executeUpdate(sql);
+			String query = buildQuery(client,RdbClientDAO.UPDATE);
+			System.out.println(query);
+			result = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
 			if(!connection.isClosed())
@@ -62,22 +59,20 @@ public class RdbClientDAO implements ClientDAO {
 	public boolean deleteClient(Client client) {
 		
 		int result=0;
-				try {
+		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			
-			
-			result = statement.executeUpdate(null);
+			String query = buildQuery(client,RdbClientDAO.DELETE);
+			result = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
 			if(!connection.isClosed())
 				connection.close();
-
-		} catch (ClassNotFoundException e) {
+			} catch (ClassNotFoundException e) {
 					e.printStackTrace();
-		} catch (InstantiationException e) {
+			} catch (InstantiationException e) {
 					e.printStackTrace();
-		} catch (IllegalAccessException e) {
+			} catch (IllegalAccessException e) {
 					e.printStackTrace();
 		} catch (SQLException e) {
 					e.printStackTrace();
@@ -89,32 +84,32 @@ public class RdbClientDAO implements ClientDAO {
 		return false;
 	}
 
-	@Override
+
 	public Client findClient(Client client) {
-				try {
+		
+		Client findedClient = null;
+		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			
-			
-			
-			ResultSet resultSet = statement.executeQuery(null);
+			String query = buildQuery(client,RdbClientDAO.SELECT);
+			ResultSet resultSet = statement.executeQuery(query);
+			findedClient = buildClient(resultSet);
 			if(!statement.isClosed())
 				statement.close();
 			if(!connection.isClosed())
 				connection.close();
-			
 				} catch (ClassNotFoundException e) {
 					e.printStackTrace();
-		} catch (InstantiationException e) {
+				} catch (InstantiationException e) {
 					e.printStackTrace();
-		} catch (IllegalAccessException e) {
+				} catch (IllegalAccessException e) {
 					e.printStackTrace();
-		} catch (SQLException e) {
+				} catch (SQLException e) {
 					e.printStackTrace();
-		}
+				}
 		
-		return null;
-	}
+			return findedClient;
+		}
 
 	@Override
 	public boolean updateClient(Client client) {
@@ -123,12 +118,14 @@ public class RdbClientDAO implements ClientDAO {
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			result = statement.executeUpdate("select");
+			String query = buildQuery(client,RdbClientDAO.UPDATE);
+			System.out.println(query);
+			String sql = "UPDATE person SET first_name=\"Александр\" AND second_name=\"Большевиков\" AND tel=89109098763 AND email=\"alexx@yandex.ru\" AND priority_id=\"2\" AND status_id=\"1\" AND group_id=\"2\" WHERE pers_id=4;";
+			result = statement.executeUpdate(sql);
 			if(!statement.isClosed())
 				statement.close();
 			if(!connection.isClosed())
 				connection.close();
-
 		} catch (ClassNotFoundException e) {
 					e.printStackTrace();
 		} catch (InstantiationException e) {
@@ -145,14 +142,14 @@ public class RdbClientDAO implements ClientDAO {
 		return false;
 	}
 
-	@Override
+
 	public RowSet selectClientsRS(Client client) {
 
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			String query;
-			ResultSet resultSet = statement.executeQuery(null);
+			String query = buildQuery(client, SELECT);
+			ResultSet resultSet = statement.executeQuery(query);
 			if(!statement.isClosed())
 				statement.close();
 			if(!connection.isClosed())
@@ -180,9 +177,6 @@ public class RdbClientDAO implements ClientDAO {
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-//			String query = "select p.pers_id,p.first_name,p.second_name,p.tel,p.email,pb.belong,pr.name," +
-//					"st.status_name from person p left outer join person_belong pb on p.belong = pb.id left outer join " +
-//					"priority pr on p.priority = pr.prio_id left outer join status st on p.status = st.stat_id where pb.belong ='клиент';";
 			String query = buildQuery(client,SELECT);
 			System.out.println(query);
 			ResultSet resultSet = statement.executeQuery(query);
@@ -284,105 +278,55 @@ public class RdbClientDAO implements ClientDAO {
 	
 	public static String buildQuery(Client client,int queryType){
 		
-		String columns = null;
-		String values = null;
 		Integer id = client.getId();
+		List<String> columns = new ArrayList<String>();
+		List<String> values = new ArrayList<String>();
 		if(client.getFirstName()!=null){
-			columns = FIRST_NAME;
-			values = client.getFirstName();
+			columns.add(FIRST_NAME);
+			values.add(client.getFirstName());
 		}
 		if(client.getSecondName()!=null){
-			if(columns!=null){
-				columns += COMMA;
-				values += COMMA;
-			}
-			columns += SECOND_NAME;
-			values += client.getSecondName();
+			columns.add(SECOND_NAME);
+			values.add(client.getSecondName());
 		}
 		if(client.getTelephone()!=null){
-			if(columns!=null){
-				columns += COMMA;
-				values += COMMA;
-			}
-			columns += TELEPHONE;
-			values += client.getTelephone();
+			columns.add(TELEPHONE);
+			values.add(client.getTelephone());
 		}
 		if(client.getEmail()!=null){
-			if(columns!=null){
-				columns += COMMA;
-				values += COMMA;
-			}
-			columns += COMMA;
-			values += COMMA;
-		}	
+			columns.add(EMAIL);
+			values.add(client.getEmail());
+		}
 		if(client.getPriority()!=null){
-			if(columns!=null){
-				columns += COMMA;
-				values += COMMA;
-			}
-			columns += PRIORITY_ID;
-			values += client.getPriority().getValue();
+			columns.add(PRIORITY_ID);
+			Integer prio_id = client.getPriority().getValue();
+			values.add(prio_id.toString());
 		}
 		if(client.getStatus()!=null){
-			if(columns!=null){
-				columns += COMMA;
-				values += COMMA;
-			}
-			columns += STATUS_ID;
-			values += client.getStatus().getValue();
+			columns.add(STATUS_ID);
+			Integer statusId = client.getStatus().getValue();
+			values.add(statusId.toString());
 		}
-		switch (queryType){
-		case SELECT:
-			return buildSelect(columns,values);
+		columns.add(GROUP_ID);
+		values.add("2");
+		String[] col =  new String[columns.size()];
+		String [] val = new String[values.size()];
+		for(int i=0;i<columns.size();i++){
+			col[i]=columns.get(i);
+			val[i]=values.get(i);
+		}
+		switch(queryType){
 		case INSERT:
-			return buildInsert(columns,values);
+			return RdbDAOFactory.sql.buildInsert(TABLE_NAME,col,val);
+		case SELECT:
+			return RdbDAOFactory.sql.buildSelect(TABLE_NAME,col,val);
 		case UPDATE:
-			return buildUpdate(columns,values,id);
+			return RdbDAOFactory.sql.buildUpdate(TABLE_NAME,col,val, PERS_ID, id);
 		case DELETE:
-			return buildDelete(columns,values,id);
+			return RdbDAOFactory.sql.buildDelete(TABLE_NAME, PERS_ID, id, STATUS_ID);
 		}
+		
 		return null;
-	}
-	
-	
-	private static String buildDelete(String columns, String values,int id) {
-		String sql = "UPDATE person SET "+STATUS_ID+"=2 WRERE "+PERS_ID+"="+id+";";
-		return sql;
-	}
-
-	
-	private static String buildUpdate(String columns, String values,int id) {
-		String sql = "UPDATE person SET ";
-			while(columns.indexOf(COMMA)>0){
-			 sql += columns.substring(0, columns.indexOf(COMMA))+"=\""+values.substring(0, values.indexOf(COMMA))+"\" AND ";
-			 columns = columns.substring(columns.indexOf(COMMA)+1);
-			 values = values.substring(values.indexOf(COMMA)+1);
-		 }
-		 sql += columns+"=\""+values+"\" ";
-		 sql +="WHERE "+PERS_ID+"="+id+";";
-		return sql;
-	}
-
-	
-	private static String buildInsert(String columns, String values) {
-		values = values.replace(COMMA, QUOTES_WITH_COMMA);
-		String sql = "INSERT INTO person("+columns+") VALUES (\'"+values+"\');";
-		return sql;
-	}
-
-	
-	private static String buildSelect(String columns,String values){
-		String sql = "SELECT * FROM person WHERE "+GROUP_ID+"=2";
-		if(columns!=null){
-			while(columns.indexOf(COMMA)>0){
-			 sql += " AND "+columns.substring(0, columns.indexOf(COMMA))+"=\""+values.substring(0, values.indexOf(COMMA))+"\"";
-			 columns = columns.substring(columns.indexOf(COMMA)+1);
-			 values = values.substring(values.indexOf(COMMA)+1);
-		 }
-		 sql += " AND "+columns+"="+values;
-		}
-		sql += ";";
-		return sql;
 	}
 	
 }

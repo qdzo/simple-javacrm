@@ -18,7 +18,7 @@ public class test {
 		manager.setFirstName("Vladimir");
 		manager.setSecondName("Banchenko");
 		manager.setTelephone("876537281");
-		String query = RdbManagerDAO.buildQuery(manager,RdbManagerDAO.UPDATE);
+		String query = RdbManagerDAO.buildQuery(manager,RdbManagerDAO.SELECT);
 		System.out.println(query);
 		
 			
