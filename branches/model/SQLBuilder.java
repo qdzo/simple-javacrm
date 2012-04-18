@@ -3,9 +3,12 @@ package model;
 public class SQLBuilder {
 	
 	
+	public String buildDelete(String tableName,String columnIdName,int id){
+		String sql = "DELETE FROM "+tableName+" WHERE "+columnIdName+"="+id+";";
+		return sql;
+	}
 	
-	
-	public String buildDelete(String tableName,String columnIdName,int id,String statusColumn) {
+	public String buildInvalidDelete(String tableName,String columnIdName,int id,String statusColumn) {
 		String sql = "UPDATE "+tableName+" SET "+statusColumn+"=2 WRERE "+columnIdName+"="+id+";";
 		return sql;
 	}
@@ -16,7 +19,7 @@ public class SQLBuilder {
 			for(int i=0;i<columns.length;i++){
 				sql+= columns[i]+ "=\""+values[i]+"\"";
 				if(i+1<columns.length)
-					sql+= " AND ";
+					sql+= ",";
 		 }
 		 sql +=" WHERE "+columnId+"="+id+";";
 		return sql;
@@ -42,7 +45,9 @@ public class SQLBuilder {
 
 	
 	public String buildSelect(String tableName,String[] columns,String[] values){
-		String sql = "SELECT * FROM "+tableName+" WHERE ";
+		String sql = "SELECT * FROM "+tableName;
+		if(columns.length>0)
+			sql+=" WHERE ";
 		for(int i=0;i<columns.length;i++){
 			sql+= columns[i]+ "=\""+values[i]+"\"";
 			if(i+1<columns.length)
