@@ -343,7 +343,8 @@ public class Heap implements TableModel{
 	}
 
 	public BusinessObjects getBObject(){
-		if(myList.get(0).getClass().equals(Client.class)){
+		try{
+			if(myList.get(0).getClass().equals(Client.class)){
 			return BusinessObjects.client;
 		} else if(myList.get(0).getClass().equals(Manager.class)){
 			return BusinessObjects.manager;
@@ -352,6 +353,9 @@ public class Heap implements TableModel{
 		} if(myList.get(0).getClass().equals(Destribution.class)){
 			return BusinessObjects.deal;
 		}
+	}catch(IndexOutOfBoundsException e){
+		System.out.println("Heap is empty! cannot get an Business-type of object from it!");
+	}
 		return null;
 	}
 
