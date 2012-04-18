@@ -1,6 +1,9 @@
 package view_controller;
 
 import java.util.List;
+
+import javax.swing.JOptionPane;
+
 import model.Client;
 import model.Destribution;
 import model.Heap;
@@ -82,6 +85,7 @@ public class JDialogsController implements ICommand  {
 			// save all changes 	
 		case SAVE:
 				saveModels();
+				notificator.sendMessage("Данные Сохранены!", "Simple-java CRM!");
 				break;
 		case SHOW:
 				showModels(bObject);
@@ -105,21 +109,21 @@ switch (bObject){
 			@SuppressWarnings("unchecked")
 			List<Manager> managers = (List<Manager>) modelFasade.selectTO(new Manager(null));
 			//manager.setModelStatus(ModelStatus.Exist);
-			heap.add(managers);
+			heap.setNewList(managers);
 			break;
 			
 		case product:
 			@SuppressWarnings("unchecked")
 			List<Product> products = (List<Product>) modelFasade.selectTO(new Product(null));
 			//product.setModelStatus(ModelStatus.Exist);
-			heap.add(products);
+			heap.setNewList(products);
 			break;
 			
 		case deal:
 			@SuppressWarnings("unchecked")
 			List<Destribution> destributions = (List<Destribution>) modelFasade.selectTO(new Destribution(null));
 			//destribution.setModelStatus(ModelStatus.Exist);
-			heap.add(destributions);
+			heap.setNewList(destributions);
 			break;
 			
 		default: throw new NullPointerException("FIND MODEL:Wrong parrameter currentObject");	
@@ -259,9 +263,10 @@ switch (bObject){
 			System.out.println("some manager marked to delete");
 			
 		} else if(currentObject.getClass()==Product.class){
-			((Product) currentObject).setModelStatus(ModelStatus.Deleted);
-			heap.set(heap.getSelectedIndex(), currentObject);
-			System.out.println("some product marked to delete");
+			notificator.sendAlert("Вы не можете удалять данные о продукции!!!", "Уровень безопасности данных");
+//			((Product) currentObject).setModelStatus(ModelStatus.Deleted);
+//			heap.set(heap.getSelectedIndex(), currentObject);
+//			System.out.println("some product marked to delete");
 		} else if(currentObject.getClass()==Destribution.class){
 			
 			((Destribution) currentObject).setModelStatus(ModelStatus.Deleted);
