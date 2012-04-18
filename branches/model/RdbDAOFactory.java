@@ -68,6 +68,7 @@ public class RdbDAOFactory implements DAOFactoryInterface {
 			try {
 				JDCConnection connection = RdbDAOFactory.createConnection();
 				connection.close();
+				System.out.println("Pre-connection had done!");
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
