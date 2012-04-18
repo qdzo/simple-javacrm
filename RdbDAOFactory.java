@@ -9,18 +9,23 @@ public class RdbDAOFactory implements DAOFactoryInterface {
 		 "?autoReconnect=true&characterEncoding=UTF-8&useUnicode=true";
 	public static final String USER = "java";
 	public static final String PSWD = "12345";
-	private static JDCConnectionDriver ConnectionDriver;
+	private static JDCConnectionDriver connectionDriver;
 	public static SQLBuilder sql = new SQLBuilder();
+	private static PreConnector preConnector;
+	
+	
+	public RdbDAOFactory(){
+		preConnector = new PreConnector();
+	}
 	
 	public static JDCConnection createConnection() throws ClassNotFoundException, InstantiationException, 
 	IllegalAccessException, SQLException{
 		
-		if(ConnectionDriver == null)
-			//if(ConnectionDriver.acceptsURL(DBURL))
+		if(connectionDriver == null)
 			{
-			ConnectionDriver = new JDCConnectionDriver(DRIVER,DBURL,USER,PSWD);
+			connectionDriver = new JDCConnectionDriver(DRIVER,DBURL,USER,PSWD);
 			}
-		return 	ConnectionDriver.connect(DBURL, null);
+		return 	connectionDriver.connect(DBURL, null);
 	}		
 	
 
@@ -53,7 +58,31 @@ public class RdbDAOFactory implements DAOFactoryInterface {
 		return new RdbProductDAO();
 	}
 
-	
+	private class PreConnector extends Thread {
+		
+		PreConnector(){
+			this.start();
+		}
+		
+		public void run(){
+			try {
+				JDCConnection connection = RdbDAOFactory.createConnection();
+				connection.close();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (InstantiationException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IllegalAccessException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	
 	
 }
