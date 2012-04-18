@@ -34,7 +34,7 @@ public class RdbManagerDAO implements ManagerDAO{
 			insertedID = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
-			if(connection.isClosed())
+			if(!connection.isClosed())
 				connection.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -58,7 +58,7 @@ public class RdbManagerDAO implements ManagerDAO{
 			deleteResult = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
-			if(connection.isClosed())
+			if(!connection.isClosed())
 				connection.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -87,7 +87,7 @@ public class RdbManagerDAO implements ManagerDAO{
 			findedManager = buildManager(resultSet);
 			if(!statement.isClosed())
 				statement.close();
-			if(connection.isClosed())
+			if(!connection.isClosed())
 				connection.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -111,7 +111,7 @@ public class RdbManagerDAO implements ManagerDAO{
 			result = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
-			if(connection.isClosed())
+			if(!connection.isClosed())
 				connection.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -137,7 +137,7 @@ public class RdbManagerDAO implements ManagerDAO{
 			ResultSet resultSet = statement.executeQuery(query);
 			if(!statement.isClosed())
 				statement.close();
-			if(connection.isClosed())
+			if(!connection.isClosed())
 				connection.close();
 
 		} catch (ClassNotFoundException e) {
@@ -159,11 +159,12 @@ public class RdbManagerDAO implements ManagerDAO{
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			String query = buildQuery(manager,SELECT);
+			System.out.println(query);
 			ResultSet resultSet = statement.executeQuery(query);
 			managers = buildManagers(resultSet);
 			if(!statement.isClosed())
 				statement.close();
-			if(connection.isClosed())
+			if(!connection.isClosed())
 				connection.close();
 
 		} catch (ClassNotFoundException e) {
@@ -206,7 +207,7 @@ public class RdbManagerDAO implements ManagerDAO{
 	
 	
 	private static Collection<Manager> buildManagers(ResultSet rs){
-		Collection<Manager> clientsCollection = new ArrayList<Manager>();
+		Collection<Manager> manaagersCollection = new ArrayList<Manager>();
 		try {
 			while(rs.next()){
 			Manager manager = new Manager(rs.getInt(PERS_ID));
@@ -224,12 +225,12 @@ public class RdbManagerDAO implements ManagerDAO{
 				manager.setStatus(Status.Недействительно);
 			}
 			manager.setModelStatus(ModelStatus.Exist);
-			clientsCollection.add(manager);
+			manaagersCollection.add(manager);
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return clientsCollection;
+		return manaagersCollection;
 	}
 
 	
@@ -259,7 +260,8 @@ public class RdbManagerDAO implements ManagerDAO{
 			Integer statusId = manager.getStatus().getValue();
 			values.add(statusId.toString());
 		}
-		
+		columns.add(GROUP_ID);
+		values.add("1");
 		String[] col =  new String[columns.size()];
 		String [] val = new String[values.size()];
 		for(int i=0;i<columns.size();i++){
@@ -274,7 +276,7 @@ public class RdbManagerDAO implements ManagerDAO{
 		case UPDATE:
 			return RdbDAOFactory.sql.buildUpdate(TABLE_NAME,col,val, PERS_ID, id);
 		case DELETE:
-			return RdbDAOFactory.sql.buildDelete(TABLE_NAME, PERS_ID, id, STATUS_ID);
+			return RdbDAOFactory.sql.buildInvalidDelete(TABLE_NAME, PERS_ID, id, STATUS_ID);
 		}
 		
 		return null;
