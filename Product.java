@@ -4,14 +4,19 @@ public class Product {
 
 	private final Integer productId;
 	private String nameProduct;
-	private long price;
-	private int summary;
+	private Long price;
+	private Integer summary;
 	private String description;
 	private ModelStatus modelStatus;
 	
 	
 	public Product(Integer id){
 		this.productId = id;
+		nameProduct=null;
+		price=null;
+		summary=null;
+		description=null;
+		modelStatus= ModelStatus.Null;
 	}
 
 	public String getNameProduct() {
@@ -23,7 +28,7 @@ public class Product {
 		this.nameProduct = nameProduct;
 	}
 
-	public long getPrice() {
+	public Long getPrice() {
 		return price;
 	}
 
@@ -50,7 +55,7 @@ public class Product {
 	}
 
 	
-	public int getSummary() {
+	public Integer getSummary() {
 		return summary;
 	}
 
