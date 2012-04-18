@@ -34,7 +34,7 @@ public class RdbClientDAO implements ClientDAO {
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			String query = buildQuery(client,RdbClientDAO.UPDATE);
+			String query = buildQuery(client,RdbClientDAO.INSERT);
 			System.out.println(query);
 			result = statement.executeUpdate(query);
 			if(!statement.isClosed())
@@ -120,8 +120,7 @@ public class RdbClientDAO implements ClientDAO {
 			Statement statement = connection.createStatement();
 			String query = buildQuery(client,RdbClientDAO.UPDATE);
 			System.out.println(query);
-			String sql = "UPDATE person SET first_name=\"Александр\" AND second_name=\"Большевиков\" AND tel=89109098763 AND email=\"alexx@yandex.ru\" AND priority_id=\"2\" AND status_id=\"1\" AND group_id=\"2\" WHERE pers_id=4;";
-			result = statement.executeUpdate(sql);
+			result = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
 			if(!connection.isClosed())
@@ -323,7 +322,7 @@ public class RdbClientDAO implements ClientDAO {
 		case UPDATE:
 			return RdbDAOFactory.sql.buildUpdate(TABLE_NAME,col,val, PERS_ID, id);
 		case DELETE:
-			return RdbDAOFactory.sql.buildDelete(TABLE_NAME, PERS_ID, id, STATUS_ID);
+			return RdbDAOFactory.sql.buildInvalidDelete(TABLE_NAME, PERS_ID, id, STATUS_ID);
 		}
 		
 		return null;
