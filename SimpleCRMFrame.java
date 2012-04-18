@@ -255,6 +255,7 @@ public class SimpleCRMFrame extends JFrame {
 		saveButton = new JButton("Save");
 		saveButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(heap.getBObject()!=null)
 				controller.execute(Commands.SAVE, heap.getBObject(), null);
 			}
 		});
