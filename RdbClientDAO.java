@@ -92,6 +92,7 @@ public class RdbClientDAO implements ClientDAO {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			String query = buildQuery(client,RdbClientDAO.SELECT);
+			System.out.println(query);
 			ResultSet resultSet = statement.executeQuery(query);
 			findedClient = buildClient(resultSet);
 			if(!statement.isClosed())
