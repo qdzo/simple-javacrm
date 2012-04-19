@@ -59,7 +59,7 @@ public abstract class Person {
 //====================================================================================================================
 	
 	public void setTelephone(String tel){
-		if(validateTel(tel));
+		if(validateTel(tel))
 		this.telephone = tel;
 	}
 
