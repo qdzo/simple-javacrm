@@ -194,14 +194,15 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 	public Manager getModel() {
 		if(manager==null)
 			return null;
-			if(checkTheFields()){
-			manager.setFirstName((firstNameManagerField.getText()).trim());
-			manager.setSecondName((lastNameManagerField.getText()).trim());
-			manager.setTelephone((telephoneManagerField.getText()).trim());
-			manager.setEmail((emailManagerField.getText()).trim());
-			manager.setStatus((model.Status)statusManagerBox.getSelectedItem());
-			return manager;
-			}else return null;
+		if(!commandToDo.equals(Commands.SEARCH))
+			if(!checkTheFields())
+				return null;
+		manager.setFirstName((firstNameManagerField.getText()).trim());
+		manager.setSecondName((lastNameManagerField.getText()).trim());
+		manager.setTelephone((telephoneManagerField.getText()).trim());
+		manager.setEmail((emailManagerField.getText()).trim());
+		manager.setStatus((model.Status)statusManagerBox.getSelectedItem());
+		return manager;
 	}
 
 
@@ -246,6 +247,7 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 	public void init(){
 		try {
 			System.out.println("client dialog is popup");
+			msgLabel.setText("");
 			this.setVisible(true);
     		} catch (Exception ex) {
     			ex.printStackTrace();
