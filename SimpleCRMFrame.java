@@ -30,7 +30,7 @@ public class SimpleCRMFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField QuickSearchField;
+	private JTextField quickSearchField;
 	private BusinessObjects[] BusinessEntities = BusinessObjects.values();
 	private DealJDialog dealDialog;
 	private ClientJDialog clientDialog;
@@ -146,23 +146,24 @@ public class SimpleCRMFrame extends JFrame {
 		gbc_lblNewLabel.gridy = 0;
 		contentPane.add(lblNewLabel, gbc_lblNewLabel);
 		
-		QuickSearchField = new JTextField();
-		QuickSearchField.addActionListener(new ActionListener() {
+		quickSearchField = new JTextField();
+		quickSearchField.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				String tel = QuickSearchField.getText().trim();
+				String tel = quickSearchField.getText().trim();
 				Client sClient =  new Client(null);
 				sClient.setTelephone(tel);
 				controller.execute(Commands.QUICKFIND, BusinessObjects.client,sClient);
+				quickSearchField.setText("..введите телефон");
 			}
 		});
-		QuickSearchField.setText("enter the tel..");
+		quickSearchField.setText("..введите телефон");
 		GridBagConstraints gbc_QuickSearchField = new GridBagConstraints();
 		gbc_QuickSearchField.insets = new Insets(0, 0, 5, 5);
 		gbc_QuickSearchField.fill = GridBagConstraints.HORIZONTAL;
 		gbc_QuickSearchField.gridx = 2;
 		gbc_QuickSearchField.gridy = 0;
-		contentPane.add(QuickSearchField, gbc_QuickSearchField);
-		QuickSearchField.setColumns(10);
+		contentPane.add(quickSearchField, gbc_QuickSearchField);
+		quickSearchField.setColumns(10);
 		
 		lblFind = new JLabel("Search:");
 		GridBagConstraints gbc_lblFind = new GridBagConstraints();
