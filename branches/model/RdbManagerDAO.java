@@ -182,10 +182,11 @@ public class RdbManagerDAO implements ManagerDAO{
 	private static Manager buildManager(ResultSet rs){
 		Manager manager;
 		try {
+			if(rs.next()){
 			manager = new Manager(rs.getInt(PERS_ID));
 			manager.setFirstName(rs.getString(FIRST_NAME));
 			manager.setSecondName(rs.getString(SECOND_NAME));
-			Integer tel = rs.getInt(TELEPHONE);
+			Long tel = rs.getLong(TELEPHONE);
 			manager.setTelephone(tel.toString());
 			manager.setEmail(rs.getString(EMAIL));		
 			int stat = rs.getInt(STATUS_ID);
@@ -198,6 +199,7 @@ public class RdbManagerDAO implements ManagerDAO{
 			}
 			manager.setModelStatus(ModelStatus.Exist);
 			return manager;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

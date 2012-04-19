@@ -1,7 +1,6 @@
 package model;
 
 import java.sql.ResultSet;
-import java.sql.ResultSetMetaData;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
@@ -201,10 +200,11 @@ public class RdbClientDAO implements ClientDAO {
 	private static Client buildClient(ResultSet rs){
 		Client client;
 		try {
+			if(rs.next()){
 			client = new Client(rs.getInt(PERS_ID));
 			client.setFirstName(rs.getString(FIRST_NAME));
 			client.setSecondName(rs.getString(SECOND_NAME));
-			Integer tel = rs.getInt(TELEPHONE);
+			Long tel = rs.getLong(TELEPHONE);
 			client.setTelephone(tel.toString());
 			client.setEmail(rs.getString(EMAIL));
 			
@@ -227,6 +227,7 @@ public class RdbClientDAO implements ClientDAO {
 			}
 			client.setModelStatus(ModelStatus.Exist);
 			return client;
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
