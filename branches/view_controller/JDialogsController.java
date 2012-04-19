@@ -68,7 +68,7 @@ public class JDialogsController implements ICommand  {
 				addModel(bObject,currentObject);
 				break;
 		case QUICKFIND:	
-				quickFind(bObject);
+				quickFind(currentObject);
 				break;
 			// find object
 		case SEARCH:
@@ -306,26 +306,34 @@ switch (bObject){
 		
 		case client:
 			Client client =(Client) modelFasade.find(currentObject);
+			if(client!=null){
 			client.setModelStatus(ModelStatus.Exist);
 			heap.add(client);
+			} else notificator.sendMessage("Клиент не найден", "База данных");
 			break;
 			
 		case manager:
 			Manager manager = (Manager) modelFasade.find(currentObject);
+			if(manager!=null){
 			manager.setModelStatus(ModelStatus.Exist);
 			heap.add(manager);
+			} else notificator.sendMessage("Мэнеджер не найден", "База данных");
 			break;
 			
 		case product:
 			Product product = (Product) modelFasade.find(currentObject);
+			if(product!=null){
 			product.setModelStatus(ModelStatus.Exist);
 			heap.add(product);
+			} else notificator.sendMessage("Продукт не найден", "База данных");
 			break;
 			
 		case deal:
 			Destribution destribution = (Destribution) modelFasade.find(currentObject);
+			if(destribution!=null){
 			destribution.setModelStatus(ModelStatus.Exist);
 			heap.add(destribution);
+			} else notificator.sendMessage("Продажа не найдена", "База данных");
 			break;
 			
 		default: throw new NullPointerException("FIND MODEL:Wrong parrameter currentObject");	
@@ -336,8 +344,10 @@ switch (bObject){
 	private void quickFind(Object currentObject) {
 		
 		Client client =(Client) modelFasade.find(currentObject);
+		if(client!=null){
 		client.setModelStatus(ModelStatus.Exist);
 		heap.add(client);
+	} else notificator.sendMessage("Нет клиента с таким номером телефона", "База данных");
 		
 	}
 
