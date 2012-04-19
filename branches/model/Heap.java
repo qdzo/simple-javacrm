@@ -38,6 +38,7 @@ public class Heap implements TableModel{
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	public void setNewList(List<? extends Object> businessObjectsList){
 		myList = (List<Object>) businessObjectsList;
 		notifyChanges();
