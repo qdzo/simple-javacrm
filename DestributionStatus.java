@@ -1,12 +1,12 @@
 package model;
 
-public enum Status {
+public enum DestributionStatus {
 
-	Актуально(1),Недействительно(2);
+	Завершено(3),Ожидается(4),Заморожено(5),Отмена(6);
 	int statValue;
 	
 //==================================================================================================	
-	 Status(int statValue){
+	 DestributionStatus(int statValue){
 		
 		this.statValue = statValue;
 	}
@@ -19,6 +19,4 @@ public enum Status {
 		 return this.statValue;
 	 }
 
-//--------------------------------------------------------------------------------------------------
-	 
 }
