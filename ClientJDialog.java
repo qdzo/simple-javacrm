@@ -53,7 +53,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
-			JLabel lblFirstName = new JLabel("first name:");
+			JLabel lblFirstName = new JLabel("Имя:");
 			GridBagConstraints gbc_lblFirstName = new GridBagConstraints();
 			gbc_lblFirstName.anchor = GridBagConstraints.EAST;
 			gbc_lblFirstName.insets = new Insets(0, 0, 5, 5);
@@ -73,7 +73,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 			firstNameClientField.setColumns(10);
 		}
 		{
-			JLabel lblSecondName = new JLabel("last name:");
+			JLabel lblSecondName = new JLabel("Фамилия:");
 			GridBagConstraints gbc_lblSecondName = new GridBagConstraints();
 			gbc_lblSecondName.anchor = GridBagConstraints.EAST;
 			gbc_lblSecondName.insets = new Insets(0, 0, 5, 5);
@@ -93,7 +93,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 			lastNameClientField.setColumns(10);
 		}
 		{
-			JLabel lblTelephone = new JLabel("telephone:");
+			JLabel lblTelephone = new JLabel("Телефон:");
 			GridBagConstraints gbc_lblTelephone = new GridBagConstraints();
 			gbc_lblTelephone.anchor = GridBagConstraints.EAST;
 			gbc_lblTelephone.insets = new Insets(0, 0, 5, 5);
@@ -133,7 +133,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 			emailClientField.setColumns(10);
 		}
 		{
-			JLabel lblPriority = new JLabel("Priority:");
+			JLabel lblPriority = new JLabel("Приоритет:");
 			GridBagConstraints gbc_lblPriority = new GridBagConstraints();
 			gbc_lblPriority.insets = new Insets(0, 0, 5, 5);
 			gbc_lblPriority.anchor = GridBagConstraints.EAST;
@@ -151,7 +151,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 			contentPanel.add(priorityClientBox, gbc_priorityClientBox);
 		}
 		{
-			JLabel lblStatus = new JLabel("Status:");
+			JLabel lblStatus = new JLabel("Статус:");
 			GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 			gbc_lblStatus.insets = new Insets(0, 0, 0, 5);
 			gbc_lblStatus.anchor = GridBagConstraints.EAST;
@@ -271,6 +271,8 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 	public void init(){
 		try {
 			System.out.println("client dialog is popup");
+			statusClientBox.setSelectedIndex(0);
+			priorityClientBox.setSelectedIndex(1);
 			msgLabel.setText("");
 			this.setVisible(true);
     		} catch (Exception ex) {
