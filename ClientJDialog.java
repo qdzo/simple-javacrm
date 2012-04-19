@@ -176,7 +176,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(checkTheFields()){
+						if(checkTheFields()||commandToDo.equals(Commands.SEARCH)){
 						controller.execute(commandToDo, BusinessObjects.client,getModel());
 						System.out.println(commandToDo);
 						controller.execute(Commands.CLOSE, BusinessObjects.client, null);
@@ -213,7 +213,9 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 	public Client getModel() {
 		if(client==null)
 			return null;
-		if(checkTheFields()){
+		if(!commandToDo.equals(Commands.SEARCH))
+		if(!checkTheFields())
+			return null;
 		client.setFirstName((firstNameClientField.getText()).trim());
 		client.setSecondName((lastNameClientField.getText()).trim());
 		client.setTelephone((telephoneClientField.getText()).trim());
@@ -221,8 +223,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 		client.setPriority((Priority)priorityClientBox.getSelectedItem());
 		client.setStatus((model.Status)statusClientBox.getSelectedItem());
 		return client;
-		} else return null;
-	}
+		}
 
 
 
@@ -270,6 +271,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 	public void init(){
 		try {
 			System.out.println("client dialog is popup");
+			msgLabel.setText("");
 			this.setVisible(true);
     		} catch (Exception ex) {
     			ex.printStackTrace();

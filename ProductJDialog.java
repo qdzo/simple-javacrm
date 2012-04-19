@@ -140,7 +140,7 @@ public class ProductJDialog extends JDialog implements IModelProduct, IDisplayab
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(checkTheFields()){
+						if(checkTheFields()||commandToDo.equals(Commands.SEARCH)){
 						controller.execute(commandToDo, BusinessObjects.product, getModel());
 						controller.execute(Commands.CLOSE, BusinessObjects.product, null);
 						}
@@ -169,13 +169,14 @@ public class ProductJDialog extends JDialog implements IModelProduct, IDisplayab
 	public Product getModel() {
 		if(product==null)
 			return null;
-			if(checkTheFields()){
+		if(!commandToDo.equals(Commands.SEARCH))
+			if(!checkTheFields())
+				return null;
 			product.setNameProduct((nameProductField.getText()).trim());
 			product.setPrice((priceProductField.getText()).trim());
 			product.setSummary((sumProductField.getText()).trim());
 			product.setDescription((descriptionProductArea.getText()).trim());
 			return product;
-			}else return null;
 	}
 
 
@@ -224,6 +225,7 @@ public class ProductJDialog extends JDialog implements IModelProduct, IDisplayab
 	public void init() {
 		 try {
 				System.out.println("product dialog is popup");
+				msgLabel.setText("");
 				this.setVisible(true);
 				} catch (Exception ex) {
 					ex.printStackTrace();
