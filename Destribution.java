@@ -13,17 +13,18 @@ public class Destribution {
 	private int ProductId;
 	private String ProductName;
 	private String comment;
-	private Status Status;
+	private DestributionStatus destributionStatus;
 	private ModelStatus modelStatus;
 	
 	
 	public Destribution(Integer id){
 		// a default constructor
 		this.id = id;
+		
 	}
 	
 	
-	public int getManagerId() {
+	public Integer getManagerId() {
 		return ManagerId;
 	}
 
@@ -46,6 +47,14 @@ public class Destribution {
 		}
 	}
 	
+	
+	public void setManager(Manager manager){
+		if(manager!=null){
+			setManagerId(manager.getId());
+			setManagerFirstName(manager.getFirstName());
+			setManagerSecondName(manager.getSecondName());	
+		}
+	}
 	protected void setManagerId(int managerId) {
 		ManagerId = managerId;
 	}
@@ -64,7 +73,7 @@ public class Destribution {
 	}
 
 
-	public int getClientId() {
+	public Integer getClientId() {
 		return ClientId;
 	}
 
@@ -79,6 +88,7 @@ public class Destribution {
 	}
 
 	
+	
 	public void setClient(int clientId, String firstName, String lastName){
 		if(validateDecimal(clientId)&&validate(firstName)&&validate(lastName)){
 			setClientId(clientId);
@@ -87,6 +97,15 @@ public class Destribution {
 			
 		}
 		
+	}
+	
+	
+	public void setClient(Client client){
+		if(client!=null){
+			setClientId(client.getId());
+			setClientFirstName(client.getFirstName());
+			setClientSecondName(client.getSecondName());
+		}
 	}
 	protected void setClientId(int clientId) {
 		ClientId = clientId;
@@ -103,7 +122,7 @@ public class Destribution {
 	}
 
 
-	public int getProductId() {
+	public Integer getProductId() {
 		return ProductId;
 	}
 
@@ -117,6 +136,13 @@ public class Destribution {
 		if(validateDecimal(productId)&&validate(productName)){
 			setProductId(productId);
 			setProductName(productName);
+		}
+	}
+	
+	public void setProduct(Product product){
+		if(product!=null){
+			setProductId(product.getProductId());
+			setProductName(product.getNameProduct());
 		}
 	}
 	
@@ -179,23 +205,19 @@ public class Destribution {
 	}
 
 
-	public Status getStatus() {
-		return Status;
+	public DestributionStatus getStatus() {
+		return destributionStatus;
 	}
 
 
-	public void setStatus(Status status) {
-		Status = status;
+	public void setStatus(DestributionStatus status) {
+		destributionStatus = status;
 	}
 
 
 //	public void setDateTime(String dateTime) {
 //		DateTime = dateTime;
 //	}
-	
-	
-	
-	
 	
 	
 }
