@@ -56,7 +56,7 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 		gbl_contentPanel.rowWeights = new double[]{0.0, 0.0, 0.0, 0.0, 0.0, 0.0, Double.MIN_VALUE};
 		contentPanel.setLayout(gbl_contentPanel);
 		{
-			JLabel lblFirstName = new JLabel("first name:");
+			JLabel lblFirstName = new JLabel("Имя:");
 			GridBagConstraints gbc_lblFirstName = new GridBagConstraints();
 			gbc_lblFirstName.insets = new Insets(0, 0, 5, 5);
 			gbc_lblFirstName.anchor = GridBagConstraints.EAST;
@@ -76,7 +76,7 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 			firstNameManagerField.setColumns(10);
 		}
 		{
-			JLabel lblLastName = new JLabel("last name:");
+			JLabel lblLastName = new JLabel("Фамилия:");
 			GridBagConstraints gbc_lblLastName = new GridBagConstraints();
 			gbc_lblLastName.insets = new Insets(0, 0, 5, 5);
 			gbc_lblLastName.anchor = GridBagConstraints.EAST;
@@ -96,7 +96,7 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 			lastNameManagerField.setColumns(10);
 		}
 		{
-			JLabel lblTelephone = new JLabel("telephone:");
+			JLabel lblTelephone = new JLabel("Телефон:");
 			GridBagConstraints gbc_lblTelephone = new GridBagConstraints();
 			gbc_lblTelephone.insets = new Insets(0, 0, 5, 5);
 			gbc_lblTelephone.anchor = GridBagConstraints.EAST;
@@ -136,7 +136,7 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 			emailManagerField.setColumns(10);
 		}
 		{
-			JLabel lblStatus = new JLabel("status:");
+			JLabel lblStatus = new JLabel("Статус:");
 			GridBagConstraints gbc_lblStatus = new GridBagConstraints();
 			gbc_lblStatus.insets = new Insets(0, 0, 5, 5);
 			gbc_lblStatus.anchor = GridBagConstraints.EAST;
@@ -248,6 +248,7 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 		try {
 			System.out.println("client dialog is popup");
 			msgLabel.setText("");
+			statusManagerBox.setSelectedIndex(0);
 			this.setVisible(true);
     		} catch (Exception ex) {
     			ex.printStackTrace();
