@@ -208,12 +208,12 @@ public class RdbClientDAO implements ClientDAO {
 			client.setTelephone(tel.toString());
 			client.setEmail(rs.getString(EMAIL));
 			
-			if(Priority.low.getValue()==rs.getInt(PRIORITY_ID)){
-			client.setPriority(Priority.low);
-			} else if(Priority.Medium.getValue()==rs.getInt(PRIORITY_ID)){
-				client.setPriority(Priority.Medium);
-			} else if(Priority.Hi.priorityValue==rs.getInt(PRIORITY_ID)){
-				client.setPriority(Priority.Hi);
+			if(Priority.Низкий.getValue()==rs.getInt(PRIORITY_ID)){
+			client.setPriority(Priority.Низкий);
+			} else if(Priority.Средний.getValue()==rs.getInt(PRIORITY_ID)){
+				client.setPriority(Priority.Средний);
+			} else if(Priority.Высокий.priorityValue==rs.getInt(PRIORITY_ID)){
+				client.setPriority(Priority.Высокий);
 			}
 			
 			
@@ -247,16 +247,16 @@ public class RdbClientDAO implements ClientDAO {
 			client.setEmail(rs.getString(EMAIL));
 			switch (rs.getInt(PRIORITY_ID)){
 			case 1:
-				client.setPriority(Priority.Hi);
+				client.setPriority(Priority.Высокий);
 				break;
 			case 2:
-				client.setPriority(Priority.Medium);
+				client.setPriority(Priority.Средний);
 				break;
 			case 3:
-				client.setPriority(Priority.low);
+				client.setPriority(Priority.Низкий);
 				break;
 			default: 
-				client.setPriority(Priority.Medium);
+				client.setPriority(Priority.Средний);
 			}
 			int stat = rs.getInt(STATUS_ID);
 			switch (stat){
