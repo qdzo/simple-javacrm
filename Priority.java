@@ -2,13 +2,12 @@ package model;
 
 public enum Priority {
 	
-	low(3,"низкий"),Medium(2,"средний"),Hi(1,"высокий");
+	РќРёР·РєРёР№(3),РЎСЂРµРґРЅРёР№(2),Р’С‹СЃРѕРєРёР№(1);
 	int priorityValue;
-	String priorityName;
 //=========================================================================================
-	Priority(int priorValue,String prioName){
+	Priority(int priorValue){
 		priorityValue = priorValue;
-		priorityName = prioName;
+	
 	}
 //------------------------------------------------------------------------------------------	
 //==========================================================================================
@@ -17,10 +16,6 @@ public enum Priority {
 		
 		return priorityValue;
 		}
-	
-	String getName(){
-		
-		return priorityName;
-	}
+
 //------------------------------------------------------------------------------------------	
 }
