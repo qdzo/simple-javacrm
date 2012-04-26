@@ -16,10 +16,13 @@ import java.awt.Insets;
 import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
+import model.Client;
 import model.Destribution;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.List;
+
 import javax.swing.JScrollPane;
 
 public class DealJDialog extends JDialog implements IModelDestribution,IDisplayable,ICommandable {
@@ -29,16 +32,20 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	 */
 	private static final long serialVersionUID = -1402793380772715703L;
 	private final JPanel contentPanel = new JPanel();
-	private JTextField findManagerField;
-	private JTextField findClientField;
-	private JTextField findProductField;
 	private ICommand controller;
 	private Commands commandToDo;
 	private Destribution destribution;
+	private ListDialog clientsViewList;
+	private ListDialog managersViewList;
+	private ListDialog productsViewList;
+	
 
 
 	public DealJDialog(Frame frame,String title) {
 		super(frame,title,true);
+		clientsViewList = new ListDialog();
+		managersViewList = new ListDialog();
+		productsViewList = new ListDialog();
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -60,32 +67,13 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			contentPanel.add(lblProduct, gbc_lblProduct);
 		}
 		{
-			JComboBox productBox = new JComboBox();
-			GridBagConstraints gbc_productBox = new GridBagConstraints();
-			gbc_productBox.insets = new Insets(0, 0, 5, 5);
-			gbc_productBox.fill = GridBagConstraints.HORIZONTAL;
-			gbc_productBox.gridx = 1;
-			gbc_productBox.gridy = 0;
-			contentPanel.add(productBox, gbc_productBox);
-		}
-		{
-			JLabel lblSearchAProduct = new JLabel("find product:");
-			GridBagConstraints gbc_lblSearchAProduct = new GridBagConstraints();
-			gbc_lblSearchAProduct.insets = new Insets(0, 0, 5, 5);
-			gbc_lblSearchAProduct.anchor = GridBagConstraints.EAST;
-			gbc_lblSearchAProduct.gridx = 2;
-			gbc_lblSearchAProduct.gridy = 0;
-			contentPanel.add(lblSearchAProduct, gbc_lblSearchAProduct);
-		}
-		{
-			findProductField = new JTextField();
-			GridBagConstraints gbc_findProductField = new GridBagConstraints();
-			gbc_findProductField.insets = new Insets(0, 0, 5, 0);
-			gbc_findProductField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_findProductField.gridx = 3;
-			gbc_findProductField.gridy = 0;
-			contentPanel.add(findProductField, gbc_findProductField);
-			findProductField.setColumns(10);
+			JButton btnSetproduct = new JButton(" setProduct ");
+			GridBagConstraints gbc_btnSetproduct = new GridBagConstraints();
+			gbc_btnSetproduct.anchor = GridBagConstraints.WEST;
+			gbc_btnSetproduct.insets = new Insets(0, 0, 5, 5);
+			gbc_btnSetproduct.gridx = 1;
+			gbc_btnSetproduct.gridy = 0;
+			contentPanel.add(btnSetproduct, gbc_btnSetproduct);
 		}
 		{
 			JLabel lblClient = new JLabel("client:");
@@ -97,32 +85,21 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			contentPanel.add(lblClient, gbc_lblClient);
 		}
 		{
-			JComboBox clientBox = new JComboBox();
-			GridBagConstraints gbc_clientBox = new GridBagConstraints();
-			gbc_clientBox.insets = new Insets(0, 0, 5, 5);
-			gbc_clientBox.fill = GridBagConstraints.HORIZONTAL;
-			gbc_clientBox.gridx = 1;
-			gbc_clientBox.gridy = 1;
-			contentPanel.add(clientBox, gbc_clientBox);
+			JButton btnSetclient = new JButton("   setClient   ");
+			GridBagConstraints gbc_btnSetclient = new GridBagConstraints();
+			gbc_btnSetclient.anchor = GridBagConstraints.WEST;
+			gbc_btnSetclient.insets = new Insets(0, 0, 5, 5);
+			gbc_btnSetclient.gridx = 1;
+			gbc_btnSetclient.gridy = 1;
+			contentPanel.add(btnSetclient, gbc_btnSetclient);
 		}
 		{
-			JLabel lblSearchAClient = new JLabel("find client:");
-			GridBagConstraints gbc_lblSearchAClient = new GridBagConstraints();
-			gbc_lblSearchAClient.insets = new Insets(0, 0, 5, 5);
-			gbc_lblSearchAClient.anchor = GridBagConstraints.EAST;
-			gbc_lblSearchAClient.gridx = 2;
-			gbc_lblSearchAClient.gridy = 1;
-			contentPanel.add(lblSearchAClient, gbc_lblSearchAClient);
-		}
-		{
-			findClientField = new JTextField();
-			GridBagConstraints gbc_findClientField = new GridBagConstraints();
-			gbc_findClientField.insets = new Insets(0, 0, 5, 0);
-			gbc_findClientField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_findClientField.gridx = 3;
-			gbc_findClientField.gridy = 1;
-			contentPanel.add(findClientField, gbc_findClientField);
-			findClientField.setColumns(10);
+			JLabel lblTime = new JLabel("time:");
+			GridBagConstraints gbc_lblTime = new GridBagConstraints();
+			gbc_lblTime.insets = new Insets(0, 0, 5, 0);
+			gbc_lblTime.gridx = 3;
+			gbc_lblTime.gridy = 1;
+			contentPanel.add(lblTime, gbc_lblTime);
 		}
 		{
 			JLabel lblManager = new JLabel("manager:");
@@ -134,32 +111,21 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			contentPanel.add(lblManager, gbc_lblManager);
 		}
 		{
-			JComboBox managerBox = new JComboBox();
-			GridBagConstraints gbc_managerBox = new GridBagConstraints();
-			gbc_managerBox.insets = new Insets(0, 0, 5, 5);
-			gbc_managerBox.fill = GridBagConstraints.HORIZONTAL;
-			gbc_managerBox.gridx = 1;
-			gbc_managerBox.gridy = 2;
-			contentPanel.add(managerBox, gbc_managerBox);
+			JButton btnSetmanager = new JButton("setManager");
+			GridBagConstraints gbc_btnSetmanager = new GridBagConstraints();
+			gbc_btnSetmanager.anchor = GridBagConstraints.WEST;
+			gbc_btnSetmanager.insets = new Insets(0, 0, 5, 5);
+			gbc_btnSetmanager.gridx = 1;
+			gbc_btnSetmanager.gridy = 2;
+			contentPanel.add(btnSetmanager, gbc_btnSetmanager);
 		}
 		{
-			JLabel lblFindManager = new JLabel("find manager:");
-			GridBagConstraints gbc_lblFindManager = new GridBagConstraints();
-			gbc_lblFindManager.insets = new Insets(0, 0, 5, 5);
-			gbc_lblFindManager.anchor = GridBagConstraints.EAST;
-			gbc_lblFindManager.gridx = 2;
-			gbc_lblFindManager.gridy = 2;
-			contentPanel.add(lblFindManager, gbc_lblFindManager);
-		}
-		{
-			findManagerField = new JTextField();
-			GridBagConstraints gbc_findManagerField = new GridBagConstraints();
-			gbc_findManagerField.insets = new Insets(0, 0, 5, 0);
-			gbc_findManagerField.fill = GridBagConstraints.HORIZONTAL;
-			gbc_findManagerField.gridx = 3;
-			gbc_findManagerField.gridy = 2;
-			contentPanel.add(findManagerField, gbc_findManagerField);
-			findManagerField.setColumns(10);
+			JLabel label = new JLabel("");
+			GridBagConstraints gbc_label = new GridBagConstraints();
+			gbc_label.insets = new Insets(0, 0, 5, 0);
+			gbc_label.gridx = 3;
+			gbc_label.gridy = 2;
+			contentPanel.add(label, gbc_label);
 		}
 		{
 			JLabel lblStatus = new JLabel("status:");
@@ -192,7 +158,6 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			GridBagConstraints gbc_scrollPane = new GridBagConstraints();
 			gbc_scrollPane.fill = GridBagConstraints.BOTH;
 			gbc_scrollPane.gridwidth = 3;
-			gbc_scrollPane.insets = new Insets(0, 0, 0, 5);
 			gbc_scrollPane.gridx = 1;
 			gbc_scrollPane.gridy = 4;
 			contentPanel.add(scrollPane, gbc_scrollPane);
@@ -281,5 +246,32 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	public Destribution getModel() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	public void setClients(List<Object> listClients){
+		if(listClients==null){
+			System.out.println("clients not set");
+			return;
+		}
+		clientsViewList.setItems(listClients);
+			
+	}
+	
+	public void setManagers(List<Object> listClients){
+		if(listClients==null){
+			System.out.println("clients not set");
+			return;
+		}
+		managersViewList.setItems(listClients);
+			
+	}
+	
+	public void setProducts(List<Object> listClients){
+		if(listClients==null){
+			System.out.println("clients not set");
+			return;
+		}
+		productsViewList.setItems(listClients);
+			
 	}
 }
