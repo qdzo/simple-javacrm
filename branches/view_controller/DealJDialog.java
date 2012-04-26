@@ -274,7 +274,7 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	
 	public void setManagers(List<Object> listClients){
 		if(listClients==null){
-			System.out.println("clients not set");
+			System.out.println("Managers not set");
 			return;
 		}
 		managersViewList.setItems(listClients);
@@ -283,7 +283,7 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	
 	public void setProducts(List<Object> listClients){
 		if(listClients==null){
-			System.out.println("clients not set");
+			System.out.println("Products not set");
 			return;
 		}
 		productsViewList.setItems(listClients);

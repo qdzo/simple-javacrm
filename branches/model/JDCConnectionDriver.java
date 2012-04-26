@@ -2,6 +2,8 @@ package model;
 
 import java.sql.*;
 import java.util.*;
+import java.util.logging.Logger;
+
 import model.JDCConnectionPool;
 
 
@@ -46,6 +48,12 @@ public class JDCConnectionDriver implements java.sql.Driver{
 
 	public boolean jdbcCompliant(){
 		return false;
+	}
+
+	@Override
+	public Logger getParentLogger() throws SQLFeatureNotSupportedException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }
