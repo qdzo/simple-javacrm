@@ -68,6 +68,11 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 		}
 		{
 			JButton btnSetproduct = new JButton(" setProduct ");
+			btnSetproduct.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					productsViewList.init();
+				}
+			});
 			GridBagConstraints gbc_btnSetproduct = new GridBagConstraints();
 			gbc_btnSetproduct.anchor = GridBagConstraints.WEST;
 			gbc_btnSetproduct.insets = new Insets(0, 0, 5, 5);
@@ -86,6 +91,11 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 		}
 		{
 			JButton btnSetclient = new JButton("   setClient   ");
+			btnSetclient.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					clientsViewList.init();
+				}
+			});
 			GridBagConstraints gbc_btnSetclient = new GridBagConstraints();
 			gbc_btnSetclient.anchor = GridBagConstraints.WEST;
 			gbc_btnSetclient.insets = new Insets(0, 0, 5, 5);
@@ -112,6 +122,11 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 		}
 		{
 			JButton btnSetmanager = new JButton("setManager");
+			btnSetmanager.addActionListener(new ActionListener() {
+				public void actionPerformed(ActionEvent e) {
+					managersViewList.init();
+				}
+			});
 			GridBagConstraints gbc_btnSetmanager = new GridBagConstraints();
 			gbc_btnSetmanager.anchor = GridBagConstraints.WEST;
 			gbc_btnSetmanager.insets = new Insets(0, 0, 5, 5);
