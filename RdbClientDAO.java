@@ -308,6 +308,11 @@ public class RdbClientDAO implements ClientDAO {
 			Integer statusId = client.getStatus().getValue();
 			values.add(statusId.toString());
 		}
+		if(columns.size()<1)
+			if(client.getId()!=null){
+				columns.add(PERS_ID);
+				values.add(client.getId().toString());
+			}
 		columns.add(GROUP_ID);
 		values.add("2");
 		String[] col =  new String[columns.size()];

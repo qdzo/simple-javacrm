@@ -239,6 +239,11 @@ public class RdbProductDAO implements ProductDAO{
 			columns.add(PROD_DESCRIPTION);
 			values.add(product.getDescription());
 		}
+		if(columns.size()<1)
+		if(product.getProductId()!=null){
+			columns.add(PROD_ID);
+			values.add((product.getProductId()).toString());
+		}
 		String[] col =  new String[columns.size()];
 		String [] val = new String[values.size()];
 		for(int i=0;i<columns.size();i++){

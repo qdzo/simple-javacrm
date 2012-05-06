@@ -262,6 +262,11 @@ public class RdbManagerDAO implements ManagerDAO{
 			Integer statusId = manager.getStatus().getValue();
 			values.add(statusId.toString());
 		}
+		if(columns.size()<1)
+			if(manager.getId()!=null){
+				columns.add(PERS_ID);
+				values.add(manager.getId().toString());
+			}
 		columns.add(GROUP_ID);
 		values.add("1");
 		String[] col =  new String[columns.size()];
