@@ -179,6 +179,7 @@ public class RdbProductDAO implements ProductDAO{
 	private static Product buildProduct(ResultSet rs){
 		Product product;
 		try {
+			rs.next();
 			product = new Product(rs.getInt(PROD_ID));
 			product.setNameProduct(rs.getString(PROD_NAME));
 			Integer price = rs.getInt(PROD_COST);
