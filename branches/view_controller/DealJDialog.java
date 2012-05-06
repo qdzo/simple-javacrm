@@ -18,6 +18,8 @@ import javax.swing.JComboBox;
 
 import model.Client;
 import model.Destribution;
+import model.Manager;
+import model.Product;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
@@ -38,14 +40,20 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	private ListDialog clientsViewList;
 	private ListDialog managersViewList;
 	private ListDialog productsViewList;
+	private JLabel managerLabel;
+	private JLabel clientLabel;
+	private JLabel productLabel;
+	private Client selectedClient;
+	private Manager selectedManager;
+	private Product selectedProduct;
 	
 
 
 	public DealJDialog(Frame frame,String title) {
 		super(frame,title,true);
-		clientsViewList = new ListDialog();
-		managersViewList = new ListDialog();
-		productsViewList = new ListDialog();
+		clientsViewList = new ListDialog(frame,"Clients",this);
+		managersViewList = new ListDialog(frame,"Managers",this);
+		productsViewList = new ListDialog(frame,"Products",this);
 		setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		getContentPane().setLayout(new BorderLayout());
@@ -81,6 +89,14 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			contentPanel.add(btnSetproduct, gbc_btnSetproduct);
 		}
 		{
+			productLabel = new JLabel("                      ");
+			GridBagConstraints gbc_productLabel = new GridBagConstraints();
+			gbc_productLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_productLabel.gridx = 2;
+			gbc_productLabel.gridy = 0;
+			contentPanel.add(productLabel, gbc_productLabel);
+		}
+		{
 			JLabel lblClient = new JLabel("client:");
 			GridBagConstraints gbc_lblClient = new GridBagConstraints();
 			gbc_lblClient.anchor = GridBagConstraints.EAST;
@@ -102,6 +118,14 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			gbc_btnSetclient.gridx = 1;
 			gbc_btnSetclient.gridy = 1;
 			contentPanel.add(btnSetclient, gbc_btnSetclient);
+		}
+		{
+			clientLabel = new JLabel("                   ");
+			GridBagConstraints gbc_clientLabel = new GridBagConstraints();
+			gbc_clientLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_clientLabel.gridx = 2;
+			gbc_clientLabel.gridy = 1;
+			contentPanel.add(clientLabel, gbc_clientLabel);
 		}
 		{
 			JLabel lblTime = new JLabel("time:");
@@ -135,6 +159,14 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			contentPanel.add(btnSetmanager, gbc_btnSetmanager);
 		}
 		{
+			managerLabel = new JLabel("                   ");
+			GridBagConstraints gbc_managerLabel = new GridBagConstraints();
+			gbc_managerLabel.insets = new Insets(0, 0, 5, 5);
+			gbc_managerLabel.gridx = 2;
+			gbc_managerLabel.gridy = 2;
+			contentPanel.add(managerLabel, gbc_managerLabel);
+		}
+		{
 			JLabel label = new JLabel("");
 			GridBagConstraints gbc_label = new GridBagConstraints();
 			gbc_label.insets = new Insets(0, 0, 5, 0);
@@ -152,6 +184,7 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			contentPanel.add(lblStatus, gbc_lblStatus);
 		}
 		{
+			@SuppressWarnings("rawtypes")
 			JComboBox statusProductBox = new JComboBox();
 			GridBagConstraints gbc_statusProductBox = new GridBagConstraints();
 			gbc_statusProductBox.insets = new Insets(0, 0, 5, 5);
@@ -192,9 +225,12 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
 		// TODO	 implement the method to check the correction of entered information	
-						if(true){
+						if(!(selectedClient.equals(null)||selectedManager.equals(null)||selectedProduct.equals(null))){
+						destribution.setClient(selectedClient);
+						destribution.setManager(selectedManager);
+						destribution.setProduct(selectedProduct);
 						controller.execute(commandToDo, BusinessObjects.deal, getModel());
-						controller.execute(Commands.CLOSE, BusinessObjects.manager, null);
+						controller.execute(Commands.CLOSE, BusinessObjects.deal, null);
 						}
 					}
 				});
@@ -216,7 +252,7 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	}
 
 
-	@Override
+	
 	public void init() {
 		 try {
 				System.out.println("deal-dialog is popup");
@@ -228,7 +264,8 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	}
 
 
-	@Override
+	
+	
 	public void close() {
 		try{
 			this.dispose();
@@ -249,22 +286,18 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	}
 
 
-	@Override
 	public void setModel(Destribution destribution) {
-	// TODO realize the method
 		if(destribution!=null)
 		this.destribution = destribution;
 		}
 
 
-	@Override
 	public Destribution getModel() {
-		// TODO Auto-generated method stub
-		return null;
+		return destribution;
 	}
 	
 	public void setClients(List<Object> listClients){
-		if(listClients==null){
+		if(listClients==null||listClients.size()<1){
 			System.out.println("clients not set");
 			return;
 		}
@@ -272,21 +305,37 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			
 	}
 	
-	public void setManagers(List<Object> listClients){
-		if(listClients==null){
+	public void setManagers(List<Object> listManagers){
+		if(listManagers==null||listManagers.size()<1){
 			System.out.println("Managers not set");
 			return;
 		}
-		managersViewList.setItems(listClients);
+		managersViewList.setItems(listManagers);
 			
 	}
 	
-	public void setProducts(List<Object> listClients){
-		if(listClients==null){
+	public void setProducts(List<Object> listProducts){
+		if(listProducts==null||listProducts.size()<1){
 			System.out.println("Products not set");
 			return;
 		}
-		productsViewList.setItems(listClients);
-			
+		productsViewList.setItems(listProducts);
+		System.out.println(listProducts.size());
 	}
+	
+	public void setCurrentClient(Client client){
+		selectedClient = client;
+		clientLabel.setText(selectedClient.getFirstName()+" "+selectedClient.getSecondName());
+	}
+	
+	public void setCurrentManager(Manager manager){
+		selectedManager = manager;
+		managerLabel.setText(selectedManager.getFirstName()+" "+selectedManager.getSecondName());
+	}
+	
+	public void setCurrentProduct(Product product){
+		selectedProduct = product;
+		productLabel.setText(product.getNameProduct());
+	}
+
 }
