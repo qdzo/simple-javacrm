@@ -102,28 +102,24 @@ switch (bObject){
 		case client:
 			@SuppressWarnings("unchecked")
 			List<Client> clients =(List<Client>) modelFasade.selectTO(new Client(null));
-		//	client.setModelStatus(ModelStatus.Exist);
 			heap.setNewList(clients);
 			break;
 			
 		case manager:
 			@SuppressWarnings("unchecked")
 			List<Manager> managers = (List<Manager>) modelFasade.selectTO(new Manager(null));
-			//manager.setModelStatus(ModelStatus.Exist);
 			heap.setNewList(managers);
 			break;
 			
 		case product:
 			@SuppressWarnings("unchecked")
 			List<Product> products = (List<Product>) modelFasade.selectTO(new Product(null));
-			//product.setModelStatus(ModelStatus.Exist);
 			heap.setNewList(products);
 			break;
 			
 		case deal:
 			@SuppressWarnings("unchecked")
 			List<Destribution> destributions = (List<Destribution>) modelFasade.selectTO(new Destribution(null));
-			//destribution.setModelStatus(ModelStatus.Exist);
 			heap.setNewList(destributions);
 			break;
 			
@@ -448,6 +444,7 @@ switch (bObject){
 		}
 
 	}
+	@SuppressWarnings("unchecked")
 	private void initDialog(BusinessObjects bObject) {
 	switch (bObject){
 		
@@ -480,6 +477,10 @@ switch (bObject){
 			Destribution destribution = new Destribution(null);
 			destribution.setModelStatus(ModelStatus.Null);
 			imodelDestribution.setModel(destribution);
+			DealJDialog dealJDialog = (DealJDialog) dealDialog;
+			dealJDialog.setClients((List<Object>) modelFasade.selectTO(new Client(null)));
+			dealJDialog.setManagers((List<Object>) modelFasade.selectTO(new Manager(null)));
+			dealJDialog.setProducts((List<Object>) modelFasade.selectTO(new Product(null)));
 			dealDialog.init();
 			break;
 			
