@@ -5,14 +5,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 import javax.sql.RowSet;
 
 public class RdbDestributionDAO  implements DestributionDAO{
 
-	private final static String PERSON_TABLE = "person";
-	private final static String PRODUCT_TABLE = "product";
+	
 	private final static String DESTRIBUTION_TABLE = "destribution";
 	private final static String DEST_ID = "dest_id";
 	private final static String DATE = "date";
@@ -21,27 +21,20 @@ public class RdbDestributionDAO  implements DestributionDAO{
 	private final static String CLIENT_ID = "clnt_id";
 	private final static String DESTRIB_COMMENT ="destrib_comment";
 	private final static String DEST_STATUS_ID = "dest_status_id";
-	private final static String PERSON_CLIENT_ID = "pers_id";
-	private final static String PERSON_FIRST_NAME =	"firstName";
-	private final static String PERSON_LAST_NAME = "secondName";
-	private final static String PRODUCT_PROD_ID = "prod_id";
-	private final static String PRODUCT_PROD_NAME ="prod_name";
 	public static final int SELECT = 1;
 	public static final int INSERT = 2;
 	public static final int UPDATE = 3;
 	public static final int DELETE = 4;
-	private static String[] selectedColumns;
-	private static String[] tableNames;
-	private static String[] equivalentColumns;
+
 
 	public int insertDestribution(Destribution destribution) {
+		int flag = 0;
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			
-			
-			
-			ResultSet resultSet = statement.executeQuery(null);
+			String query = buildQuery(destribution,INSERT);
+			System.out.println(query);
+			flag = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
 			if(!connection.isClosed())
@@ -55,18 +48,18 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return 0;
+		return flag;
 	}
 
 	@Override
 	public boolean deleteDestribution(Destribution destribution) {
+		int flag = 0;
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			
-			
-			
-			ResultSet resultSet = statement.executeQuery(null);
+			String query = buildQuery(destribution,DELETE);
+			System.out.println(query);
+			flag = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
 			if(!connection.isClosed())
@@ -80,21 +73,25 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+		if(flag == 0)
 		return false;
+		else return true;
 	}
 
 
 	public Destribution findDestribution(Destribution destribution) {
+		Destribution findedDestrib = destribution;
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			String query = buildQuery(destribution,SELECT);
+			System.out.println(query);
 			ResultSet resultSet = statement.executeQuery(query);
-			
-			if(!statement.isClosed())
-				statement.close();
 			if(!connection.isClosed())
 				connection.close();
+			findedDestrib = buildDestribution(resultSet);
+			if(!statement.isClosed())
+				statement.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
@@ -104,7 +101,7 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		return null;
+		return findedDestrib;
 	}
 
 
@@ -114,6 +111,7 @@ public class RdbDestributionDAO  implements DestributionDAO{
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			String query = buildQuery(destribution,UPDATE);
+			System.out.println(query);
 			flag = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
@@ -135,14 +133,18 @@ public class RdbDestributionDAO  implements DestributionDAO{
 
 	@Override
 	public RowSet selectDestributionsRS(Destribution destribution) {
+		List<Destribution> destList = new ArrayList<Destribution>();
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			ResultSet resultSet = statement.executeQuery(null);
-			if(!statement.isClosed())
-				statement.close();
+			String query = buildQuery(destribution,SELECT);
+			System.out.println(query);
+			ResultSet resultSet = statement.executeQuery(query);
 			if(!connection.isClosed())
 				connection.close();
+			destList = buildDestributions(resultSet);
+			if(!statement.isClosed())
+				statement.close();
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
@@ -157,17 +159,20 @@ public class RdbDestributionDAO  implements DestributionDAO{
 
 	@Override
 	public Collection<Destribution> selectDestributionsTO(Destribution destribution) {
+		List<Destribution> destList = new ArrayList<Destribution>();
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
+			String query = buildQuery(destribution,SELECT);
+			System.out.println(query);
+			ResultSet resultSet = statement.executeQuery(query);
 			
-			
-			
-			ResultSet resultSet = statement.executeQuery(null);
-			if(!statement.isClosed())
-				statement.close();
 			if(!connection.isClosed())
 				connection.close();
+			destList = buildDestributions(resultSet);
+			if(!statement.isClosed())
+				statement.close();
+			return destList;
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (InstantiationException e) {
@@ -180,59 +185,89 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		return null;
 	}
 
-//	private static Manager buildDestribution(ResultSet rs){
-//		Destribution destribution;
-//		try {
-//			destribution = new Destribution(rs.getInt(DEST_ID));
-//			destribution;
-//			destribution.setSecondName(rs.getString(SECOND_NAME));
-//			Integer tel = rs.getInt(TELEPHONE);
-//			destribution.setTelephone(tel.toString());
-//			destribution.setEmail(rs.getString(EMAIL));		
-//			int stat = rs.getInt(STATUS_ID);
-//			switch (stat){
-//			case 1:
-//				destribution.setStatus(Status.Актуально);
-//				break;
-//			case 2:
-//				destribution.setStatus(Status.Недействительно);
-//			}
-//			destribution.setModelStatus(ModelStatus.Exist);
-//			return destribution;
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return null;
-//	}
-//	
-//	
-//	
-//	private static Collection<Manager> buildManagers(ResultSet rs){
-//		Collection<Manager> clientsCollection = new ArrayList<Manager>();
-//		try {
-//			while(rs.next()){
-//			Manager manager = new Manager(rs.getInt(PERS_ID));
-//			manager.setFirstName(rs.getString(FIRST_NAME));
-//			manager.setSecondName(rs.getString(SECOND_NAME));
-//			Long tel = rs.getLong(TELEPHONE);
-//			manager.setTelephone(tel.toString());
-//			manager.setEmail(rs.getString(EMAIL));
-//			int stat = rs.getInt(STATUS_ID);
-//			switch (stat){
-//			case 1:
-//				manager.setStatus(Status.Актуально);
-//				break;
-//			case 2:
-//				manager.setStatus(Status.Недействительно);
-//			}
-//			manager.setModelStatus(ModelStatus.Exist);
-//			clientsCollection.add(manager);
-//			}
-//		} catch (SQLException e) {
-//			e.printStackTrace();
-//		}
-//		return clientsCollection;
-//	}
+	private static Destribution buildDestribution(ResultSet rs){
+		Destribution destribution;
+		try {
+			rs.next();
+			destribution = new Destribution(rs.getInt(DEST_ID));		
+			destribution.setDateTime(rs.getDate(DATE));
+			destribution.setComment(rs.getString(DESTRIB_COMMENT));
+			int destStatusId = rs.getInt(DEST_STATUS_ID);
+			switch (destStatusId){
+			case 3:
+				destribution.setStatus(DestributionStatus.Завершено);
+				break;
+			case 4:
+				destribution.setStatus(DestributionStatus.Ожидается);
+				break;
+			case 5:
+				destribution.setStatus(DestributionStatus.Заморожено);
+				break;
+			case 6:
+				destribution.setStatus(DestributionStatus.Отмена);
+				break;
+			}
+			RdbClientDAO clientDAO = (RdbClientDAO) new RdbDAOFactory().getClientDAO();
+			RdbManagerDAO managerDAO =  (RdbManagerDAO) new RdbDAOFactory().getManagerDAO();
+			RdbProductDAO productDAO =  (RdbProductDAO) new RdbDAOFactory().getProductDAO();
+			Client client = clientDAO.findClient(new Client(rs.getInt(CLIENT_ID)));
+			Manager manager = managerDAO.findManager(new Manager(rs.getInt(MANAGER_ID)));
+			Product product = productDAO.findProduct(new Product(rs.getInt(PRODUCT_ID)));
+			destribution.setClient(client);
+			destribution.setManager(manager);
+			destribution.setProduct(product);
+			destribution.setModelStatus(ModelStatus.Exist);
+			return destribution;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+
+	private static List<Destribution> buildDestributions(ResultSet rs){
+		List<Destribution> destributions = new ArrayList<Destribution>();
+		RdbClientDAO clientDAO = (RdbClientDAO) new RdbDAOFactory().getClientDAO();
+		RdbManagerDAO managerDAO =  (RdbManagerDAO) new RdbDAOFactory().getManagerDAO();
+		RdbProductDAO productDAO =  (RdbProductDAO) new RdbDAOFactory().getProductDAO();
+		try {
+			while(rs.next()){
+			Destribution destribution = new Destribution(rs.getInt(DEST_ID));		
+			destribution.setDateTime(rs.getDate(DATE));
+			destribution.setComment(rs.getString(DESTRIB_COMMENT));
+			int destStatusId = rs.getInt(DEST_STATUS_ID);
+			switch (destStatusId){
+			case 3:
+				destribution.setStatus(DestributionStatus.Завершено);
+				break;
+			case 4:
+				destribution.setStatus(DestributionStatus.Ожидается);
+				break;
+			case 5:
+				destribution.setStatus(DestributionStatus.Заморожено);
+				break;
+			case 6:
+				destribution.setStatus(DestributionStatus.Отмена);
+				break;
+			}
+			System.out.println("ClientID:"+rs.getInt(CLIENT_ID)+"ManagerId:"+rs.getInt(MANAGER_ID)+"ProductId:"+rs.getInt(PRODUCT_ID));
+			Client client = clientDAO.findClient(new Client(rs.getInt(CLIENT_ID)));
+			Manager manager = managerDAO.findManager(new Manager(rs.getInt(MANAGER_ID)));
+			Product product = productDAO.findProduct(new Product(rs.getInt(PRODUCT_ID)));
+			destribution.setClient(client);
+			destribution.setManager(manager);
+			destribution.setProduct(product);
+			destribution.setModelStatus(ModelStatus.Exist);
+			destributions.add(destribution);
+			
+			}
+			return destributions;
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
 
 	
 	public static String buildQuery(Destribution destribution,int queryType){
@@ -243,6 +278,13 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		if(destribution.getProductId()!=null){
 			columns.add(PRODUCT_ID);
 			values.add((destribution.getProductId()).toString());
+		}
+		if(destribution.getDateTime()!=null){
+			columns.add(DATE);
+			java.text.SimpleDateFormat sdf = 
+				     new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String currentTime = sdf.format(destribution.getDateTime());
+			values.add(currentTime);
 		}
 		if(destribution.getManagerId()!=null){
 			columns.add(MANAGER_ID);
@@ -271,7 +313,7 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		case INSERT:
 			return RdbDAOFactory.sql.buildInsert(DESTRIBUTION_TABLE,col,val);
 		case SELECT:
-			return RdbDAOFactory.sql.buildSmartSelect(selectedColumns, tableNames, equivalentColumns, col, val);
+			return RdbDAOFactory.sql.buildSelect(DESTRIBUTION_TABLE, col, val);
 		case UPDATE:
 			return RdbDAOFactory.sql.buildUpdate(DESTRIBUTION_TABLE,col,val, DEST_ID, id);
 		case DELETE:
@@ -281,8 +323,5 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		return null;
 	}
 	
-	private static void makeArrays(){
-		
-	}
 	
 }

@@ -18,11 +18,13 @@ import javax.swing.JComboBox;
 
 import model.Client;
 import model.Destribution;
+import model.DestributionStatus;
 import model.Manager;
 import model.Product;
 
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.util.Date;
 import java.util.List;
 
 import javax.swing.JScrollPane;
@@ -46,9 +48,13 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	private Client selectedClient;
 	private Manager selectedManager;
 	private Product selectedProduct;
-	
+	private Clock clock;
+	private JLabel Timelabel;
+	private JTextArea commentArea;
+	private JComboBox statusProductBox;
 
 
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public DealJDialog(Frame frame,String title) {
 		super(frame,title,true);
 		clientsViewList = new ListDialog(frame,"Clients",this);
@@ -128,14 +134,6 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			contentPanel.add(clientLabel, gbc_clientLabel);
 		}
 		{
-			JLabel lblTime = new JLabel("time:");
-			GridBagConstraints gbc_lblTime = new GridBagConstraints();
-			gbc_lblTime.insets = new Insets(0, 0, 5, 0);
-			gbc_lblTime.gridx = 3;
-			gbc_lblTime.gridy = 1;
-			contentPanel.add(lblTime, gbc_lblTime);
-		}
-		{
 			JLabel lblManager = new JLabel("manager:");
 			GridBagConstraints gbc_lblManager = new GridBagConstraints();
 			gbc_lblManager.anchor = GridBagConstraints.EAST;
@@ -184,14 +182,22 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			contentPanel.add(lblStatus, gbc_lblStatus);
 		}
 		{
-			@SuppressWarnings("rawtypes")
-			JComboBox statusProductBox = new JComboBox();
+			statusProductBox = new JComboBox(DestributionStatus.values());
 			GridBagConstraints gbc_statusProductBox = new GridBagConstraints();
+			gbc_statusProductBox.anchor = GridBagConstraints.WEST;
 			gbc_statusProductBox.insets = new Insets(0, 0, 5, 5);
-			gbc_statusProductBox.fill = GridBagConstraints.HORIZONTAL;
 			gbc_statusProductBox.gridx = 1;
 			gbc_statusProductBox.gridy = 3;
 			contentPanel.add(statusProductBox, gbc_statusProductBox);
+		}
+		{
+			Timelabel = new JLabel("time:");
+			GridBagConstraints gbc_Timelabel = new GridBagConstraints();
+			gbc_Timelabel.insets = new Insets(0, 0, 5, 0);
+			gbc_Timelabel.gridx = 3;
+			gbc_Timelabel.gridy = 3;
+			contentPanel.add(Timelabel, gbc_Timelabel);
+			clock = new Clock(Timelabel);
 		}
 		{
 			JLabel lblComment = new JLabel("comment:");
@@ -210,7 +216,7 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			gbc_scrollPane.gridy = 4;
 			contentPanel.add(scrollPane, gbc_scrollPane);
 			{
-				JTextArea commentArea = new JTextArea();
+				commentArea = new JTextArea();
 				commentArea.setLineWrap(true);
 				commentArea.setWrapStyleWord(true);
 				scrollPane.setViewportView(commentArea);
@@ -223,12 +229,8 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			{
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
-					public void actionPerformed(ActionEvent e) {
-		// TODO	 implement the method to check the correction of entered information	
+					public void actionPerformed(ActionEvent e) {	
 						if(!(selectedClient.equals(null)||selectedManager.equals(null)||selectedProduct.equals(null))){
-						destribution.setClient(selectedClient);
-						destribution.setManager(selectedManager);
-						destribution.setProduct(selectedProduct);
 						controller.execute(commandToDo, BusinessObjects.deal, getModel());
 						controller.execute(Commands.CLOSE, BusinessObjects.deal, null);
 						}
@@ -267,6 +269,12 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	
 	
 	public void close() {
+		clientLabel.setText("");
+		managerLabel.setText("");
+		productLabel.setText("");
+		selectedClient = null;
+		selectedManager = null;
+		selectedProduct = null;
 		try{
 			this.dispose();
 		}catch(Exception ex){
@@ -293,6 +301,12 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 
 
 	public Destribution getModel() {
+		destribution.setClient(selectedClient);
+		destribution.setManager(selectedManager);
+		destribution.setProduct(selectedProduct);
+		destribution.setComment(commentArea.getText());
+		destribution.setStatus((DestributionStatus) statusProductBox.getSelectedItem());
+		destribution.setDateTime(new Date(System.currentTimeMillis()));
 		return destribution;
 	}
 	
@@ -320,7 +334,6 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			return;
 		}
 		productsViewList.setItems(listProducts);
-		System.out.println(listProducts.size());
 	}
 	
 	public void setCurrentClient(Client client){
@@ -336,6 +349,26 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	public void setCurrentProduct(Product product){
 		selectedProduct = product;
 		productLabel.setText(product.getNameProduct());
+	}
+	
+	
+	
+	class Clock extends Thread{
+		JLabel timeLabel;
+		
+		Clock(JLabel timeLabel){
+			this.timeLabel = timeLabel;
+			this.start();
+		}
+		
+		public void run(){
+			while(true){
+			try {
+				sleep(1000);
+			} catch (InterruptedException e) {}
+			timeLabel.setText(new Date(System.currentTimeMillis()).toString());
+			}
+		}
 	}
 
 }

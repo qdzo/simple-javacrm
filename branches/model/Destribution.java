@@ -1,17 +1,19 @@
 package model;
 
+import java.util.Date;
+
 public class Destribution {
 
 	private final Integer id;
-	private String DateTime;
-	private int ManagerId;
-	private String ManagerFirstName;
-	private String ManagerSecondName;
-	private int ClientId;
-	private String ClientFirstName;
-	private String ClientSecondName;
-	private int ProductId;
-	private String ProductName;
+	private Date dateTime;
+	private Integer managerId;
+	private String managerFirstName;
+	private String managerSecondName;
+	private Integer clientId;
+	private String clientFirstName;
+	private String clientSecondName;
+	private Integer productId;
+	private String productName;
 	private String comment;
 	private DestributionStatus destributionStatus;
 	private ModelStatus modelStatus;
@@ -20,22 +22,24 @@ public class Destribution {
 	public Destribution(Integer id){
 		// a default constructor
 		this.id = id;
-		
+		managerId = null;
+		clientId = null;
+		productId = null;
 	}
 	
 	
 	public Integer getManagerId() {
-		return ManagerId;
+		return managerId;
 	}
 
 	
 	public String getManagerFirstName() {
-		return ManagerFirstName;
+		return managerFirstName;
 	}
 
 	
 	public String getManagerSecondName() {
-		return ManagerSecondName;
+		return managerSecondName;
 	}
 
 
@@ -56,48 +60,39 @@ public class Destribution {
 		}
 	}
 	protected void setManagerId(int managerId) {
-		ManagerId = managerId;
+		this.managerId = managerId;
 	}
 
 
 
 
 	protected void setManagerFirstName(String managerFirstName) {
-			ManagerFirstName = managerFirstName;
+			this.managerFirstName = managerFirstName;
 	}
 
 
 
 	protected void setManagerSecondName(String managerSecondName) {
-			ManagerSecondName = managerSecondName;
+			this.managerSecondName = managerSecondName;
 	}
 
 
 	public Integer getClientId() {
-		return ClientId;
+		return clientId;
 	}
 
 	
 	public String getClientFirstName() {
-		return ClientFirstName;
+		return clientFirstName;
 	}
 
 
 	public String getClientSecondName() {
-		return ClientSecondName;
+		return clientSecondName;
 	}
 
 	
 	
-	public void setClient(int clientId, String firstName, String lastName){
-		if(validateDecimal(clientId)&&validate(firstName)&&validate(lastName)){
-			setClientId(clientId);
-			setClientFirstName(firstName);
-			setClientSecondName(lastName);
-			
-		}
-		
-	}
 	
 	
 	public void setClient(Client client){
@@ -108,36 +103,30 @@ public class Destribution {
 		}
 	}
 	protected void setClientId(int clientId) {
-		ClientId = clientId;
+		this.clientId = clientId;
 	}
 
 
 	protected void setClientFirstName(String clientFirstName) {
-		ClientFirstName = clientFirstName;
+		this.clientFirstName = clientFirstName;
 	}
 
 
 	protected void setClientSecondName(String clientSecondName) {
-		ClientSecondName = clientSecondName;
+		this.clientSecondName = clientSecondName;
 	}
 
 
 	public Integer getProductId() {
-		return ProductId;
+		return productId;
 	}
 
 
 	public String getProductName() {
-		return ProductName;
+		return productName;
 	}
 
 
-	public void setProduct(int productId,String productName){
-		if(validateDecimal(productId)&&validate(productName)){
-			setProductId(productId);
-			setProductName(productName);
-		}
-	}
 	
 	public void setProduct(Product product){
 		if(product!=null){
@@ -148,13 +137,13 @@ public class Destribution {
 	
 	protected void setProductId(int productId) {
 		if(validateDecimal(productId))
-		ProductId = productId;
+		this.productId = productId;
 	}
 
 	
 	protected void setProductName(String productName) {
 		if(validate(productName))
-		ProductName = productName;
+		this.productName = productName;
 	}
 
 
@@ -180,11 +169,14 @@ public class Destribution {
 	}
 
 
-	public String getDateTime() {
-		return DateTime;
+	public Date getDateTime() {
+		return dateTime;
 	}
 
-
+	public void setDateTime(Date date){
+		this.dateTime = date;
+	}
+	
 	public ModelStatus getModelStatus() {
 		return modelStatus;
 	}
@@ -214,10 +206,5 @@ public class Destribution {
 		destributionStatus = status;
 	}
 
-
-//	public void setDateTime(String dateTime) {
-//		DateTime = dateTime;
-//	}
-	
 	
 }
