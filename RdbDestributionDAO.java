@@ -5,7 +5,6 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Date;
 import java.util.List;
 
 import javax.sql.RowSet;
@@ -137,27 +136,27 @@ public class RdbDestributionDAO  implements DestributionDAO{
 
 	@Override
 	public RowSet selectDestributionsRS(Destribution destribution) {
-		List<Destribution> destList = new ArrayList<Destribution>();
-		try {
-			JDCConnection connection = RdbDAOFactory.createConnection();
-			Statement statement = connection.createStatement();
-			String query = buildQuery(destribution,SELECT);
-			System.out.println(query);
-			ResultSet resultSet = statement.executeQuery(query);
-			if(!connection.isClosed())
-				connection.close();
-			destList = buildDestributions(resultSet);
-			if(!statement.isClosed())
-				statement.close();
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//		List<Destribution> destList = new ArrayList<Destribution>();
+//		try {
+//			JDCConnection connection = RdbDAOFactory.createConnection();
+//			Statement statement = connection.createStatement();
+//			String query = buildQuery(destribution,SELECT);
+//			System.out.println(query);
+//			ResultSet resultSet = statement.executeQuery(query);
+//			if(!connection.isClosed())
+//				connection.close();
+//			destList = buildDestributions(resultSet);
+//			if(!statement.isClosed())
+//				statement.close();
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (InstantiationException e) {
+//			e.printStackTrace();
+//		} catch (IllegalAccessException e) {
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 		return null;
 	}
 

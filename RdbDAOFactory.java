@@ -16,6 +16,7 @@ public class RdbDAOFactory implements DAOFactoryInterface {
 	
 	public RdbDAOFactory(){
 		preConnector = new PreConnector();
+		preConnector.start();
 	}
 	
 	public static JDCConnection createConnection() throws ClassNotFoundException, InstantiationException, 
@@ -61,7 +62,6 @@ public class RdbDAOFactory implements DAOFactoryInterface {
 	private class PreConnector extends Thread {
 		
 		PreConnector(){
-			this.start();
 		}
 		
 		public void run(){
