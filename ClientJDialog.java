@@ -31,8 +31,8 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 	private JTextField telephoneClientField;
 	private JTextField emailClientField;
 	private Client client;
-	private JComboBox priorityClientBox;
-	private JComboBox statusClientBox;
+	private JComboBox<Object> priorityClientBox;
+	private JComboBox<Object> statusClientBox;
 	private JLabel msgLabel;
 	private ICommand controller;
 	private Commands commandToDo;
@@ -142,7 +142,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 			contentPanel.add(lblPriority, gbc_lblPriority);
 		}
 		{
-			priorityClientBox = new JComboBox(Priority.values());
+			priorityClientBox = new JComboBox<Object>(Priority.values());
 			GridBagConstraints gbc_priorityClientBox = new GridBagConstraints();
 			gbc_priorityClientBox.anchor = GridBagConstraints.WEST;
 			gbc_priorityClientBox.insets = new Insets(0, 0, 5, 5);
@@ -160,7 +160,7 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 			contentPanel.add(lblStatus, gbc_lblStatus);
 		}
 		{
-			statusClientBox = new JComboBox(model.Status.values());
+			statusClientBox = new JComboBox<Object>(model.Status.values());
 			GridBagConstraints gbc_statusClientBox = new GridBagConstraints();
 			gbc_statusClientBox.insets = new Insets(0, 0, 0, 5);
 			gbc_statusClientBox.anchor = GridBagConstraints.WEST;
