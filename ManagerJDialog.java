@@ -165,7 +165,7 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						if(checkTheFields()){
+						if(checkTheFields()||commandToDo.equals(Commands.SEARCH)){
 						controller.execute(commandToDo, BusinessObjects.manager, getModel());
 						controller.execute(Commands.CLOSE, BusinessObjects.manager, null);
 						}
@@ -201,7 +201,9 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 		manager.setSecondName((lastNameManagerField.getText()).trim());
 		manager.setTelephone((telephoneManagerField.getText()).trim());
 		manager.setEmail((emailManagerField.getText()).trim());
+		if(!commandToDo.equals(Commands.SEARCH)){
 		manager.setStatus((model.Status)statusManagerBox.getSelectedItem());
+		}
 		return manager;
 	}
 

@@ -186,7 +186,9 @@ public class ProductJDialog extends JDialog implements IModelProduct, IDisplayab
 		try {
 			this.product = product;
 			nameProductField.setText(product.getNameProduct());
+			if(product.getPrice()!=null)
 			priceProductField.setText(String.valueOf(product.getPrice()));
+			if(product.getSummary()!=null)
 			sumProductField.setText(String.valueOf(product.getSummary()));
 			descriptionProductArea.setText(product.getDescription());
 		} catch (Exception e) {
