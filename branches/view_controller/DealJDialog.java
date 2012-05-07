@@ -13,7 +13,6 @@ import javax.swing.JTextArea;
 import java.awt.GridBagConstraints;
 import javax.swing.JLabel;
 import java.awt.Insets;
-import javax.swing.JTextField;
 import javax.swing.JComboBox;
 
 import model.Client;
@@ -51,7 +50,7 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	private Clock clock;
 	private JLabel Timelabel;
 	private JTextArea commentArea;
-	private JComboBox statusProductBox;
+	private JComboBox<Object> statusProductBox;
 
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -198,6 +197,7 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 			gbc_Timelabel.gridy = 3;
 			contentPanel.add(Timelabel, gbc_Timelabel);
 			clock = new Clock(Timelabel);
+			clock.start();
 		}
 		{
 			JLabel lblComment = new JLabel("comment:");
@@ -382,7 +382,6 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 		
 		Clock(JLabel timeLabel){
 			this.timeLabel = timeLabel;
-			this.start();
 		}
 		
 		public void run(){

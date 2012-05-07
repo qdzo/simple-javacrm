@@ -39,10 +39,10 @@ public class SimpleCRMFrame extends JFrame {
 	private JButton deleteButton;
 	private JButton saveButton;
 	private JButton editButton;
-	private JComboBox addEntetiesBox;
+	private JComboBox<Object> addEntetiesBox;
 	private JButton addButton;
 	private JButton searchButton;
-	private JComboBox findEntetiesBox;
+	private JComboBox<Object> findEntetiesBox;
 	private JLabel lblFind;
 	private JDialogsController controller;
 	private Model model;
@@ -173,7 +173,7 @@ public class SimpleCRMFrame extends JFrame {
 		gbc_lblFind.gridy = 0;
 		contentPane.add(lblFind, gbc_lblFind);
 		
-		findEntetiesBox = new JComboBox(BusinessEntities);
+		findEntetiesBox = new JComboBox<Object>(BusinessEntities);
 		GridBagConstraints gbc_findEntetiesBox = new GridBagConstraints();
 		gbc_findEntetiesBox.insets = new Insets(0, 0, 5, 5);
 		gbc_findEntetiesBox.fill = GridBagConstraints.HORIZONTAL;
@@ -231,7 +231,7 @@ public class SimpleCRMFrame extends JFrame {
 		gbc_addButton.gridy = 7;
 		contentPane.add(addButton, gbc_addButton);
 		
-		addEntetiesBox = new JComboBox(BusinessEntities);
+		addEntetiesBox = new JComboBox<Object>(BusinessEntities);
 		GridBagConstraints gbc_AddEntetiesBox = new GridBagConstraints();
 		gbc_AddEntetiesBox.insets = new Insets(0, 0, 0, 5);
 		gbc_AddEntetiesBox.fill = GridBagConstraints.HORIZONTAL;

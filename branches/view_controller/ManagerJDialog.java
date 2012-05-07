@@ -34,7 +34,7 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 	private JTextField telephoneManagerField;
 	private JTextField lastNameManagerField;
 	private JTextField firstNameManagerField;
-	private JComboBox statusManagerBox;
+	private JComboBox<Object> statusManagerBox;
 	private Manager manager;
 	private JLabel msgLabel;
 	private ICommand controller;
@@ -145,7 +145,7 @@ public class ManagerJDialog extends JDialog implements IModelManager, IDisplayab
 			contentPanel.add(lblStatus, gbc_lblStatus);
 		}
 		{
-			statusManagerBox = new JComboBox(Status.values());
+			statusManagerBox = new JComboBox<Object>(Status.values());
 			GridBagConstraints gbc_statusManagerBox = new GridBagConstraints();
 			gbc_statusManagerBox.insets = new Insets(0, 0, 5, 5);
 			gbc_statusManagerBox.anchor = GridBagConstraints.WEST;

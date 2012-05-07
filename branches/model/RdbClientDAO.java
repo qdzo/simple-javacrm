@@ -145,26 +145,26 @@ public class RdbClientDAO implements ClientDAO {
 
 	public RowSet selectClientsRS(Client client) {
 
-		try {
-			JDCConnection connection = RdbDAOFactory.createConnection();
-			Statement statement = connection.createStatement();
-			String query = buildQuery(client, SELECT);
-			ResultSet resultSet = statement.executeQuery(query);
-			if(!statement.isClosed())
-				statement.close();
-			if(!connection.isClosed())
-				connection.close();
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		
+//		try {
+//			JDCConnection connection = RdbDAOFactory.createConnection();
+//			Statement statement = connection.createStatement();
+//			String query = buildQuery(client, SELECT);
+//			ResultSet resultSet = statement.executeQuery(query);
+//			if(!statement.isClosed())
+//				statement.close();
+//			if(!connection.isClosed())
+//				connection.close();
+//
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (InstantiationException e) {
+//			e.printStackTrace();
+//		} catch (IllegalAccessException e) {
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
+//		
 		return null;
 	}
 	

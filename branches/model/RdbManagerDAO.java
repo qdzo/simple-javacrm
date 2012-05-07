@@ -133,26 +133,26 @@ public class RdbManagerDAO implements ManagerDAO{
 
 	@Override
 	public RowSet selectManagersRS(Manager manager) {
-		try {
-			JDCConnection connection = RdbDAOFactory.createConnection();
-			Statement statement = connection.createStatement();
-			String query = buildQuery(manager,SELECT);
-			System.out.println(query);
-			ResultSet resultSet = statement.executeQuery(query);
-			if(!statement.isClosed())
-				statement.close();
-			if(!connection.isClosed())
-				connection.close();
-
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-		} catch (InstantiationException e) {
-			e.printStackTrace();
-		} catch (IllegalAccessException e) {
-			e.printStackTrace();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			JDCConnection connection = RdbDAOFactory.createConnection();
+//			Statement statement = connection.createStatement();
+//			String query = buildQuery(manager,SELECT);
+//			System.out.println(query);
+//			ResultSet resultSet = statement.executeQuery(query);
+//			if(!statement.isClosed())
+//				statement.close();
+//			if(!connection.isClosed())
+//				connection.close();
+//
+//		} catch (ClassNotFoundException e) {
+//			e.printStackTrace();
+//		} catch (InstantiationException e) {
+//			e.printStackTrace();
+//		} catch (IllegalAccessException e) {
+//			e.printStackTrace();
+//		} catch (SQLException e) {
+//			e.printStackTrace();
+//		}
 		return null;
 	}
 
