@@ -242,7 +242,7 @@ public class Heap implements TableModel{
 	
 	public void add(Object object) {
 		if(myList.size()>0)
-		if(myList.get(0).getClass().equals(object.getClass())){
+		if(myList.get(1).getClass().equals(object.getClass())){
 		myList.add(object);
 		System.out.println("added new row in list!");
 		notifyChanges();
@@ -271,7 +271,6 @@ public class Heap implements TableModel{
 
 	public void clear() {
 		myList.clear();
-		notifyChanges();
 	}
 
 
