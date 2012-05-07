@@ -190,7 +190,7 @@ public class RdbProductDAO implements ProductDAO{
 			product.setModelStatus(ModelStatus.Exist);
 			return product;
 		} catch (SQLException e) {
-			e.printStackTrace();
+			System.out.println("ResultSet is empty! no such product in a database!");
 		}
 		return null;
 	}

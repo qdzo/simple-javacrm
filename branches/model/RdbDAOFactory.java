@@ -47,7 +47,7 @@ public class RdbDAOFactory implements DAOFactoryInterface {
 	
 	public DestributionDAO getDestributionDAO(){
 		
-		return new RdbDestributionDAO();
+		return new RdbDestributionDAO(this);
 	}
 
 	

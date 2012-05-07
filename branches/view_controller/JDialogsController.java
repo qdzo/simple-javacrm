@@ -305,6 +305,7 @@ switch (bObject){
 			Client client =(Client) modelFasade.find(currentObject);
 			if(client!=null){
 			client.setModelStatus(ModelStatus.Exist);
+			heap.clear();
 			heap.add(client);
 			} else notificator.sendMessage("Клиент не найден", "База данных");
 			break;
@@ -313,6 +314,7 @@ switch (bObject){
 			Manager manager = (Manager) modelFasade.find(currentObject);
 			if(manager!=null){
 			manager.setModelStatus(ModelStatus.Exist);
+			heap.clear();
 			heap.add(manager);
 			} else notificator.sendMessage("Мэнеджер не найден", "База данных");
 			break;
@@ -321,6 +323,7 @@ switch (bObject){
 			Product product = (Product) modelFasade.find(currentObject);
 			if(product!=null){
 			product.setModelStatus(ModelStatus.Exist);
+			heap.clear();
 			heap.add(product);
 			} else notificator.sendMessage("Продукт не найден", "База данных");
 			break;
@@ -329,6 +332,7 @@ switch (bObject){
 			Destribution destribution = (Destribution) modelFasade.find(currentObject);
 			if(destribution!=null){
 			destribution.setModelStatus(ModelStatus.Exist);
+			heap.clear();
 			heap.add(destribution);
 			} else notificator.sendMessage("Продажа не найдена", "База данных");
 			break;

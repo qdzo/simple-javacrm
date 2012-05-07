@@ -230,7 +230,9 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 				JButton okButton = new JButton("OK");
 				okButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {	
-						if(!(selectedClient.equals(null)||selectedManager.equals(null)||selectedProduct.equals(null))){
+						System.out.println(commandToDo);
+						if(selectedClient!=null||selectedManager!=null||selectedProduct!=null
+								||commandToDo.equals(Commands.SEARCH)||commandToDo.equals(Commands.UPDATE)){
 						controller.execute(commandToDo, BusinessObjects.deal, getModel());
 						controller.execute(Commands.CLOSE, BusinessObjects.deal, null);
 						}
@@ -272,6 +274,7 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 		clientLabel.setText("");
 		managerLabel.setText("");
 		productLabel.setText("");
+		commentArea.setText("");
 		selectedClient = null;
 		selectedManager = null;
 		selectedProduct = null;
@@ -297,16 +300,37 @@ public class DealJDialog extends JDialog implements IModelDestribution,IDisplaya
 	public void setModel(Destribution destribution) {
 		if(destribution!=null)
 		this.destribution = destribution;
+		if(destribution.getProductName()!=null){
+			productLabel.setText(destribution.getProductName());
+		}
+		if(destribution.getClientId()!=null){
+			clientLabel.setText(destribution.getClientFirstName()+" "+destribution.getClientSecondName());
+		}
+		if(destribution.getManagerId()!=null){
+			managerLabel.setText(destribution.getManagerFirstName()+" "+destribution.getManagerSecondName());
+		}
+		if(destribution.getComment()!=null){
+			commentArea.setText(destribution.getComment());
+		}
+		if(destribution.getStatus()!=null){
+			statusProductBox.setSelectedItem(destribution.getStatus());
+		}
 		}
 
 
 	public Destribution getModel() {
+		if(selectedClient!=null)
 		destribution.setClient(selectedClient);
+		if(selectedManager!=null)
 		destribution.setManager(selectedManager);
+		if(selectedProduct!=null)
 		destribution.setProduct(selectedProduct);
+		if(commentArea.getText().length()>0)
 		destribution.setComment(commentArea.getText());
+		if(!commandToDo.equals(Commands.SEARCH)){
 		destribution.setStatus((DestributionStatus) statusProductBox.getSelectedItem());
 		destribution.setDateTime(new Date(System.currentTimeMillis()));
+		}
 		return destribution;
 	}
 	

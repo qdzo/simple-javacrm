@@ -31,6 +31,7 @@ public class RdbManagerDAO implements ManagerDAO{
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			String query = buildQuery(manager,INSERT);
+			System.out.println(query);
 			insertedID = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
@@ -55,6 +56,7 @@ public class RdbManagerDAO implements ManagerDAO{
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			String query = buildQuery(manager,DELETE);
+			System.out.println(query);
 			deleteResult = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
@@ -108,6 +110,7 @@ public class RdbManagerDAO implements ManagerDAO{
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
 			String query = buildQuery(manager,UPDATE);
+			System.out.println(query);
 			result = statement.executeUpdate(query);
 			if(!statement.isClosed())
 				statement.close();
@@ -133,7 +136,8 @@ public class RdbManagerDAO implements ManagerDAO{
 		try {
 			JDCConnection connection = RdbDAOFactory.createConnection();
 			Statement statement = connection.createStatement();
-			String query = buildQuery(manager,SELECT);			
+			String query = buildQuery(manager,SELECT);
+			System.out.println(query);
 			ResultSet resultSet = statement.executeQuery(query);
 			if(!statement.isClosed())
 				statement.close();

@@ -25,7 +25,11 @@ public class RdbDestributionDAO  implements DestributionDAO{
 	public static final int INSERT = 2;
 	public static final int UPDATE = 3;
 	public static final int DELETE = 4;
-
+	private RdbDAOFactory nativeFactory;
+	
+	protected RdbDestributionDAO(RdbDAOFactory nativeFactory){
+		this.nativeFactory = nativeFactory;
+	}
 
 	public int insertDestribution(Destribution destribution) {
 		int flag = 0;
@@ -185,7 +189,7 @@ public class RdbDestributionDAO  implements DestributionDAO{
 		return null;
 	}
 
-	private static Destribution buildDestribution(ResultSet rs){
+	private Destribution buildDestribution(ResultSet rs){
 		Destribution destribution;
 		try {
 			rs.next();
@@ -207,9 +211,9 @@ public class RdbDestributionDAO  implements DestributionDAO{
 				destribution.setStatus(DestributionStatus.Отмена);
 				break;
 			}
-			RdbClientDAO clientDAO = (RdbClientDAO) new RdbDAOFactory().getClientDAO();
-			RdbManagerDAO managerDAO =  (RdbManagerDAO) new RdbDAOFactory().getManagerDAO();
-			RdbProductDAO productDAO =  (RdbProductDAO) new RdbDAOFactory().getProductDAO();
+			RdbClientDAO clientDAO = (RdbClientDAO) nativeFactory.getClientDAO();
+			RdbManagerDAO managerDAO =  (RdbManagerDAO) nativeFactory.getManagerDAO();
+			RdbProductDAO productDAO =  (RdbProductDAO) nativeFactory.getProductDAO();
 			Client client = clientDAO.findClient(new Client(rs.getInt(CLIENT_ID)));
 			Manager manager = managerDAO.findManager(new Manager(rs.getInt(MANAGER_ID)));
 			Product product = productDAO.findProduct(new Product(rs.getInt(PRODUCT_ID)));
@@ -225,11 +229,11 @@ public class RdbDestributionDAO  implements DestributionDAO{
 	}
 	
 
-	private static List<Destribution> buildDestributions(ResultSet rs){
+	private  List<Destribution> buildDestributions(ResultSet rs){
 		List<Destribution> destributions = new ArrayList<Destribution>();
-		RdbClientDAO clientDAO = (RdbClientDAO) new RdbDAOFactory().getClientDAO();
-		RdbManagerDAO managerDAO =  (RdbManagerDAO) new RdbDAOFactory().getManagerDAO();
-		RdbProductDAO productDAO =  (RdbProductDAO) new RdbDAOFactory().getProductDAO();
+		RdbClientDAO clientDAO = (RdbClientDAO) nativeFactory.getClientDAO();
+		RdbManagerDAO managerDAO =  (RdbManagerDAO) nativeFactory.getManagerDAO();
+		RdbProductDAO productDAO =  (RdbProductDAO) nativeFactory.getProductDAO();
 		try {
 			while(rs.next()){
 			Destribution destribution = new Destribution(rs.getInt(DEST_ID));		

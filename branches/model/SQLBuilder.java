@@ -9,7 +9,7 @@ public class SQLBuilder {
 	}
 	
 	public String buildInvalidDelete(String tableName,String columnIdName,int id,String statusColumn) {
-		String sql = "UPDATE "+tableName+" SET "+statusColumn+"=2 WRERE "+columnIdName+"="+id+";";
+		String sql = "UPDATE "+tableName+" SET "+statusColumn+" = 2 WHERE "+columnIdName+" = "+id+";";
 		return sql;
 	}
 

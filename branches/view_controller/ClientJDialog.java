@@ -220,8 +220,10 @@ public class ClientJDialog extends JDialog implements IModelClient, IDisplayable
 		client.setSecondName((lastNameClientField.getText()).trim());
 		client.setTelephone((telephoneClientField.getText()).trim());
 		client.setEmail((emailClientField.getText()).trim());
+		if(!commandToDo.equals(Commands.SEARCH)){
 		client.setPriority((Priority)priorityClientBox.getSelectedItem());
 		client.setStatus((model.Status)statusClientBox.getSelectedItem());
+		}
 		return client;
 		}
 
