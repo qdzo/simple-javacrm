@@ -295,42 +295,35 @@ switch (bObject){
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	private void findModel(BusinessObjects bObject, Object currentObject) {
 	switch (bObject){
 		
 		case client:
-			Client client =(Client) modelFasade.find(currentObject);
-			if(client!=null){
-			client.setModelStatus(ModelStatus.Exist);
-			heap.clear();
-			heap.add(client);
+			List<Client> clients =(List<Client>) modelFasade.selectTO(currentObject);
+			if(clients.size()>0){
+			heap.setNewList(clients);
 			} else notificator.sendMessage("Клиент не найден", "База данных");
 			break;
 			
 		case manager:
-			Manager manager = (Manager) modelFasade.find(currentObject);
-			if(manager!=null){
-			manager.setModelStatus(ModelStatus.Exist);
-			heap.clear();
-			heap.add(manager);
+			List<Manager> managers = (List<Manager>) modelFasade.selectTO(currentObject);
+			if(managers.size()>0){
+			heap.setNewList(managers);
 			} else notificator.sendMessage("Мэнеджер не найден", "База данных");
 			break;
 			
 		case product:
-			Product product = (Product) modelFasade.find(currentObject);
-			if(product!=null){
-			product.setModelStatus(ModelStatus.Exist);
-			heap.clear();
-			heap.add(product);
+			List<Product> products = (List<Product>) modelFasade.selectTO(currentObject);
+			if(products.size()>0){
+			heap.setNewList(products);
 			} else notificator.sendMessage("Продукт не найден", "База данных");
 			break;
 			
 		case deal:
-			Destribution destribution = (Destribution) modelFasade.find(currentObject);
-			if(destribution!=null){
-			destribution.setModelStatus(ModelStatus.Exist);
-			heap.clear();
-			heap.add(destribution);
+			List<Destribution> destributions = (List<Destribution>) modelFasade.selectTO(currentObject);
+			if(destributions.size()>0){
+			heap.setNewList(destributions);
 			} else notificator.sendMessage("Продажа не найдена", "База данных");
 			break;
 			
@@ -343,7 +336,7 @@ switch (bObject){
 		
 		Client client =(Client) modelFasade.find(currentObject);
 		if(client!=null){
-		client.setModelStatus(ModelStatus.Exist);
+		heap.clear();
 		heap.add(client);
 	} else notificator.sendMessage("Нет клиента с таким номером телефона", "База данных");
 		

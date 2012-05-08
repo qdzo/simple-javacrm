@@ -253,7 +253,6 @@ public class RdbDestributionDAO  implements DestributionDAO{
 				destribution.setStatus(DestributionStatus.Отмена);
 				break;
 			}
-			System.out.println("ClientID:"+rs.getInt(CLIENT_ID)+"ManagerId:"+rs.getInt(MANAGER_ID)+"ProductId:"+rs.getInt(PRODUCT_ID));
 			Client client = clientDAO.findClient(new Client(rs.getInt(CLIENT_ID)));
 			Manager manager = managerDAO.findManager(new Manager(rs.getInt(MANAGER_ID)));
 			Product product = productDAO.findProduct(new Product(rs.getInt(PRODUCT_ID)));

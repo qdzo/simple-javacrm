@@ -9,8 +9,6 @@ import java.awt.GridBagLayout;
 import javax.swing.JButton;
 import java.awt.GridBagConstraints;
 import java.awt.Insets;
-
-import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -82,16 +80,18 @@ public class SimpleCRMFrame extends JFrame {
 	}		
 	
 	private void initHeap(){
+		System.out.print("Initializing Heap...");
 		heap = new Heap();
 		heap.addTableModelListener(table);
 		heap.addObserver(table);
 		
-		System.out.println("Heap is initialized!");
+		System.out.println("OK!");
 	}
 	
 	private void initNotificator(){
+		System.out.print("Initializing notificator...");
 		notificator = new Notificator(this);
-		System.out.println("Notificator is initialized!");
+		System.out.println("OK!");
 	}
 	
 	private void setDefaultController(ICommand defaultController) {
@@ -103,6 +103,7 @@ public class SimpleCRMFrame extends JFrame {
 	}
 
 	private void initController(){
+		System.out.print("Initializing controller...!");
 		controller = new JDialogsController();
 		controller.setClientDialog(clientDialog);
 		controller.setDealDialog(dealDialog);
@@ -112,19 +113,21 @@ public class SimpleCRMFrame extends JFrame {
 		controller.setNotificator(notificator);
 		setDefaultController(controller);
 		controller.setHeapList(heap);
-		System.out.println("Controller is initialized!");
+		System.out.println("OK!");
 	}
 	
 	private void initJDialogs(){
+		System.out.print("Initializing JDialogs...");
 		productDialog = new ProductJDialog(this,"Product");
 		dealDialog = new DealJDialog(this,"Product") ;
 		clientDialog = new ClientJDialog(this,"Client");
 		managerDialog = new ManagerJDialog(this,"Manager");
-		System.out.println("Jdialogs are initialized!");
+		System.out.println("OK!");
 	}
 	
 	
 	private void initMainFrame(){
+		System.out.print("Initializing main-frame...");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 650, 397);
 		contentPane = new JPanel();
@@ -279,12 +282,8 @@ public class SimpleCRMFrame extends JFrame {
 		gbc_saveButton.gridy = 7;
 		contentPane.add(saveButton, gbc_saveButton);
 		
-		System.out.println("Main Frame is initialized!");
+		System.out.println("OK!");
 	}
 
-	public void sendMessage(String msg,String title){
-		JOptionPane.showMessageDialog(this,msg,title,JOptionPane.INFORMATION_MESSAGE);	
-		
-		}
 	
 }

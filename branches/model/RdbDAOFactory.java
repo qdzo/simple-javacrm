@@ -67,20 +67,17 @@ public class RdbDAOFactory implements DAOFactoryInterface {
 		public void run(){
 			try {
 				JDCConnection connection = RdbDAOFactory.createConnection();
+				System.out.print("Creating pre-connection to DB...");
 				connection.close();
-				System.out.println("Pre-connection had done!");
+				System.out.println("OK!");
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("ERROR!");
 			} catch (InstantiationException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("ERROR!");
 			} catch (IllegalAccessException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("ERROR!");
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+				System.out.println("ERROR!");
 			}
 		}
 	}

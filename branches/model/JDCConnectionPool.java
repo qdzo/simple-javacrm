@@ -84,7 +84,6 @@ public class JDCConnectionPool{
 		}
 		String jdbcUrl = "jdbc:";
 		jdbcUrl+= url.substring(url.indexOf("mysql"));
-		System.out.println(jdbcUrl);
 		Connection conn = DriverManager.getConnection(jdbcUrl, user, password);
 		c = new JDCConnection(conn, this);
 		c.lease();
